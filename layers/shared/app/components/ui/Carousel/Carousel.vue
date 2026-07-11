@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CarouselEmits, CarouselProps } from './types'
 import { CAROUSEL_TRANSITION_SPEED_MS } from './config'
-import { getActiveIndexFromSlideChange } from './utils'
+import { getActiveIndexFromSlideChange, getNextCarouselIndex, getPrevCarouselIndex } from './utils'
 import type { SwiperSlideChangeDetail } from './utils'
 
 type SwiperContainerElement = HTMLElement & {
