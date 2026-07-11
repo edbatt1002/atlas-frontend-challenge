@@ -48,7 +48,7 @@ const profileTo = computed(() => `/professionals/${props.professional.id}`)
               :src="photos[0]"
               aria-hidden="true"
               loading="lazy"
-              class="absolute inset-0 size-full scale-110 object-cover opacity-40 blur-xl"
+              class="absolute inset-0 size-full scale-110 object-cover opacity-80 blur-xs"
             >
             <div class="absolute inset-0 bg-gradient-to-br from-bg-raised/85 to-bg-soft/95" />
 
