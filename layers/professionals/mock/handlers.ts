@@ -8,15 +8,15 @@ import type {
   ProfessionalSort
 } from '../app/types'
 
-type ProfessionalFilterKey = 'search' | 'profession' | 'online' | 'minPrice' | 'maxPrice' | 'minRating'
+type ProfessionalFilterKey = 'search' | 'profession' | 'online' | 'min_price' | 'max_price' | 'min_rating'
 type ProfessionalFilters = Partial<Record<ProfessionalFilterKey, string>>
 
 const sortComparators: Record<ProfessionalSort, (a: Professional, b: Professional) => number> = {
-  destaques: (a, b) => Number(b.online) - Number(a.online) || b.rating - a.rating,
-  novidades: (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
-  distancia: (a, b) => a.location.distanceKm - b.location.distanceKm,
-  avaliacao: (a, b) => b.rating - a.rating,
-  valor: (a, b) => a.price - b.price
+  featured: (a, b) => Number(b.online) - Number(a.online) || b.rating - a.rating,
+  newest: (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+  nearest: (a, b) => a.location.distanceKm - b.location.distanceKm,
+  rating: (a, b) => b.rating - a.rating,
+  price: (a, b) => a.price - b.price
 }
 
 const filterPredicates: Record<ProfessionalFilterKey, (value: string, p: Professional) => boolean> = {
@@ -24,9 +24,9 @@ const filterPredicates: Record<ProfessionalFilterKey, (value: string, p: Profess
     p.name.toLowerCase().includes(value) || p.profession.toLowerCase().includes(value),
   profession: (value, p) => p.professionSlug === value,
   online: (value, p) => p.online === (value === 'true'),
-  minPrice: (value, p) => p.price >= Number(value),
-  maxPrice: (value, p) => p.price <= Number(value),
-  minRating: (value, p) => p.rating >= Number(value)
+  min_price: (value, p) => p.price >= Number(value),
+  max_price: (value, p) => p.price <= Number(value),
+  min_rating: (value, p) => p.rating >= Number(value)
 }
 
 export function filterProfessionals(list: Professional[], filters: ProfessionalFilters) {
@@ -40,7 +40,7 @@ export function filterProfessionals(list: Professional[], filters: ProfessionalF
 }
 
 export function sortProfessionals(list: Professional[], sort: ProfessionalSort | null) {
-  const comparator = sortComparators[sort ?? 'destaques']
+  const comparator = sortComparators[sort ?? 'featured']
   return [...list].sort(comparator)
 }
 
@@ -58,9 +58,9 @@ function parseFilters(params: URLSearchParams): ProfessionalFilters {
     search: params.get('search')?.trim().toLowerCase() || undefined,
     profession: params.get('profession') || undefined,
     online: params.get('online') || undefined,
-    minPrice: params.get('minPrice') || undefined,
-    maxPrice: params.get('maxPrice') || undefined,
-    minRating: params.get('minRating') || undefined
+    min_price: params.get('min_price') || undefined,
+    max_price: params.get('max_price') || undefined,
+    min_rating: params.get('min_rating') || undefined
   }
 }
 
