@@ -1,4 +1,4 @@
-import { filtersToQuery } from '../useProfessionalFilters'
+import { countActiveFilters, filtersToQuery } from '../useProfessionalFilters'
 import type { ProfessionalFilterState } from '../useProfessionalFilters'
 
 const empty: ProfessionalFilterState = { search: '' }
@@ -12,14 +12,18 @@ describe('filtersToQuery', () => {
     const filters: ProfessionalFilterState = {
       search: 'ignored',
       profession: 'modelo',
+      online: true,
       maxPrice: 500,
+      minRating: 4.5,
       sort: 'price'
     }
 
     expect(filtersToQuery(filters, 'ana')).toEqual({
       search: 'ana',
       profession: 'modelo',
+      online: true,
       max_price: 500,
+      min_rating: 4.5,
       sort: 'price'
     })
   })
@@ -34,5 +38,35 @@ describe('filtersToQuery', () => {
     const filters: ProfessionalFilterState = { search: '', minPrice: 0 }
 
     expect(filtersToQuery(filters, '')).toEqual({ min_price: 0 })
+  })
+
+  it('drops online when false', () => {
+    const filters: ProfessionalFilterState = { search: '', online: false }
+
+    expect(filtersToQuery(filters, '')).toEqual({})
+  })
+})
+
+describe('countActiveFilters', () => {
+  it('returns 0 when nothing is active', () => {
+    expect(countActiveFilters(empty)).toBe(0)
+  })
+
+  it('counts profession, online, maxPrice and minRating as one each', () => {
+    const filters: ProfessionalFilterState = {
+      search: '',
+      profession: 'modelo',
+      online: true,
+      maxPrice: 500,
+      minRating: 4
+    }
+
+    expect(countActiveFilters(filters)).toBe(4)
+  })
+
+  it('does not count search or sort', () => {
+    const filters: ProfessionalFilterState = { search: 'ana', sort: 'price' }
+
+    expect(countActiveFilters(filters)).toBe(0)
   })
 })
