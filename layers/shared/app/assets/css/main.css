@@ -1,23 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "@nuxt/ui";
 
 @theme {
-  --color-bg:          #12060d;
-  --color-bg-soft:     #1c0b16;
-  --color-bg-card:     #271122;
-  --color-bg-raised:   #351a2e;
+  --color-bg: #12060d;
+  --color-bg-soft: #1c0b16;
+  --color-bg-card: #271122;
+  --color-bg-raised: #351a2e;
 
-  --color-primary:     #ff2d6f;
+  --color-primary: #ff2d6f;
   --color-primary-600: #e0175a;
   --color-primary-400: #ff5c8d;
-  --color-secondary:   #c026d3;
-  --color-secondary-600:#a21caf;
-  --color-accent:      #ff9d2d;
-  --color-online:      #2ee6a6;
-  --color-danger:      #ff4d4d;
+  --color-secondary: #c026d3;
+  --color-secondary-600: #a21caf;
+  --color-accent: #ff9d2d;
+  --color-online: #2ee6a6;
+  --color-danger: #ff4d4d;
 
-  --color-primary-50:  color-mix(in oklch, var(--color-primary) 8%, white);
+  --color-primary-50: color-mix(in oklch, var(--color-primary) 8%, white);
   --color-primary-100: color-mix(in oklch, var(--color-primary) 18%, white);
   --color-primary-200: color-mix(in oklch, var(--color-primary) 34%, white);
   --color-primary-300: color-mix(in oklch, var(--color-primary) 55%, white);
@@ -27,29 +26,45 @@
   --color-primary-900: color-mix(in oklch, var(--color-primary-600) 46%, black);
   --color-primary-950: color-mix(in oklch, var(--color-primary-600) 28%, black);
 
-  --color-secondary-50:  color-mix(in oklch, var(--color-secondary) 8%, white);
+  --color-secondary-50: color-mix(in oklch, var(--color-secondary) 8%, white);
   --color-secondary-100: color-mix(in oklch, var(--color-secondary) 18%, white);
   --color-secondary-200: color-mix(in oklch, var(--color-secondary) 34%, white);
   --color-secondary-300: color-mix(in oklch, var(--color-secondary) 55%, white);
   --color-secondary-400: color-mix(in oklch, var(--color-secondary) 78%, white);
   --color-secondary-500: var(--color-secondary);
-  --color-secondary-700: color-mix(in oklch, var(--color-secondary-600) 82%, black);
-  --color-secondary-800: color-mix(in oklch, var(--color-secondary-600) 64%, black);
-  --color-secondary-900: color-mix(in oklch, var(--color-secondary-600) 46%, black);
-  --color-secondary-950: color-mix(in oklch, var(--color-secondary-600) 28%, black);
+  --color-secondary-700: color-mix(
+    in oklch,
+    var(--color-secondary-600) 82%,
+    black
+  );
+  --color-secondary-800: color-mix(
+    in oklch,
+    var(--color-secondary-600) 64%,
+    black
+  );
+  --color-secondary-900: color-mix(
+    in oklch,
+    var(--color-secondary-600) 46%,
+    black
+  );
+  --color-secondary-950: color-mix(
+    in oklch,
+    var(--color-secondary-600) 28%,
+    black
+  );
 
-  --color-ink:         #fbe9f2;
-  --color-ink-muted:   #c79bb4;
-  --color-ink-faint:   #8f6980;
-  --color-line:        rgba(255,214,235,0.10);
+  --color-ink: #fbe9f2;
+  --color-ink-muted: #c79bb4;
+  --color-ink-faint: #8f6980;
+  --color-line: rgba(255, 214, 235, 0.1);
 
   --font-display: "Bricolage Grotesque", sans-serif;
-  --font-sans:    "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
 
-  --radius-xl:  18px;
+  --radius-xl: 18px;
   --radius-2xl: 26px;
 
-  --shadow-card: 0 24px 60px -24px rgba(0,0,0,0.7);
+  --shadow-card: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
 }
 
 :root {

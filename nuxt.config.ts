@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
   extends: ['./layers/shared', './layers/professionals'],
 
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxt/test-utils/module', '@vueuse/nuxt'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/ui',
+    '@nuxt/test-utils/module',
+    '@vueuse/nuxt',
+    '@nuxt/fonts'
+  ],
 
   devtools: {
     enabled: true
@@ -33,3 +39,4 @@ export default defineNuxtConfig({
     }
   }
 })
+
