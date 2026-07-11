@@ -1,8 +1,8 @@
-import { professionalHandlers } from '../../layers/professionals/mock'
+import { handlers } from '../../mocks/handlers'
 
 export default defineNuxtPlugin(async () => {
   const { setupWorker } = await import('msw/browser')
 
-  const worker = setupWorker(...professionalHandlers)
+  const worker = setupWorker(...handlers)
   await worker.start({ onUnhandledRequest: 'bypass' })
 })
