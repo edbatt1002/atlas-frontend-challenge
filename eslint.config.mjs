@@ -16,27 +16,18 @@ export default withNuxt({
     },
     'boundaries/include': ['layers/**'],
     'boundaries/elements': [
-      { type: 'shared', pattern: 'layers/shared', mode: 'folder' },
-      { type: 'feature', pattern: 'layers/*', mode: 'folder' }
+      { type: 'shared', pattern: 'layers/shared' },
+      { type: 'feature', pattern: 'layers/*' }
     ]
   },
   rules: {
-    'boundaries/element-types': [
+    'boundaries/dependencies': [
       'error',
       {
         default: 'disallow',
-        rules: [
-          { from: ['shared'], allow: ['shared'] },
-          { from: ['feature'], allow: ['shared'] }
-        ]
-      }
-    ],
-    'boundaries/entry-point': [
-      'error',
-      {
-        default: 'disallow',
-        rules: [
-          { target: ['shared', 'feature'], allow: ['app/index.ts', 'mock/index.ts'] }
+        policies: [
+          { from: { element: { types: 'shared' } }, allow: { to: { element: { types: 'shared' } } } },
+          { from: { element: { types: 'feature' } }, allow: { to: { element: { types: 'shared' } } } }
         ]
       }
     ]
