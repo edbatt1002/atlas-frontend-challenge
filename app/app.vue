@@ -1,4 +1,13 @@
 <script setup lang="ts">
+const { visible: headerVisible } = useHeaderVisibility()
+const headerHeight = useHeaderHeight()
+
+const headerEl = ref<HTMLElement | null>(null)
+const { height } = useElementSize(headerEl)
+watch(height, (h) => {
+  headerHeight.value = h
+})
+
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
@@ -25,9 +34,18 @@ useSeoMeta({
 
 <template>
   <UApp>
-    <LayoutHeader />
+    <div
+      ref="headerEl"
+      class="fixed inset-x-0 top-0 z-40 transition-transform duration-300"
+      :class="headerVisible ? 'translate-y-0' : '-translate-y-full'"
+    >
+      <LayoutHeader />
+    </div>
 
-    <UMain class="pb-16 lg:pb-0">
+    <UMain
+      class="pb-16 lg:pb-0"
+      :style="{ paddingTop: `${headerHeight}px` }"
+    >
       <NuxtPage />
     </UMain>
 
