@@ -1,5 +1,4 @@
 import { http, HttpResponse } from 'msw'
-import { describe, expect, it } from 'vitest'
 import { mockNuxtImport } from '@nuxt/test-utils/runtime'
 import { setupMockApi } from '~~/mocks/testServer'
 

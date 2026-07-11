@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import ProfessionalCard from '../ProfessionalCard.vue'
 import type { Professional } from '../../../types'

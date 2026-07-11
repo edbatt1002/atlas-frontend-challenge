@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import FiltersPanel from '../FiltersPanel.vue'
 import type { Profession } from '../../../types'
