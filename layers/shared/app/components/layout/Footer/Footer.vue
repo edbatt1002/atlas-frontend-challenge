@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { FOOTER_LINKS } from './config'
+
 const year = new Date().getFullYear()
 </script>
 
@@ -18,11 +20,7 @@ const year = new Date().getFullYear()
     </template>
 
     <UNavigationMenu
-      :items="[
-        { label: 'Termos', to: '/termos' },
-        { label: 'Privacidade', to: '/privacidade' },
-        { label: 'Suporte', to: '/suporte' }
-      ]"
+      :items="FOOTER_LINKS"
       variant="link"
     />
 

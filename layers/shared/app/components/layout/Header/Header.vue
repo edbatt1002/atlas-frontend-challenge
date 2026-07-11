@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { LOCATION_LABEL } from './config'
+</script>
+
 <template>
   <UHeader>
     <template #title>
@@ -16,7 +20,7 @@
     <template #right>
       <UButton
         icon="i-lucide-map-pin"
-        label="São Paulo"
+        :label="LOCATION_LABEL"
         color="neutral"
         variant="ghost"
         class="hidden md:flex"
