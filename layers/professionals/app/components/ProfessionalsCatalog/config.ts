@@ -1,3 +1,4 @@
 export const FIRST_LOAD_SKELETONS = 10
 export const LOAD_MORE_SKELETONS = 5
 export const INFINITE_SCROLL_ROOT_MARGIN = '400px'
+export const PRIORITY_CARD_COUNT = 4

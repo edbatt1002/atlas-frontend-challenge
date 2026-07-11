@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ProfessionalsCatalogProps } from './types'
-import { FIRST_LOAD_SKELETONS, INFINITE_SCROLL_ROOT_MARGIN, LOAD_MORE_SKELETONS } from './config'
+import { FIRST_LOAD_SKELETONS, INFINITE_SCROLL_ROOT_MARGIN, LOAD_MORE_SKELETONS, PRIORITY_CARD_COUNT } from './config'
 
 const props = defineProps<ProfessionalsCatalogProps>()
 const emit = defineEmits<{ clear: [] }>()
@@ -72,9 +72,10 @@ const reachedEnd = computed(() => !hasNextPage.value && items.value.length > 0)
         </template>
         <template v-else>
           <ProfessionalCard
-            v-for="pro in items"
+            v-for="(pro, index) in items"
             :key="pro.id"
             :professional="pro"
+            :priority="index < PRIORITY_CARD_COUNT"
           />
           <template v-if="loadingMore">
             <ProfessionalCardSkeleton
