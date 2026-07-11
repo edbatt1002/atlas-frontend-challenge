@@ -37,6 +37,10 @@ export interface Professional {
   rating: number
   reviewsCount: number
   online: boolean
+  verified: boolean
+  photos: number
+  videos: number
+  createdAt: string
   description: string
   location: ProfessionalLocation
   gallery: string[]
@@ -46,15 +50,16 @@ export interface Professional {
 }
 
 export type ProfessionalSort
-  = | 'price_asc'
-    | 'price_desc'
-    | 'rating_desc'
-    | 'distance_asc'
-    | 'name_asc'
+  = | 'destaques'
+    | 'novidades'
+    | 'distancia'
+    | 'avaliacao'
+    | 'valor'
 
 export interface ProfessionalListParams {
   search?: string
   profession?: string
+  online?: boolean
   minPrice?: number
   maxPrice?: number
   minRating?: number
