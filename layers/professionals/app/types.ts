@@ -79,3 +79,7 @@ export interface ProfessionalListResponse {
   data: Professional[]
   meta: ProfessionalListMeta
 }
+
+export type CatalogSheetMode = 'filter' | 'sort' | 'geo'
+
+export type CatalogFilterSection = 'profissao' | 'disponibilidade' | 'preco' | 'avaliacao'
