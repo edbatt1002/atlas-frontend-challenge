@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { ProfessionalListParams } from '../types'
+import type { ProfessionalsCatalogProps } from './types'
+import { FIRST_LOAD_SKELETONS, INFINITE_SCROLL_ROOT_MARGIN, LOAD_MORE_SKELETONS } from './config'
 
-const props = defineProps<{ query: ProfessionalListParams }>()
+const props = defineProps<ProfessionalsCatalogProps>()
 const emit = defineEmits<{ clear: [] }>()
 
 const { items, isPending, error, hasNextPage, fetchNextPage } = useProfessionals(() => props.query)
@@ -23,7 +24,7 @@ useIntersectionObserver(
   ([entry]) => {
     if (entry?.isIntersecting) loadMore()
   },
-  { rootMargin: '400px' }
+  { rootMargin: INFINITE_SCROLL_ROOT_MARGIN }
 )
 
 const showFirstLoad = computed(() => isPending.value && items.value.length === 0)
@@ -65,7 +66,7 @@ const reachedEnd = computed(() => !hasNextPage.value && items.value.length > 0)
       <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5">
         <template v-if="showFirstLoad">
           <ProfessionalCardSkeleton
-            v-for="n in 10"
+            v-for="n in FIRST_LOAD_SKELETONS"
             :key="`first-${n}`"
           />
         </template>
@@ -77,7 +78,7 @@ const reachedEnd = computed(() => !hasNextPage.value && items.value.length > 0)
           />
           <template v-if="loadingMore">
             <ProfessionalCardSkeleton
-              v-for="n in 5"
+              v-for="n in LOAD_MORE_SKELETONS"
               :key="`more-${n}`"
             />
           </template>
