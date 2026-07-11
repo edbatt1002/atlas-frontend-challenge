@@ -1,0 +1,1 @@
+export const CAROUSEL_TRANSITION_SPEED_MS = 350
