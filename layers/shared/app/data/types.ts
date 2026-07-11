@@ -1,5 +1,3 @@
-import type { MaybeRefOrGetter, Ref } from 'vue'
-
 export interface ServerQueryResult<T> {
   data: Ref<T | undefined>
   isPending: Ref<boolean>

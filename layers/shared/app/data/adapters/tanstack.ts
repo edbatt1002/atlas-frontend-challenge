@@ -1,5 +1,3 @@
-import { computed, onServerPrefetch, toValue } from 'vue'
-import type { Ref } from 'vue'
 import { useInfiniteQuery, useQuery } from '@tanstack/vue-query'
 import type {
   DataAdapter,
