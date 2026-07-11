@@ -19,6 +19,8 @@
     "@mswjs/data": "^0.16.2",
     "@nuxt/ui": "^4.9.0",
     "@tanstack/vue-query": "^5.101.2",
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/nuxt": "^14.3.0",
     "msw": "^2.15.0",
     "nuxt": "^4.4.8",
     "tailwindcss": "^4.3.1"

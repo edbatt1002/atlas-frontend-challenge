@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   extends: ['./layers/shared', './layers/professionals'],
 
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxt/test-utils/module'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxt/test-utils/module', '@vueuse/nuxt'],
 
   devtools: {
     enabled: true
