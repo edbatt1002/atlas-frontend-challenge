@@ -50,19 +50,19 @@ export interface Professional {
 }
 
 export type ProfessionalSort
-  = | 'destaques'
-    | 'novidades'
-    | 'distancia'
-    | 'avaliacao'
-    | 'valor'
+  = | 'featured'
+    | 'newest'
+    | 'nearest'
+    | 'rating'
+    | 'price'
 
 export interface ProfessionalListParams {
   search?: string
   profession?: string
   online?: boolean
-  minPrice?: number
-  maxPrice?: number
-  minRating?: number
+  min_price?: number
+  max_price?: number
+  min_rating?: number
   sort?: ProfessionalSort
   page?: number
   limit?: number

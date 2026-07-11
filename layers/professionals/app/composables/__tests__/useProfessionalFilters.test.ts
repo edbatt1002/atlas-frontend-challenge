@@ -8,19 +8,19 @@ describe('filtersToQuery', () => {
     expect(filtersToQuery(empty, '')).toEqual({})
   })
 
-  it('includes only the active filters', () => {
+  it('includes only the active filters, translated to the API (snake_case, english) vocabulary', () => {
     const filters: ProfessionalFilterState = {
       search: 'ignored',
       profession: 'modelo',
       maxPrice: 500,
-      sort: 'price_asc'
+      sort: 'price'
     }
 
     expect(filtersToQuery(filters, 'ana')).toEqual({
       search: 'ana',
       profession: 'modelo',
-      maxPrice: 500,
-      sort: 'price_asc'
+      max_price: 500,
+      sort: 'price'
     })
   })
 
@@ -30,9 +30,9 @@ describe('filtersToQuery', () => {
     expect(filtersToQuery(filters, '')).toEqual({})
   })
 
-  it('keeps a zero minPrice (present, not empty)', () => {
+  it('keeps a zero min_price (present, not empty)', () => {
     const filters: ProfessionalFilterState = { search: '', minPrice: 0 }
 
-    expect(filtersToQuery(filters, '')).toEqual({ minPrice: 0 })
+    expect(filtersToQuery(filters, '')).toEqual({ min_price: 0 })
   })
 })
