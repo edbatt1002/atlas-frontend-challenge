@@ -10,8 +10,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: '',
-      dataAdapter: 'tanstack'
+      apiBase: ''
     }
   },
 
