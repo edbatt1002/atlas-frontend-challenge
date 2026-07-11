@@ -54,6 +54,10 @@ export function createProfessional(index: number): Professional {
     rating: faker.number.float({ min: 3.2, max: 5, fractionDigits: 1 }),
     reviewsCount: faker.number.int({ min: 0, max: 320 }),
     online: faker.datatype.boolean(0.4),
+    verified: faker.datatype.boolean(0.6),
+    photos: faker.number.int({ min: 4, max: 60 }),
+    videos: faker.number.int({ min: 0, max: 12 }),
+    createdAt: faker.date.past({ years: 2 }).toISOString(),
     description: faker.lorem.paragraphs({ min: 1, max: 3 }, '\n\n'),
     location: {
       city: faker.location.city(),
