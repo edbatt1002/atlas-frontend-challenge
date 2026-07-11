@@ -9,8 +9,8 @@ defineProps<ProfessionalCardProps>()
     :to="`/professionals/${professional.id}`"
     class="group block"
   >
-    <article class="overflow-hidden rounded-2xl border border-line bg-bg-card shadow-card transition duration-200 group-hover:-translate-y-0.5 group-hover:border-primary-400/40">
-      <div class="relative aspect-[3/4] bg-bg-raised">
+    <article class="overflow-hidden rounded-2xl border border-line bg-bg-card shadow-card transition duration-200 group-hover:border-primary-400/40">
+      <div class="relative aspect-[4/5] bg-bg-raised">
         <img
           :src="professional.photo"
           :alt="professional.name"
