@@ -4,12 +4,12 @@
       <img
         src="/onluxe-logo.svg"
         alt="onluxe"
-        class="h-6 w-auto dark:hidden"
+        class="h-8 w-auto dark:hidden"
       >
       <img
         src="/onluxe-logo-dark.svg"
         alt="onluxe"
-        class="hidden h-6 w-auto dark:block"
+        class="hidden h-8 w-auto dark:block"
       >
     </template>
 
