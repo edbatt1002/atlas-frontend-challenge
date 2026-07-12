@@ -1,49 +1,54 @@
 <script setup lang="ts">
+import { A11y, Keyboard } from 'swiper/modules'
+import { Swiper } from 'swiper/vue'
+import type { Swiper as SwiperInstance } from 'swiper'
 import type { CarouselProps } from './types'
 import { CAROUSEL_TRANSITION_SPEED_MS } from './config'
-import { getActiveIndexFromSlideChange, getNextCarouselIndex, getPrevCarouselIndex } from './utils'
-import type { SwiperSlideChangeDetail } from './utils'
-
-type SwiperContainerElement = HTMLElement & {
-  swiper?: { slideTo: (index: number, speed?: number) => void }
-}
+import { getNextCarouselIndex, getPrevCarouselIndex } from './utils'
 
 const modelValue = defineModel<number>({ default: 0 })
-const { slideCount, pagination = false, navigation = false, lazyPreloadPrevNext = 0 } = defineProps<CarouselProps>()
+const { slideCount, navigation = false, lazyPreloadPrevNext = 0 } = defineProps<CarouselProps>()
+const modules = [A11y, Keyboard]
+const swiper = shallowRef<SwiperInstance | null>(null)
 
-const containerRef = ref<SwiperContainerElement | null>(null)
+function onSwiper(instance: SwiperInstance) {
+  swiper.value = instance
+}
 
-function onSlideChange(event: CustomEvent<SwiperSlideChangeDetail[]>) {
-  const index = getActiveIndexFromSlideChange(event.detail)
-  if (index != null) modelValue.value = index
+function onSlideChange(instance: SwiperInstance) {
+  modelValue.value = instance.activeIndex
 }
 
 function goPrev() {
-  modelValue.value = getPrevCarouselIndex(modelValue.value)
+  const index = getPrevCarouselIndex(modelValue.value)
+  modelValue.value = index
+  swiper.value?.slideTo(index)
 }
 
 function goNext() {
-  modelValue.value = getNextCarouselIndex(modelValue.value, slideCount)
+  const index = getNextCarouselIndex(modelValue.value, slideCount)
+  modelValue.value = index
+  swiper.value?.slideTo(index)
 }
 
-watch(modelValue, (index) => {
-  containerRef.value?.swiper?.slideTo(index, CAROUSEL_TRANSITION_SPEED_MS)
-})
+watch(modelValue, index => swiper.value?.slideTo(index))
 </script>
 
 <template>
-  <div class="relative size-full">
-    <swiper-container
-      ref="containerRef"
-      :speed="CAROUSEL_TRANSITION_SPEED_MS"
-      :pagination="pagination"
+  <div class="relative size-full overflow-hidden">
+    <Swiper
+      data-testid="carousel-track"
+      :modules="modules"
       :initial-slide="modelValue"
+      :speed="CAROUSEL_TRANSITION_SPEED_MS"
       :lazy-preload-prev-next="lazyPreloadPrevNext"
+      :keyboard="{ enabled: true }"
       class="size-full"
-      @swiperslidechange="onSlideChange"
+      @swiper="onSwiper"
+      @slide-change="onSlideChange"
     >
       <slot />
-    </swiper-container>
+    </Swiper>
 
     <template v-if="navigation">
       <UButton
