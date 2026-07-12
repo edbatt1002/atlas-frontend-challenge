@@ -1,3 +1,3 @@
 export function useHeaderHeight() {
-  return useState('header-height-px', () => 0)
+  return useState('header-height-px', () => 64)
 }

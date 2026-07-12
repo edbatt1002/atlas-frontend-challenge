@@ -1,3 +1,3 @@
 export function useCatalogToolbarHeight() {
-  return useState('catalog-toolbar-height-px', () => 0)
+  return useState('catalog-toolbar-height-px', () => 116)
 }
