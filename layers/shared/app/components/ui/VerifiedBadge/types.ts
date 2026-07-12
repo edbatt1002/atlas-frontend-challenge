@@ -1,3 +1,3 @@
 export interface VerifiedBadgeProps {
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
 }
