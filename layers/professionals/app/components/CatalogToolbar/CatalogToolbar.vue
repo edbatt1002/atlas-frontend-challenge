@@ -30,6 +30,7 @@ const topOffset = computed(() => headerVisible.value ? headerHeight.value : 0)
         v-model="search"
         icon="i-lucide-search"
         placeholder="Buscar por nome ou profissão"
+        aria-label="Buscar por nome ou profissão"
         size="lg"
       />
 

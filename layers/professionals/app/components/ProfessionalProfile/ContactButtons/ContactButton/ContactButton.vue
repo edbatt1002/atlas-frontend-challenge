@@ -13,6 +13,7 @@ const link = computed(() => buildContactLink(networkProp, value))
   <UButton
     :to="link"
     target="_blank"
+    rel="noopener noreferrer"
     :icon="network.icon"
     :label="label ?? network.label"
     :size="size"

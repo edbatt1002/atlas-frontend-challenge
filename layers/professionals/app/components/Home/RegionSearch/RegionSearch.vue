@@ -111,6 +111,7 @@ function useCurrentLocation() {
               v-model="query"
               icon="i-lucide-search"
               placeholder="Buscar estado"
+              aria-label="Buscar estado"
               class="w-full"
               autofocus
             />

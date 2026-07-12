@@ -201,6 +201,7 @@ const title = computed(() => {
                   :step="PRICE_STEP"
                   :model-value="maxPrice ?? PRICE_MAX"
                   color="primary"
+                  aria-label="Preço máximo"
                   @update:model-value="onMaxPriceUpdate"
                 />
                 <div class="mt-1.5 flex justify-between text-[11px] text-ink-faint">
