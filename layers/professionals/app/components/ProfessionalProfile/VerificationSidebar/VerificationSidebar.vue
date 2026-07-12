@@ -7,13 +7,11 @@ defineProps<VerificationSidebarProps>()
 <template>
   <aside class="flex flex-col gap-4">
     <div class="rounded-[16px] border border-line bg-bg-card p-4">
-      <div class="text-xs font-semibold text-ink-faint">
-        A partir de
-      </div>
-      <div class="font-display text-2xl font-extrabold text-ink">
-        {{ formatCurrency(basePrice) }}
-        <span class="text-sm font-semibold text-ink-faint"> / hora</span>
-      </div>
+      <ProfessionalPriceTag
+        :price="basePrice"
+        size="md"
+        per-hour
+      />
 
       <ProfessionalProfilePriceTiers
         :tiers="priceTiers"
@@ -32,7 +30,7 @@ defineProps<VerificationSidebarProps>()
         v-if="verified"
         class="flex items-center gap-2.5 border-b border-line pb-3"
       >
-        <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm text-white">✓</span>
+        <UiVerifiedBadge size="lg" />
         <div>
           <div class="text-[13px] font-bold text-ink">
             Perfil verificado

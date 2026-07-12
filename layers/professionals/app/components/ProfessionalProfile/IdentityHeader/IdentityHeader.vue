@@ -14,12 +14,12 @@ defineProps<IdentityHeaderProps>()
       class="border-4 border-bg"
     />
 
-    <span
+    <ProfessionalOnlineBadge
       v-if="online"
-      class="mt-3 inline-flex items-center gap-1.5 rounded-full border border-online/40 bg-online/10 px-2.5 py-1 text-[11px] font-bold text-online"
-    >
-      <span class="size-1.5 rounded-full bg-online" />ONLINE AGORA
-    </span>
+      variant="pill"
+      label="ONLINE AGORA"
+      class="mt-3"
+    />
 
     <div class="mt-2 flex items-center gap-2">
       <h1 class="font-display text-2xl font-extrabold text-ink sm:text-3xl">

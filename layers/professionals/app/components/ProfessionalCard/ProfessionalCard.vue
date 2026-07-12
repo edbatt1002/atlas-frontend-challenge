@@ -100,12 +100,12 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
           />
         </div>
 
-        <span
+        <ProfessionalOnlineBadge
           v-if="professional.online"
-          class="pointer-events-none absolute left-2 top-[18px] z-20 inline-flex items-center gap-1 rounded-full border border-online/40 bg-black/70 px-2 py-0.5 text-[9px] font-bold text-online"
-        >
-          <span class="size-1.5 rounded-full bg-online" />ONLINE
-        </span>
+          variant="overlay"
+          label="ONLINE"
+          class="pointer-events-none absolute left-2 top-[18px] z-20"
+        />
 
         <UButton
           aria-label="Favoritar"
