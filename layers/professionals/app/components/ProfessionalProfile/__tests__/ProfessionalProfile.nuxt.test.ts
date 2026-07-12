@@ -7,7 +7,8 @@ const professional: Professional = {
   name: 'Valentina',
   profession: 'Modelo',
   professionSlug: 'modelo',
-  photo: 'https://example.test/valentina.jpg',
+  cover: 'https://example.test/valentina-cover.jpg',
+  avatar: 'https://example.test/valentina-avatar.jpg',
   price: 350,
   rating: 4.9,
   reviewsCount: 214,
@@ -18,14 +19,32 @@ const professional: Professional = {
   createdAt: '2026-01-01T00:00:00.000Z',
   description: 'Atendimento premium e discreto no centro de São Paulo.',
   location: { city: 'São Paulo', state: 'SP', distanceKm: 2.3 },
-  gallery: [
-    'https://example.test/1.jpg',
-    'https://example.test/2.jpg',
-    'https://example.test/3.jpg',
-    'https://example.test/4.jpg',
-    'https://example.test/5.jpg',
-    'https://example.test/6.jpg'
+  gallery: [],
+  media: [
+    { url: 'https://example.test/1.jpg', type: 'photo' },
+    { url: 'https://example.test/2.jpg', type: 'photo' },
+    { url: 'https://example.test/3.jpg', type: 'video' },
+    { url: 'https://example.test/4.jpg', type: 'photo' },
+    { url: 'https://example.test/5.jpg', type: 'photo' },
+    { url: 'https://example.test/6.jpg', type: 'photo' }
   ],
+  characteristics: {
+    age: 24,
+    heightCm: 168,
+    hairColor: 'Loiro',
+    eyeColor: 'Castanhos',
+    attends: 'Homens',
+    hasLocal: true,
+    languages: ['PT', 'EN'],
+    hours: '10h–22h'
+  },
+  priceTiers: [
+    { label: '1 hora', price: 350 },
+    { label: '2 horas', price: 600 },
+    { label: 'Pernoite', price: 1200 }
+  ],
+  contact: { telegram: 'valentina_tg', whatsapp: '5511999998888' },
+  stats: { lastActivity: 'Agora', responseTime: '~5 min', memberSince: '2024' },
   services: [
     { name: 'Massagem', price: 200 },
     { name: '1 hora', price: 350 }
@@ -37,7 +56,7 @@ const professional: Professional = {
 }
 
 describe('ProfessionalProfile', () => {
-  it('renders name, verified badge, profession, rating and distance', async () => {
+  it('renders name, verified badge, profession, rating and location', async () => {
     const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
     const text = wrapper.text()
 
@@ -58,11 +77,12 @@ describe('ProfessionalProfile', () => {
     expect(offline.text()).not.toContain('ONLINE')
   })
 
-  it('renders the description and each service with its price', async () => {
+  it('renders the description, characteristics and each service with its price', async () => {
     const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
     const text = wrapper.text()
 
     expect(text).toContain(professional.description)
+    expect(text).toContain('24 anos')
     expect(text).toContain('Massagem')
     expect(text).toContain('R$ 200')
     expect(text).toContain('1 hora')
@@ -84,12 +104,20 @@ describe('ProfessionalProfile', () => {
     expect(text).toContain('Atendimento impecável.')
   })
 
-  it('shows the base price and a message CTA in the sticky bar', async () => {
+  it('shows the base price and price tiers in the desktop sidebar', async () => {
     const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
     const text = wrapper.text()
 
-    expect(text).toContain('R$ 350')
-    expect(text).toContain('Enviar mensagem')
+    expect(text).toContain('Pernoite')
+    expect(text).toContain('R$ 1.200')
+  })
+
+  it('links the contact buttons to real Telegram/WhatsApp deep links', async () => {
+    const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
+    const hrefs = wrapper.findAll('a').map(a => a.attributes('href'))
+
+    expect(hrefs).toContain('https://t.me/valentina_tg')
+    expect(hrefs).toContain('https://wa.me/5511999998888')
   })
 
   it('links back to the catalog', async () => {
