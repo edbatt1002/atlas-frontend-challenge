@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { CatalogSheetEmits, CatalogSheetProps } from './types'
-import { FILTER_SECTIONS, PRICE_MAX, PRICE_MIN, PRICE_STEP, RATING_CHIPS, SORT_ITEMS } from './config'
-import type { CatalogFilterSection, ProfessionalSort } from '../../types'
+import type { ProfessionalSort } from '../../types'
 
 const { mode, professions } = defineProps<CatalogSheetProps>()
 const emit = defineEmits<CatalogSheetEmits>()
@@ -14,89 +13,9 @@ const sort = defineModel<ProfessionalSort | undefined>('sort')
 
 const isOpen = computed(() => mode !== null)
 
-function selectProfession(slug: string | undefined) {
-  profession.value = slug
-}
-
-function toggleOnline() {
-  online.value = !online.value
-}
-
-function selectMinRating(value: number | undefined) {
-  minRating.value = value
-}
-
 function onUpdateOpen(open: boolean) {
   if (!open) emit('close')
 }
-
-const paneRef = ref<HTMLElement | null>(null)
-const sectionRefs = reactive<Partial<Record<CatalogFilterSection, HTMLElement>>>({})
-const activeSection = ref<CatalogFilterSection>('profissao')
-
-function setSectionRef(id: CatalogFilterSection) {
-  return (el: unknown) => {
-    sectionRefs[id] = (el as HTMLElement | null) ?? undefined
-  }
-}
-
-FILTER_SECTIONS.forEach((section) => {
-  useIntersectionObserver(
-    () => sectionRefs[section.id],
-    ([entry]) => {
-      if (entry?.isIntersecting) activeSection.value = section.id
-    },
-    { root: paneRef, rootMargin: '0px 0px -70% 0px' }
-  )
-})
-
-function scrollToSection(id: CatalogFilterSection) {
-  sectionRefs[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
-const filterSectionsWithCount = computed(() => FILTER_SECTIONS.map(section => ({
-  ...section,
-  count: {
-    profissao: profession.value ? 1 : 0,
-    disponibilidade: online.value ? 1 : 0,
-    preco: maxPrice.value != null ? 1 : 0,
-    avaliacao: minRating.value != null ? 1 : 0
-  }[section.id]
-})))
-
-const priceActive = computed(() => maxPrice.value != null && maxPrice.value < PRICE_MAX)
-const maxPriceLabel = computed(() => priceActive.value ? `até ${formatCurrency(maxPrice.value!)}` : 'Qualquer')
-
-function onMaxPriceUpdate(value: number | undefined) {
-  if (value != null) maxPrice.value = value
-}
-
-const { resume: requestGeolocation, isSupported: isGeolocationSupported } = useGeolocation({ immediate: false })
-
-function onGeoAllow() {
-  if (isGeolocationSupported.value) requestGeolocation()
-  sort.value = 'nearest'
-  emit('geoAllow')
-  emit('close')
-}
-
-function onSelectSort(value: ProfessionalSort | undefined) {
-  sort.value = value
-  emit('close')
-}
-
-const SORT_FEATURED_VALUE = 'featured'
-const sortItems = SORT_ITEMS.map(item => ({ label: item.label, value: item.value ?? SORT_FEATURED_VALUE }))
-const sortValue = computed({
-  get: () => sort.value ?? SORT_FEATURED_VALUE,
-  set: (value: string) => onSelectSort(value === SORT_FEATURED_VALUE ? undefined : value as ProfessionalSort)
-})
-
-const title = computed(() => {
-  if (mode === 'filter') return 'Filtros'
-  if (mode === 'sort') return 'Ordenar por'
-  return undefined
-})
 </script>
 
 <template>
@@ -113,181 +32,28 @@ const title = computed(() => {
   >
     <template #body>
       <div class="flex size-full flex-col">
-        <template v-if="mode === 'filter'">
-          <div class="flex items-center justify-between px-4.5 py-2.5">
-            <h3 class="font-display text-lg font-extrabold text-ink">
-              {{ title }}
-            </h3>
-            <UButton
-              aria-label="Fechar"
-              icon="i-lucide-x"
-              color="neutral"
-              variant="outline"
-              size="sm"
-              class="rounded-full"
-              @click="emit('close')"
-            />
-          </div>
+        <CatalogSheetFilterPanel
+          v-if="mode === 'filter'"
+          v-model:profession="profession"
+          v-model:online="online"
+          v-model:max-price="maxPrice"
+          v-model:min-rating="minRating"
+          :professions="professions"
+          @close="emit('close')"
+        />
 
-          <div class="flex min-h-0 flex-1 border-t border-line">
-            <CatalogFilterSections
-              :sections="filterSectionsWithCount"
-              :active="activeSection"
-              @select="scrollToSection"
-            />
+        <CatalogSheetSortPanel
+          v-else-if="mode === 'sort'"
+          v-model:sort="sort"
+          @close="emit('close')"
+        />
 
-            <div
-              ref="paneRef"
-              class="flex-1 overflow-y-auto p-4"
-            >
-              <div :ref="setSectionRef('profissao')">
-                <div class="mb-2.5 font-mono text-[10px] tracking-[0.14em] text-ink-faint">
-                  PROFISSÃO
-                </div>
-                <div class="flex flex-wrap gap-2">
-                  <UButton
-                    label="Todas"
-                    size="sm"
-                    :color="!profession ? 'primary' : 'neutral'"
-                    :variant="!profession ? 'solid' : 'outline'"
-                    class="rounded-full font-semibold"
-                    @click="selectProfession(undefined)"
-                  />
-                  <UButton
-                    v-for="p in professions"
-                    :key="p.slug"
-                    :label="p.label"
-                    size="sm"
-                    :color="profession === p.slug ? 'primary' : 'neutral'"
-                    :variant="profession === p.slug ? 'solid' : 'outline'"
-                    class="rounded-full font-semibold"
-                    @click="selectProfession(p.slug)"
-                  />
-                </div>
-              </div>
-
-              <div
-                :ref="setSectionRef('disponibilidade')"
-                class="mt-7"
-              >
-                <div class="mb-2.5 font-mono text-[10px] tracking-[0.14em] text-ink-faint">
-                  DISPONIBILIDADE
-                </div>
-                <UButton
-                  label="Somente online agora"
-                  color="neutral"
-                  variant="outline"
-                  class="rounded-full font-bold"
-                  :class="online ? 'border-transparent bg-online text-[#04140d] hover:bg-online' : 'border-online/35 text-online'"
-                  @click="toggleOnline"
-                >
-                  <template #leading>
-                    <span class="size-1.5 rounded-full bg-current" />
-                  </template>
-                </UButton>
-              </div>
-
-              <div
-                :ref="setSectionRef('preco')"
-                class="mt-7"
-              >
-                <div class="mb-2.5 flex items-center justify-between">
-                  <span class="font-mono text-[10px] tracking-[0.14em] text-ink-faint">PREÇO MÁXIMO</span>
-                  <span class="text-[13px] font-extrabold text-primary-400">{{ maxPriceLabel }}</span>
-                </div>
-                <USlider
-                  :min="PRICE_MIN"
-                  :max="PRICE_MAX"
-                  :step="PRICE_STEP"
-                  :model-value="maxPrice ?? PRICE_MAX"
-                  color="primary"
-                  aria-label="Preço máximo"
-                  @update:model-value="onMaxPriceUpdate"
-                />
-                <div class="mt-1.5 flex justify-between text-[11px] text-ink-faint">
-                  <span>{{ formatCurrency(PRICE_MIN) }}</span>
-                  <span>{{ formatCurrency(PRICE_MAX) }}+</span>
-                </div>
-              </div>
-
-              <div
-                :ref="setSectionRef('avaliacao')"
-                class="mt-7"
-              >
-                <div class="mb-2.5 font-mono text-[10px] tracking-[0.14em] text-ink-faint">
-                  AVALIAÇÃO MÍNIMA
-                </div>
-                <div class="flex flex-wrap gap-2">
-                  <UButton
-                    v-for="chip in RATING_CHIPS"
-                    :key="chip.label"
-                    :label="chip.label"
-                    size="sm"
-                    :color="minRating === chip.value ? 'primary' : 'neutral'"
-                    :variant="minRating === chip.value ? 'solid' : 'outline'"
-                    class="rounded-full font-semibold"
-                    @click="selectMinRating(chip.value)"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-
-        <template v-else-if="mode === 'sort'">
-          <div class="flex items-center justify-between px-4.5 py-2.5">
-            <h3 class="font-display text-lg font-extrabold text-ink">
-              {{ title }}
-            </h3>
-            <UButton
-              aria-label="Fechar"
-              icon="i-lucide-x"
-              color="neutral"
-              variant="outline"
-              size="sm"
-              class="rounded-full"
-              @click="emit('close')"
-            />
-          </div>
-
-          <div class="flex-1 overflow-y-auto border-t border-line p-4">
-            <URadioGroup
-              v-model="sortValue"
-              :items="sortItems"
-              variant="list"
-              indicator="end"
-              color="primary"
-            />
-          </div>
-        </template>
-
-        <template v-else-if="mode === 'geo'">
-          <div class="flex flex-1 flex-col items-center justify-center px-8 text-center">
-            <div class="flex size-[70px] items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-3xl text-primary-400">
-              <UIcon name="i-lucide-map-pin" />
-            </div>
-            <h3 class="mt-5 font-display text-xl font-extrabold text-ink">
-              Usar sua localização?
-            </h3>
-            <p class="mt-2 max-w-[30ch] text-[13.5px] text-ink-faint">
-              Permita o acesso à sua localização para mostrarmos os perfis mais próximos de você.
-            </p>
-            <UButton
-              class="mt-5 w-full max-w-[260px] justify-center"
-              color="primary"
-              size="lg"
-              label="Permitir localização"
-              @click="onGeoAllow"
-            />
-            <UButton
-              label="Agora não"
-              variant="link"
-              color="neutral"
-              class="mt-2.5 font-semibold"
-              @click="emit('close')"
-            />
-          </div>
-        </template>
+        <CatalogSheetGeoPrompt
+          v-else-if="mode === 'geo'"
+          v-model:sort="sort"
+          @geo-allow="emit('geoAllow')"
+          @close="emit('close')"
+        />
       </div>
     </template>
 
