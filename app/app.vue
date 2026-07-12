@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { visible: headerVisible } = useHeaderVisibility()
+const { visible: bottomNavVisible } = useBottomNavVisibility()
 const headerHeight = useHeaderHeight()
 
 const headerEl = ref<HTMLElement | null>(null)
@@ -33,7 +34,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UApp>
+  <UApp :scroll-body="false">
     <div
       ref="headerEl"
       class="fixed inset-x-0 top-0 z-40 transition-transform duration-300"
@@ -50,6 +51,6 @@ useSeoMeta({
     </UMain>
 
     <LayoutFooter />
-    <LayoutBottomNav />
+    <LayoutBottomNav v-if="bottomNavVisible" />
   </UApp>
 </template>
