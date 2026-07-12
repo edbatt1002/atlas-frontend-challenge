@@ -96,3 +96,47 @@ jobs:
             playwright-report
             test-results
           retention-days: 14
+
+  lighthouse:
+    name: Lighthouse
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download production build
+        uses: actions/download-artifact@v6
+        with:
+          name: production-build
+          path: .output
+
+      - name: Install Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Configure Chromium for Lighthouse
+        run: |
+          node --input-type=module -e "import { chromium } from 'playwright'; console.log('CHROME_PATH=' + chromium.executablePath())" >> "$GITHUB_ENV"
+
+      - name: Run Lighthouse CI
+        run: npm run test:lighthouse
+
+      - name: Upload Lighthouse reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci
+          include-hidden-files: true
+          retention-days: 14

@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@faker-js/faker": "^10.5.0",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@lhci/cli": "^0.15.1",
     "@nuxt/eslint": "^1.16.0",
     "@nuxt/test-utils": "^4.0.3",
     "@playwright/test": "^1.61.1",
