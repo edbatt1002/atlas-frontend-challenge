@@ -3,12 +3,10 @@ import type { ContactButtonProps } from './types'
 import { CONTACT_NETWORKS } from './config'
 import { buildContactLink } from './utils'
 
-const props = withDefaults(defineProps<ContactButtonProps>(), {
-  size: 'md'
-})
+const { network: networkProp, value, size = 'md', label } = defineProps<ContactButtonProps>()
 
-const network = computed(() => CONTACT_NETWORKS[props.network])
-const link = computed(() => buildContactLink(props.network, props.value))
+const network = computed(() => CONTACT_NETWORKS[networkProp])
+const link = computed(() => buildContactLink(networkProp, value))
 </script>
 
 <template>

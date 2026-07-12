@@ -3,9 +3,9 @@ import type { ProfessionalCardProps } from './types'
 import { CARD_MAX_PHOTOS } from './config'
 import { getCardPhotos, getSegmentState } from './utils'
 
-const props = defineProps<ProfessionalCardProps>()
+const { professional } = defineProps<ProfessionalCardProps>()
 
-const photos = computed(() => getCardPhotos(props.professional.gallery, CARD_MAX_PHOTOS))
+const photos = computed(() => getCardPhotos(professional.gallery, CARD_MAX_PHOTOS))
 const slideCount = computed(() => photos.value.length + 1)
 const activeIndex = ref(0)
 const isPhotoSlide = computed(() => activeIndex.value < photos.value.length)
@@ -15,7 +15,7 @@ watch(activeIndex, (index) => {
   loadedPhotoIndexes.value.add(index)
 })
 
-const profileTo = computed(() => professionalPath(props.professional.id, props.professional.name))
+const profileTo = computed(() => professionalPath(professional.id, professional.name))
 </script>
 
 <template>

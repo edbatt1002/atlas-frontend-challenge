@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CarouselEmits, CarouselProps } from './types'
+import type { CarouselProps } from './types'
 import { CAROUSEL_TRANSITION_SPEED_MS } from './config'
 import { getActiveIndexFromSlideChange, getNextCarouselIndex, getPrevCarouselIndex } from './utils'
 import type { SwiperSlideChangeDetail } from './utils'
@@ -8,29 +8,25 @@ type SwiperContainerElement = HTMLElement & {
   swiper?: { slideTo: (index: number, speed?: number) => void }
 }
 
-const props = withDefaults(defineProps<CarouselProps>(), {
-  modelValue: 0,
-  pagination: false,
-  navigation: false
-})
-const emit = defineEmits<CarouselEmits>()
+const modelValue = defineModel<number>({ default: 0 })
+const { slideCount, pagination = false, navigation = false } = defineProps<CarouselProps>()
 
 const containerRef = ref<SwiperContainerElement | null>(null)
 
 function onSlideChange(event: CustomEvent<SwiperSlideChangeDetail[]>) {
   const index = getActiveIndexFromSlideChange(event.detail)
-  if (index != null) emit('update:modelValue', index)
+  if (index != null) modelValue.value = index
 }
 
 function goPrev() {
-  emit('update:modelValue', getPrevCarouselIndex(props.modelValue))
+  modelValue.value = getPrevCarouselIndex(modelValue.value)
 }
 
 function goNext() {
-  emit('update:modelValue', getNextCarouselIndex(props.modelValue, props.slideCount))
+  modelValue.value = getNextCarouselIndex(modelValue.value, slideCount)
 }
 
-watch(() => props.modelValue, (index) => {
+watch(modelValue, (index) => {
   containerRef.value?.swiper?.slideTo(index, CAROUSEL_TRANSITION_SPEED_MS)
 })
 </script>

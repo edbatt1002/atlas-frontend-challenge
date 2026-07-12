@@ -4,19 +4,19 @@ import { TYPE_FILTERS } from './config'
 import type { MediaTypeFilter } from './config'
 import { clampIndex, filterMediaByType } from './utils'
 
-const props = defineProps<GalleryLightboxProps>()
+const { open, media, initialIndex } = defineProps<GalleryLightboxProps>()
 const emit = defineEmits<GalleryLightboxEmits>()
 
 const view = ref<'grid' | 'feed'>('grid')
 const typeFilter = ref<MediaTypeFilter>('all')
 const activeIndex = ref(0)
 
-const filteredMedia = computed(() => filterMediaByType(props.media, typeFilter.value))
+const filteredMedia = computed(() => filterMediaByType(media, typeFilter.value))
 
-watch(() => props.open, (isOpen) => {
+watch(() => open, (isOpen) => {
   if (!isOpen) return
   typeFilter.value = 'all'
-  activeIndex.value = clampIndex(props.initialIndex ?? 0, props.media.length)
+  activeIndex.value = clampIndex(initialIndex ?? 0, media.length)
   view.value = 'grid'
 })
 

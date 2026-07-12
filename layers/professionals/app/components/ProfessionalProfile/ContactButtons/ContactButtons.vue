@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import type { ContactButtonsProps } from './types'
 
-const props = withDefaults(defineProps<ContactButtonsProps>(), {
-  variant: 'compact'
-})
+const { contact, variant = 'compact' } = defineProps<ContactButtonsProps>()
 
 const primaryNetwork = computed(() => {
-  if (props.contact.whatsapp) return { network: 'whatsapp' as const, value: props.contact.whatsapp }
-  if (props.contact.telegram) return { network: 'telegram' as const, value: props.contact.telegram }
+  if (contact.whatsapp) return { network: 'whatsapp' as const, value: contact.whatsapp }
+  if (contact.telegram) return { network: 'telegram' as const, value: contact.telegram }
   return null
 })
 </script>

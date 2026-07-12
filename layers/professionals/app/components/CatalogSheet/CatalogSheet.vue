@@ -3,10 +3,28 @@ import type { CatalogSheetEmits, CatalogSheetProps } from './types'
 import { FILTER_SECTIONS, PRICE_MAX, PRICE_MIN, PRICE_STEP, RATING_CHIPS, SORT_ITEMS } from './config'
 import type { CatalogFilterSection, ProfessionalSort } from '../../types'
 
-const props = defineProps<CatalogSheetProps>()
+const { mode, professions } = defineProps<CatalogSheetProps>()
 const emit = defineEmits<CatalogSheetEmits>()
 
-const isOpen = computed(() => props.mode !== null)
+const profession = defineModel<string | undefined>('profession')
+const online = defineModel<boolean | undefined>('online')
+const maxPrice = defineModel<number | undefined>('maxPrice')
+const minRating = defineModel<number | undefined>('minRating')
+const sort = defineModel<ProfessionalSort | undefined>('sort')
+
+const isOpen = computed(() => mode !== null)
+
+function selectProfession(slug: string | undefined) {
+  profession.value = slug
+}
+
+function toggleOnline() {
+  online.value = !online.value
+}
+
+function selectMinRating(value: number | undefined) {
+  minRating.value = value
+}
 
 function onUpdateOpen(open: boolean) {
   if (!open) emit('close')
@@ -39,44 +57,44 @@ function scrollToSection(id: CatalogFilterSection) {
 const filterSectionsWithCount = computed(() => FILTER_SECTIONS.map(section => ({
   ...section,
   count: {
-    profissao: props.profession ? 1 : 0,
-    disponibilidade: props.online ? 1 : 0,
-    preco: props.maxPrice != null ? 1 : 0,
-    avaliacao: props.minRating != null ? 1 : 0
+    profissao: profession.value ? 1 : 0,
+    disponibilidade: online.value ? 1 : 0,
+    preco: maxPrice.value != null ? 1 : 0,
+    avaliacao: minRating.value != null ? 1 : 0
   }[section.id]
 })))
 
-const priceActive = computed(() => props.maxPrice != null && props.maxPrice < PRICE_MAX)
-const maxPriceLabel = computed(() => priceActive.value ? `até ${formatCurrency(props.maxPrice!)}` : 'Qualquer')
+const priceActive = computed(() => maxPrice.value != null && maxPrice.value < PRICE_MAX)
+const maxPriceLabel = computed(() => priceActive.value ? `até ${formatCurrency(maxPrice.value!)}` : 'Qualquer')
 
 function onMaxPriceUpdate(value: number | undefined) {
-  if (value != null) emit('update:maxPrice', value)
+  if (value != null) maxPrice.value = value
 }
 
 const { resume: requestGeolocation, isSupported: isGeolocationSupported } = useGeolocation({ immediate: false })
 
 function onGeoAllow() {
   if (isGeolocationSupported.value) requestGeolocation()
-  emit('update:sort', 'nearest')
+  sort.value = 'nearest'
   emit('geoAllow')
   emit('close')
 }
 
 function onSelectSort(value: ProfessionalSort | undefined) {
-  emit('update:sort', value)
+  sort.value = value
   emit('close')
 }
 
 const SORT_FEATURED_VALUE = 'featured'
 const sortItems = SORT_ITEMS.map(item => ({ label: item.label, value: item.value ?? SORT_FEATURED_VALUE }))
 const sortValue = computed({
-  get: () => props.sort ?? SORT_FEATURED_VALUE,
+  get: () => sort.value ?? SORT_FEATURED_VALUE,
   set: (value: string) => onSelectSort(value === SORT_FEATURED_VALUE ? undefined : value as ProfessionalSort)
 })
 
 const title = computed(() => {
-  if (props.mode === 'filter') return 'Filtros'
-  if (props.mode === 'sort') return 'Ordenar por'
+  if (mode === 'filter') return 'Filtros'
+  if (mode === 'sort') return 'Ordenar por'
   return undefined
 })
 </script>
@@ -133,7 +151,7 @@ const title = computed(() => {
                     :color="!profession ? 'primary' : 'neutral'"
                     :variant="!profession ? 'solid' : 'outline'"
                     class="rounded-full font-semibold"
-                    @click="emit('update:profession', undefined)"
+                    @click="selectProfession(undefined)"
                   />
                   <UButton
                     v-for="p in professions"
@@ -143,7 +161,7 @@ const title = computed(() => {
                     :color="profession === p.slug ? 'primary' : 'neutral'"
                     :variant="profession === p.slug ? 'solid' : 'outline'"
                     class="rounded-full font-semibold"
-                    @click="emit('update:profession', p.slug)"
+                    @click="selectProfession(p.slug)"
                   />
                 </div>
               </div>
@@ -161,7 +179,7 @@ const title = computed(() => {
                   variant="outline"
                   class="rounded-full font-bold"
                   :class="online ? 'border-transparent bg-online text-[#04140d] hover:bg-online' : 'border-online/35 text-online'"
-                  @click="emit('update:online', !online)"
+                  @click="toggleOnline"
                 >
                   <template #leading>
                     <span class="size-1.5 rounded-full bg-current" />
@@ -207,7 +225,7 @@ const title = computed(() => {
                     :color="minRating === chip.value ? 'primary' : 'neutral'"
                     :variant="minRating === chip.value ? 'solid' : 'outline'"
                     class="rounded-full font-semibold"
-                    @click="emit('update:minRating', chip.value)"
+                    @click="selectMinRating(chip.value)"
                   />
                 </div>
               </div>

@@ -49,20 +49,15 @@ function closeSheet() {
     </UContainer>
 
     <CatalogSheet
+      v-model:profession="filters.profession"
+      v-model:online="filters.online"
+      v-model:max-price="filters.maxPrice"
+      v-model:min-rating="filters.minRating"
+      v-model:sort="filters.sort"
       :mode="sheetMode"
       :professions="professions ?? []"
-      :profession="filters.profession"
-      :online="filters.online"
-      :max-price="filters.maxPrice"
-      :min-rating="filters.minRating"
-      :sort="filters.sort"
       @close="closeSheet"
       @clear="reset"
-      @update:profession="filters.profession = $event"
-      @update:online="filters.online = $event"
-      @update:max-price="filters.maxPrice = $event"
-      @update:min-rating="filters.minRating = $event"
-      @update:sort="filters.sort = $event"
     />
   </div>
 </template>
