@@ -7,13 +7,12 @@ describe('LayoutBottomNav', () => {
     expect(wrapper.classes()).toContain('lg:hidden')
   })
 
-  it('renders all four tabs', async () => {
+  it('renders the three available tabs', async () => {
     const wrapper = await mountSuspended(BottomNav)
     const text = wrapper.text()
     expect(text).toContain('Explorar')
     expect(text).toContain('Buscar')
     expect(text).toContain('Favoritos')
-    expect(text).toContain('Chat')
   })
 
   it('links each tab to its route', async () => {
@@ -22,8 +21,7 @@ describe('LayoutBottomNav', () => {
     expect(links.map(l => l.attributes('href'))).toEqual([
       '/',
       '/buscar',
-      '/favoritos',
-      '/chat'
+      '/favoritos'
     ])
   })
 
