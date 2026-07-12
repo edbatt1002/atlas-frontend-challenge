@@ -28,7 +28,7 @@ describe('CatalogFilterSections', () => {
   it('emits select with the clicked section id', async () => {
     const wrapper = await mountSuspended(CatalogFilterSections, { props: { sections, active: 'profissao' } })
 
-    await wrapper.findAll('button')[2]!.trigger('click')
+    await wrapper.findAll('button')[2]!.trigger('mousedown')
 
     expect(wrapper.emitted('select')).toEqual([['preco']])
   })

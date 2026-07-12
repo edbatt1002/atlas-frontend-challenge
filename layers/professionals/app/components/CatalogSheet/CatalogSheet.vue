@@ -49,8 +49,8 @@ const filterSectionsWithCount = computed(() => FILTER_SECTIONS.map(section => ({
 const priceActive = computed(() => props.maxPrice != null && props.maxPrice < PRICE_MAX)
 const maxPriceLabel = computed(() => priceActive.value ? `até ${formatCurrency(props.maxPrice!)}` : 'Qualquer')
 
-function onMaxPriceInput(event: Event) {
-  emit('update:maxPrice', Number((event.target as HTMLInputElement).value))
+function onMaxPriceUpdate(value: number | undefined) {
+  if (value != null) emit('update:maxPrice', value)
 }
 
 const { resume: requestGeolocation, isSupported: isGeolocationSupported } = useGeolocation({ immediate: false })
@@ -177,15 +177,14 @@ const title = computed(() => {
                   <span class="font-mono text-[10px] tracking-[0.14em] text-ink-faint">PREÇO MÁXIMO</span>
                   <span class="text-[13px] font-extrabold text-primary-400">{{ maxPriceLabel }}</span>
                 </div>
-                <input
-                  type="range"
+                <USlider
                   :min="PRICE_MIN"
                   :max="PRICE_MAX"
                   :step="PRICE_STEP"
-                  :value="maxPrice ?? PRICE_MAX"
-                  class="w-full accent-primary"
-                  @input="onMaxPriceInput"
-                >
+                  :model-value="maxPrice ?? PRICE_MAX"
+                  color="primary"
+                  @update:model-value="onMaxPriceUpdate"
+                />
                 <div class="mt-1.5 flex justify-between text-[11px] text-ink-faint">
                   <span>{{ formatCurrency(PRICE_MIN) }}</span>
                   <span>{{ formatCurrency(PRICE_MAX) }}+</span>

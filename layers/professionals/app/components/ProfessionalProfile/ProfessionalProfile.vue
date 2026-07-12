@@ -117,13 +117,15 @@ function openLightbox(index: number) {
                 Serviços
               </h2>
               <div class="mt-2 flex flex-wrap gap-2">
-                <span
+                <UBadge
                   v-for="service in professional.services"
                   :key="service.name"
-                  class="rounded-[12px] border border-line bg-bg-soft px-3.5 py-2 text-[13px] font-semibold text-ink"
-                >
-                  {{ service.name }} · {{ formatCurrency(service.price) }}
-                </span>
+                  :label="`${service.name} · ${formatCurrency(service.price)}`"
+                  color="neutral"
+                  variant="outline"
+                  size="lg"
+                  class="rounded-[12px] font-semibold"
+                />
               </div>
             </div>
 
