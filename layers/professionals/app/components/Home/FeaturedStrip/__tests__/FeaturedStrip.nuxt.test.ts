@@ -11,9 +11,10 @@ describe('HomeFeaturedStrip', () => {
     expect(wrapper.text()).toContain('Valentina')
   })
 
-  it('renders nothing when there are no featured professionals', async () => {
+  it('reserves the strip space while featured professionals are loading', async () => {
     const wrapper = await mountSuspended(FeaturedStrip, { props: { professionals: [] } })
 
-    expect(wrapper.text()).not.toContain('Em destaque hoje')
+    expect(wrapper.text()).toContain('Em destaque hoje')
+    expect(wrapper.findAllComponents({ name: 'ProfessionalCardSkeleton' })).toHaveLength(4)
   })
 })
