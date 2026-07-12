@@ -32,10 +32,6 @@ export default defineNuxtConfig({
     }
   },
 
-  routeRules: {
-    '/': { prerender: true }
-  },
-
   devServer: {
     port: Number(process.env.PORT) || 3000
   },
