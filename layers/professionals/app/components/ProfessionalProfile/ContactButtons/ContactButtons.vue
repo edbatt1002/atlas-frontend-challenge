@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import type { ContactButtonsProps } from './types'
-import { telegramLink, whatsappLink } from './utils'
 
 const props = withDefaults(defineProps<ContactButtonsProps>(), {
   variant: 'compact'
 })
 
-const primaryTo = computed(() => {
-  if (props.contact.whatsapp) return { label: 'Chamar no WhatsApp', to: whatsappLink(props.contact.whatsapp), icon: 'i-simple-icons-whatsapp' }
-  if (props.contact.telegram) return { label: 'Chamar no Telegram', to: telegramLink(props.contact.telegram), icon: 'i-simple-icons-telegram' }
+const primaryNetwork = computed(() => {
+  if (props.contact.whatsapp) return { network: 'whatsapp' as const, value: props.contact.whatsapp }
+  if (props.contact.telegram) return { network: 'telegram' as const, value: props.contact.telegram }
   return null
 })
 </script>
@@ -18,39 +17,23 @@ const primaryTo = computed(() => {
     v-if="variant === 'compact' && (contact.telegram || contact.whatsapp)"
     class="flex gap-2"
   >
-    <UButton
+    <ProfessionalProfileContactButtonsContactButton
       v-if="contact.telegram"
-      :to="telegramLink(contact.telegram)"
-      target="_blank"
-      icon="i-simple-icons-telegram"
-      label="Telegram"
-      color="neutral"
-      variant="outline"
-      class="flex-1 justify-center font-bold"
-      block
+      network="telegram"
+      :value="contact.telegram"
     />
-    <UButton
+    <ProfessionalProfileContactButtonsContactButton
       v-if="contact.whatsapp"
-      :to="whatsappLink(contact.whatsapp)"
-      target="_blank"
-      icon="i-simple-icons-whatsapp"
-      label="WhatsApp"
-      color="neutral"
-      variant="outline"
-      class="flex-1 justify-center font-bold"
-      block
+      network="whatsapp"
+      :value="contact.whatsapp"
     />
   </div>
 
-  <UButton
-    v-else-if="variant === 'primary' && primaryTo"
-    :to="primaryTo.to"
-    target="_blank"
-    :icon="primaryTo.icon"
-    :label="primaryTo.label"
-    color="primary"
+  <ProfessionalProfileContactButtonsContactButton
+    v-else-if="variant === 'primary' && primaryNetwork"
+    :network="primaryNetwork.network"
+    :value="primaryNetwork.value"
+    :label="`Chamar no ${primaryNetwork.network === 'whatsapp' ? 'WhatsApp' : 'Telegram'}`"
     size="xl"
-    block
-    class="justify-center font-extrabold"
   />
 </template>
