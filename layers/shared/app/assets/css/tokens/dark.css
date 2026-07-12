@@ -1,0 +1,25 @@
+.dark {
+  --color-bg: #12060d;
+  --color-bg-soft: #1c0b16;
+  --color-bg-card: #271122;
+  --color-bg-raised: #351a2e;
+
+  --color-primary: #ff2d6f;
+  --color-primary-600: #e0175a;
+  --color-primary-400: #ff5c8d;
+  --color-secondary: #c026d3;
+  --color-secondary-600: #a21caf;
+  --color-accent: #ff9d2d;
+  --color-online: #2ee6a6;
+  --color-danger: #ff4d4d;
+
+  --color-ink: #fbe9f2;
+  --color-ink-muted: #c79bb4;
+  --color-ink-faint: #99738a;
+  --color-line: rgba(255, 214, 235, 0.1);
+  --color-star: #ffd166;
+
+  --shadow-card: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
+
+  color-scheme: dark;
+}
