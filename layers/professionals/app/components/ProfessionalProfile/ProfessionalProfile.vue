@@ -32,6 +32,14 @@ SECTION_IDS.forEach((id) => {
 function scrollToSection(id: ProfileSectionId) {
   sectionRefs[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
+
+const lightboxOpen = ref(false)
+const lightboxIndex = ref(0)
+
+function openLightbox(index: number) {
+  lightboxIndex.value = index
+  lightboxOpen.value = true
+}
 </script>
 
 <template>
@@ -77,6 +85,7 @@ function scrollToSection(id: ProfileSectionId) {
               <ProfessionalProfileGallerySection
                 :media="professional.media"
                 :name="professional.name"
+                @open="openLightbox"
               />
             </div>
 
@@ -141,6 +150,14 @@ function scrollToSection(id: ProfileSectionId) {
     <ProfessionalProfileMobileStickyBar
       :price="professional.price"
       :contact="professional.contact"
+    />
+
+    <ProfessionalProfileGalleryLightbox
+      :open="lightboxOpen"
+      :media="professional.media"
+      :initial-index="lightboxIndex"
+      :name="professional.name"
+      @close="lightboxOpen = false"
     />
   </div>
 </template>
