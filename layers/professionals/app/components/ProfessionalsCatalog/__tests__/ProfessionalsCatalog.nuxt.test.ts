@@ -1,3 +1,4 @@
+import { flushPromises } from '@vue/test-utils'
 import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
 import ProfessionalsCatalog from '../ProfessionalsCatalog.vue'
 import { buildProfessional } from '../../../../mock/fixtures'
@@ -21,6 +22,11 @@ mockNuxtImport('useProfessionals', () => () => ({
   fetchNextPage: mockState.fetchNextPage,
   refetch: vi.fn()
 }))
+
+mockNuxtImport('useIntersectionObserver', () => (_target: unknown, callback: (entries: { isIntersecting: boolean }[]) => void) => {
+  callback([{ isIntersecting: true }])
+  return { stop: vi.fn() }
+})
 
 describe('ProfessionalsCatalog', () => {
   it('shows skeletons on the first load', async () => {
@@ -63,5 +69,25 @@ describe('ProfessionalsCatalog', () => {
     const wrapper = await mountSuspended(ProfessionalsCatalog, { props: { query: {} } })
 
     expect(wrapper.text()).toContain('Você chegou ao fim da lista')
+  })
+
+  it('fetches the next page when the sentinel intersects and there is a next page', async () => {
+    const fetchNextPage = vi.fn().mockResolvedValue(undefined)
+    mockState = { items: [professional], isPending: false, error: null, hasNextPage: true, fetchNextPage }
+
+    await mountSuspended(ProfessionalsCatalog, { props: { query: {} } })
+    await flushPromises()
+
+    expect(fetchNextPage).toHaveBeenCalled()
+  })
+
+  it('does not fetch when there is no next page', async () => {
+    const fetchNextPage = vi.fn().mockResolvedValue(undefined)
+    mockState = { items: [professional], isPending: false, error: null, hasNextPage: false, fetchNextPage }
+
+    await mountSuspended(ProfessionalsCatalog, { props: { query: {} } })
+    await flushPromises()
+
+    expect(fetchNextPage).not.toHaveBeenCalled()
   })
 })
