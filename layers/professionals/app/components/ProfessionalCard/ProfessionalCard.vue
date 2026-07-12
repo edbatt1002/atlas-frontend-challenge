@@ -119,9 +119,10 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
         <span class="pointer-events-none absolute bottom-2 right-2 z-20 rounded-full bg-primary px-2.5 py-1 text-xs font-extrabold text-white">
           {{ formatCurrency(professional.price) }}
         </span>
-        <span class="pointer-events-none absolute bottom-2 left-2 z-20 inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5 text-xs font-bold text-[#ffd166]">
-          ★ <span class="text-white">{{ professional.rating.toFixed(1) }}</span>
-        </span>
+        <UiRatingStar
+          :value="professional.rating"
+          class="pointer-events-none absolute bottom-2 left-2 z-20 rounded-full bg-black/70 px-2 py-0.5 text-xs font-bold text-white"
+        />
       </template>
     </div>
 
@@ -133,10 +134,10 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
         <h3 class="truncate font-display text-sm font-bold text-ink">
           {{ professional.name }}
         </h3>
-        <span
+        <UiVerifiedBadge
           v-if="professional.verified"
-          class="flex size-3.5 shrink-0 items-center justify-center rounded-full bg-primary text-[8px] text-white"
-        >✓</span>
+          size="sm"
+        />
       </div>
       <p class="mt-0.5 truncate text-xs font-semibold text-primary-400">
         {{ professional.profession }}

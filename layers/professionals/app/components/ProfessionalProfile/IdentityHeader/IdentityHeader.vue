@@ -25,15 +25,20 @@ defineProps<IdentityHeaderProps>()
       <h1 class="font-display text-2xl font-extrabold text-ink sm:text-3xl">
         {{ name }}
       </h1>
-      <span
+      <UiVerifiedBadge
         v-if="verified"
-        class="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] text-white"
-      >✓</span>
+        size="md"
+      />
     </div>
 
     <div class="mt-1 flex flex-wrap items-center gap-2.5 text-sm font-semibold text-ink-muted">
       <span>{{ profession }}</span>
-      <span class="text-[#ffd166]">★ {{ rating.toFixed(1) }} · {{ reviewsCount }} avaliações</span>
+      <UiRatingStar
+        :value="rating"
+        class="text-star"
+      >
+        · {{ reviewsCount }} avaliações
+      </UiRatingStar>
       <span>{{ location.city }} · {{ location.state }} · {{ formatDistance(location.distanceKm) }}</span>
     </div>
   </div>

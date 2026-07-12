@@ -19,7 +19,10 @@ defineProps<ReviewsListProps>()
     >
       <div class="flex items-center justify-between gap-2">
         <span class="text-[13px] font-bold text-ink">{{ review.author }}</span>
-        <span class="text-xs font-bold text-[#ffd166]">★ {{ review.rating.toFixed(1) }}</span>
+        <UiRatingStar
+          :value="review.rating"
+          class="text-xs font-bold text-star"
+        />
       </div>
       <p class="mt-1.5 text-[12.5px] leading-relaxed text-ink-faint">
         {{ review.comment }}
