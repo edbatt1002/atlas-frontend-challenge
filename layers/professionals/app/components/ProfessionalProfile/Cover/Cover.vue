@@ -6,13 +6,17 @@ defineProps<CoverProps>()
 
 <template>
   <div class="relative aspect-[3/1] w-full overflow-hidden bg-bg-raised">
-    <img
+    <NuxtImg
       :src="coverUrl"
       :alt="`Capa de ${name}`"
       loading="eager"
       fetchpriority="high"
+      sizes="100vw"
+      width="1200"
+      height="400"
+      format="webp"
       class="size-full object-cover"
-    >
+    />
     <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/10 to-transparent" />
 
     <UButton

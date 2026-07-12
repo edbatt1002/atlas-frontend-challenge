@@ -34,12 +34,16 @@ const gallery = computed(() => getGalleryDisplay(props.media, GALLERY_GRID_LIMIT
         class="relative aspect-[3/4] overflow-hidden rounded-[12px] bg-bg-raised"
         @click="emit('open', index)"
       >
-        <img
+        <NuxtImg
           :src="item.url"
           :alt="`${name} - galeria ${index + 1}`"
           loading="lazy"
+          sizes="33vw"
+          width="400"
+          height="533"
+          format="webp"
           class="size-full object-cover"
-        >
+        />
         <span
           v-if="item.type === 'video'"
           class="absolute inset-0 flex items-center justify-center bg-black/25 text-2xl text-white"

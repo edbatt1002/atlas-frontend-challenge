@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { AvatarProps } from './types'
-import { AVATAR_SIZES } from './config'
+import { AVATAR_PIXEL_SIZES, AVATAR_SIZES } from './config'
 import { getInitials } from './utils'
 
 const { src, alt, size = 'md', online = false } = defineProps<AvatarProps>()
 
 const sizeClasses = computed(() => AVATAR_SIZES[size])
+const pixelSize = computed(() => AVATAR_PIXEL_SIZES[size])
 const initials = computed(() => getInitials(alt))
 </script>
 
@@ -15,12 +16,14 @@ const initials = computed(() => getInitials(alt))
       :class="sizeClasses.container"
       class="relative overflow-hidden rounded-full border-bg bg-bg-raised"
     >
-      <img
+      <NuxtImg
         v-if="src"
         :src="src"
         :alt="alt"
+        :width="pixelSize"
+        :height="pixelSize"
         class="size-full object-cover"
-      >
+      />
       <span
         v-else
         :class="sizeClasses.text"
@@ -32,6 +35,7 @@ const initials = computed(() => getInitials(alt))
       v-if="online"
       :class="sizeClasses.dot"
       class="absolute rounded-full border-bg bg-online"
+      role="status"
       aria-label="Online agora"
     />
   </div>

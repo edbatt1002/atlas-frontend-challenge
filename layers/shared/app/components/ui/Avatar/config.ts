@@ -28,3 +28,10 @@ export const AVATAR_SIZES: Record<AvatarSize, AvatarSizeClasses> = {
     dot: 'size-[17px] border-[3px] right-[5px] bottom-[5px] lg:size-[22px] lg:border-4 lg:right-[9px] lg:bottom-[9px]'
   }
 }
+
+export const AVATAR_PIXEL_SIZES: Record<AvatarSize, number> = {
+  sm: 64,
+  md: 80,
+  lg: 100,
+  hero: 150
+}
