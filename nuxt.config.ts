@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: ['./layers/shared', './layers/professionals'],
+  extends: [
+    './layers/shared',
+    './layers/institutional',
+    './layers/support',
+    './layers/favorites',
+    './layers/professionals'
+  ],
 
   modules: [
     '@nuxt/eslint',
