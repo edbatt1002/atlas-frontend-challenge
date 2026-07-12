@@ -6,7 +6,7 @@ const headerHeight = useHeaderHeight()
 const headerEl = ref<HTMLElement | null>(null)
 const { height } = useElementSize(headerEl)
 watch(height, (h) => {
-  headerHeight.value = h
+  if (h > 0) headerHeight.value = h
 })
 
 const colorMode = useColorMode()
