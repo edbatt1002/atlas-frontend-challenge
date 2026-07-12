@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: 'TermsPage' })
+
 usePageSeo({
   title: 'Termos de uso',
   description: 'Conheça as condições de uso do catálogo onluxe.'

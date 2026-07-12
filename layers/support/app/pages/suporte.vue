@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: 'SupportPage' })
+
 usePageSeo({
   title: 'Suporte',
   description: 'Encontre orientações para navegar e entrar em contato com profissionais na onluxe.'

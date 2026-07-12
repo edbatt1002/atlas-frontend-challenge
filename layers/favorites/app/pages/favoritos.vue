@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: 'FavoritesPage' })
+
 usePageSeo({
   title: 'Favoritos',
   description: 'Acesse os profissionais que você marcou como favoritos.'

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: 'PrivacyPage' })
+
 usePageSeo({
   title: 'Privacidade',
   description: 'Entenda como a onluxe trata privacidade e dados durante a navegação.'
