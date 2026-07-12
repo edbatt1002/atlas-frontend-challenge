@@ -1,5 +1,5 @@
-import type { Professional } from '../../../types'
+import type { ProfessionalCardData } from '../../../components/ProfessionalCard/types'
 
 export interface FeaturedStripProps {
-  professionals: Professional[]
+  professionals: ProfessionalCardData[]
 }

@@ -1,24 +1,9 @@
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import ProfessionalProfile from '../ProfessionalProfile.vue'
-import type { Professional } from '../../../types'
+import { buildProfessional } from '../../../../mock/fixtures'
 
-const professional: Professional = {
-  id: 'p-1',
-  name: 'Valentina',
-  profession: 'Modelo',
-  professionSlug: 'modelo',
-  cover: 'https://example.test/valentina-cover.jpg',
-  avatar: 'https://example.test/valentina-avatar.jpg',
-  price: 350,
-  rating: 4.9,
-  reviewsCount: 214,
-  online: true,
-  verified: true,
-  photos: 24,
-  videos: 3,
-  createdAt: '2026-01-01T00:00:00.000Z',
+const professional = buildProfessional({
   description: 'Atendimento premium e discreto no centro de São Paulo.',
-  location: { city: 'São Paulo', state: 'SP', distanceKm: 2.3 },
   gallery: [],
   media: [
     { url: 'https://example.test/1.jpg', type: 'photo' },
@@ -44,16 +29,14 @@ const professional: Professional = {
     { label: 'Pernoite', price: 1200 }
   ],
   contact: { telegram: 'valentina_tg', whatsapp: '5511999998888' },
-  stats: { lastActivity: 'Agora', responseTime: '~5 min', memberSince: '2024' },
   services: [
     { name: 'Massagem', price: 200 },
     { name: '1 hora', price: 350 }
   ],
-  availability: [],
   reviews: [
     { author: 'Anônimo', rating: 5, comment: 'Atendimento impecável.', date: '2026-01-10T00:00:00.000Z' }
   ]
-}
+})
 
 describe('ProfessionalProfile', () => {
   it('renders name, verified badge, profession, rating and location', async () => {

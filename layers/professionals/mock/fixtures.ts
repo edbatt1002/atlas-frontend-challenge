@@ -1,0 +1,47 @@
+import type { Professional } from '../app/types'
+
+export function buildProfessional(overrides: Partial<Professional> = {}): Professional {
+  return {
+    id: 'p-1',
+    name: 'Valentina',
+    profession: 'Modelo',
+    professionSlug: 'modelo',
+    cover: 'https://example.test/valentina-cover.jpg',
+    avatar: 'https://example.test/valentina-avatar.jpg',
+    price: 350,
+    rating: 4.9,
+    reviewsCount: 214,
+    online: true,
+    verified: true,
+    photos: 24,
+    videos: 3,
+    createdAt: '2026-01-01T00:00:00.000Z',
+    description: 'Perfil de teste com uma descrição curta',
+    location: { city: 'São Paulo', state: 'SP', distanceKm: 2.3 },
+    gallery: [
+      'https://example.test/1.jpg',
+      'https://example.test/2.jpg',
+      'https://example.test/3.jpg',
+      'https://example.test/4.jpg',
+      'https://example.test/5.jpg'
+    ],
+    media: [],
+    characteristics: {
+      age: 24,
+      heightCm: 168,
+      hairColor: 'Loiro',
+      eyeColor: 'Castanhos',
+      attends: 'Homens',
+      hasLocal: true,
+      languages: ['PT'],
+      hours: '10h–22h'
+    },
+    priceTiers: [],
+    contact: {},
+    stats: { lastActivity: 'Agora', responseTime: '~5 min', memberSince: '2024' },
+    services: [],
+    availability: [],
+    reviews: [],
+    ...overrides
+  }
+}
