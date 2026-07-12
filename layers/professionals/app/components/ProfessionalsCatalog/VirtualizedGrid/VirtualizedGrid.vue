@@ -31,8 +31,11 @@ function measureRef(el: Element | { $el?: Element } | null) {
       :key="String(virtualRow.key)"
       :ref="measureRef"
       :data-index="virtualRow.index"
-      class="absolute inset-x-0 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-      :style="{ transform: `translateY(${virtualRow.start}px)` }"
+      class="absolute inset-x-0 grid gap-4 pb-4"
+      :style="{
+        transform: `translateY(${virtualRow.start}px)`,
+        gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`
+      }"
     >
       <ProfessionalCard
         v-for="(pro, colIndex) in rows[virtualRow.index]"

@@ -1,5 +1,5 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime'
-import { useProfessionalSeo } from '../useProfessionalSeo'
+import { buildProfessionalSeoTitle, useProfessionalSeo } from '../useProfessionalSeo'
 import { buildProfessional } from '../../../../mock/fixtures'
 
 const { seoMeta } = vi.hoisted(() => ({ seoMeta: vi.fn() }))
@@ -9,6 +9,18 @@ mockNuxtImport('useSeoMeta', () => seoMeta)
 function lastArg() {
   return seoMeta.mock.calls.at(-1)![0]
 }
+
+describe('buildProfessionalSeoTitle', () => {
+  it('combines name, profession and city into a title', () => {
+    const professional = buildProfessional({
+      name: 'Valentina',
+      profession: 'Modelo',
+      location: { city: 'São Paulo', state: 'SP', distanceKm: 2.3 }
+    })
+
+    expect(buildProfessionalSeoTitle(professional)).toBe('Valentina · Modelo em São Paulo')
+  })
+})
 
 describe('useProfessionalSeo', () => {
   beforeEach(() => seoMeta.mockClear())
