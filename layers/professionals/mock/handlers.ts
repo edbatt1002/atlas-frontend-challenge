@@ -8,7 +8,7 @@ import type {
   ProfessionalSort
 } from '../app/types'
 
-type ProfessionalFilterKey = 'search' | 'profession' | 'online' | 'min_price' | 'max_price' | 'min_rating'
+type ProfessionalFilterKey = 'search' | 'profession' | 'state' | 'online' | 'min_price' | 'max_price' | 'min_rating'
 type ProfessionalFilters = Partial<Record<ProfessionalFilterKey, string>>
 
 const sortComparators: Record<ProfessionalSort, (a: Professional, b: Professional) => number> = {
@@ -23,6 +23,7 @@ const filterPredicates: Record<ProfessionalFilterKey, (value: string, p: Profess
   search: (value, p) =>
     p.name.toLowerCase().includes(value) || p.profession.toLowerCase().includes(value),
   profession: (value, p) => p.professionSlug === value,
+  state: (value, p) => p.location.state === value,
   online: (value, p) => p.online === (value === 'true'),
   min_price: (value, p) => p.price >= Number(value),
   max_price: (value, p) => p.price <= Number(value),
@@ -57,6 +58,7 @@ function parseFilters(params: URLSearchParams): ProfessionalFilters {
   return {
     search: params.get('search')?.trim().toLowerCase() || undefined,
     profession: params.get('profession') || undefined,
+    state: params.get('state') || undefined,
     online: params.get('online') || undefined,
     min_price: params.get('min_price') || undefined,
     max_price: params.get('max_price') || undefined,
