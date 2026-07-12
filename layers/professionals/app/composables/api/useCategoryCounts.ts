@@ -1,4 +1,4 @@
-import { listProfessionals } from '../services/professionals'
+import { listProfessionals } from '../../services/professionals'
 
 export function useCategoryCounts(slugs: string[]) {
   return Object.fromEntries(slugs.map((slug) => {

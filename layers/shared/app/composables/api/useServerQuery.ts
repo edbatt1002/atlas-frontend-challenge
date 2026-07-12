@@ -1,5 +1,5 @@
-import { tanstackAdapter } from '../data/adapters/tanstack'
-import type { ServerQueryKey, ServerQueryOptions, ServerQueryResult } from '../data/types'
+import { tanstackAdapter } from '../../data/adapters/tanstack'
+import type { ServerQueryKey, ServerQueryOptions, ServerQueryResult } from '../../data/types'
 
 export function useServerQuery<T>(
   key: ServerQueryKey,

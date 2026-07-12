@@ -1,5 +1,5 @@
-import { listProfessionals } from '../services/professionals'
-import type { Professional } from '../types'
+import { listProfessionals } from '../../services/professionals'
+import type { Professional } from '../../types'
 
 export function useFeaturedProfessionals(limit: number) {
   return useServerQuery<Professional[]>(

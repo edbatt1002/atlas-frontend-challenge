@@ -1,5 +1,5 @@
 import { getNextProfessionalsPage } from '../useProfessionals'
-import type { ProfessionalListResponse } from '../../types'
+import type { ProfessionalListResponse } from '../../../types'
 
 function response(page: number, totalPages: number): ProfessionalListResponse {
   return { data: [], meta: { page, limit: 24, total: totalPages * 24, totalPages } }

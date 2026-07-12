@@ -1,4 +1,4 @@
-import type { Professional } from '../types'
+import type { Professional } from '../../types'
 
 export function buildProfessionalSeoTitle(professional: Professional): string {
   return `${professional.name} · ${professional.profession} em ${professional.location.city}`

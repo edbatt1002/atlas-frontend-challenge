@@ -1,5 +1,5 @@
 import { buildProfessionalSeoTitle } from '../useProfessionalSeo'
-import { buildProfessional } from '../../../mock/fixtures'
+import { buildProfessional } from '../../../../mock/fixtures'
 
 describe('buildProfessionalSeoTitle', () => {
   it('combines name, profession and city into a title', () => {

@@ -1,5 +1,5 @@
-import { listProfessionals } from '../services/professionals'
-import type { Professional, ProfessionalListParams, ProfessionalListResponse } from '../types'
+import { listProfessionals } from '../../services/professionals'
+import type { Professional, ProfessionalListParams, ProfessionalListResponse } from '../../types'
 
 export function getNextProfessionalsPage(last: ProfessionalListResponse): number | undefined {
   return last.meta.page < last.meta.totalPages ? last.meta.page + 1 : undefined

@@ -1,6 +1,6 @@
-import { HOME_CATEGORY_SLUGS } from '../components/Home/Categories/config'
-import type { CategoryItem } from '../components/Home/Categories/types'
-import type { Profession } from '../types'
+import { HOME_CATEGORY_SLUGS } from '../../components/Home/Categories/config'
+import type { CategoryItem } from '../../components/Home/Categories/types'
+import type { Profession } from '../../types'
 
 export function buildCategoryItems(
   professions: Profession[],

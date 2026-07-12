@@ -1,5 +1,5 @@
 import { buildCategoryItems } from '../useHomeCategories'
-import type { Profession } from '../../types'
+import type { Profession } from '../../../types'
 
 const professions: Profession[] = [
   { label: 'Acompanhante', slug: 'acompanhante', icon: 'i-lucide-heart' },

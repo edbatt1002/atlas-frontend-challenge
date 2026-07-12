@@ -5,6 +5,10 @@ export default defineNuxtConfig({
     name: 'shared'
   },
 
+  imports: {
+    dirs: [fileURLToPath(new URL('./app/composables/**', import.meta.url))]
+  },
+
   css: [fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))],
 
   vue: {

@@ -1,4 +1,4 @@
-import type { ProfessionalListParams, ProfessionalSort } from '../types'
+import type { ProfessionalListParams, ProfessionalSort } from '../../types'
 
 export interface ProfessionalFilterState {
   search: string
