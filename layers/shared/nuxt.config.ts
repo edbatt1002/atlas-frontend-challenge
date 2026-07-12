@@ -9,13 +9,10 @@ export default defineNuxtConfig({
     dirs: [fileURLToPath(new URL('./app/composables/**', import.meta.url))]
   },
 
-  css: [fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))],
-
-  vue: {
-    compilerOptions: {
-      isCustomElement: tag => tag.startsWith('swiper-')
-    }
-  },
+  css: [
+    'swiper/css',
+    fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))
+  ],
 
   fonts: {
     families: [
