@@ -8,6 +8,11 @@ const toolbarHeight = useCatalogToolbarHeight()
 const { filters, query, activeFilterCount, reset } = useProfessionalFilters()
 const { data: professions } = useProfessions()
 
+usePageSeo({
+  title: 'Buscar profissionais',
+  description: 'Filtre por profissão, preço, avaliação e distância para encontrar quem combina com você.'
+})
+
 const sheetMode = ref<CatalogSheetMode | null>(null)
 
 function openSheet(mode: CatalogSheetMode) {

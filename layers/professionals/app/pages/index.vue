@@ -7,8 +7,8 @@ const totalLabel = computed(() => total.value ? `+${total.value} profissionais v
 const { categories } = useHomeCategories()
 const { data: featured } = useFeaturedProfessionals(FEATURED_LIMIT)
 
-useSeoMeta({
-  title: 'onluxe · Encontre quem combina com você',
+usePageSeo({
+  title: 'Encontre quem combina com você',
   description: 'Perfis reais, avaliações e disponibilidade em tempo real na sua cidade.'
 })
 </script>

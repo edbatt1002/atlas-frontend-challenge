@@ -15,6 +15,8 @@ const id = computed(() => String(route.params.id))
 const { data: professional, isPending, error } = useProfessional(id)
 
 const isNotFound = computed(() => (error.value as FetchError | null)?.statusCode === 404)
+
+useProfessionalSeo(professional, isNotFound)
 </script>
 
 <template>
