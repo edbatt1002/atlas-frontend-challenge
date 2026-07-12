@@ -11,7 +11,8 @@ watch(height, (h) => {
 
 useHead({
   meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { name: 'theme-color', content: '#12060d' }
   ],
   link: [
     { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
