@@ -5,7 +5,12 @@ export default defineNuxtPlugin((nuxt) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 5000
+        staleTime: 5000,
+        retry: (failureCount, error) => {
+          const statusCode = (error as { statusCode?: number }).statusCode
+          if (statusCode && statusCode >= 400 && statusCode < 500) return false
+          return failureCount < 2
+        }
       }
     }
   })

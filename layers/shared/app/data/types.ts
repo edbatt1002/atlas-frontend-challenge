@@ -18,6 +18,7 @@ export type ServerQueryKey = MaybeRefOrGetter<readonly unknown[]>
 
 export interface ServerQueryOptions {
   staleTime?: number
+  throwOnServerError?: boolean
 }
 
 export interface ServerInfiniteOptions<TPage, TItem, TParam> extends ServerQueryOptions {

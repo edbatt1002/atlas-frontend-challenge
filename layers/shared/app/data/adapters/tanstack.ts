@@ -20,7 +20,12 @@ export const tanstackAdapter: DataAdapter = {
       staleTime: options?.staleTime
     })
 
-    if (import.meta.server) onServerPrefetch(() => result.suspense())
+    if (import.meta.server) {
+      onServerPrefetch(async () => {
+        await result.suspense()
+        if (options?.throwOnServerError && result.error.value) throw result.error.value
+      })
+    }
 
     return {
       data: result.data,
