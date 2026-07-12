@@ -6,12 +6,11 @@ defineProps<IdentityHeaderProps>()
 
 <template>
   <div class="-mt-10 px-4 sm:px-6">
-    <UAvatar
+    <UiAvatar
       :src="avatarUrl"
       :alt="name"
-      size="3xl"
-      :chip="online ? { inset: true, ui: { base: 'bg-online' } } : false"
-      class="border-4 border-bg"
+      size="hero"
+      :online="online"
     />
 
     <ProfessionalOnlineBadge
