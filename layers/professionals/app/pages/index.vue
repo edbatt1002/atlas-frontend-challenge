@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { FEATURED_LIMIT } from '../components/Home/FeaturedStrip/config'
+import { HOME_CATEGORY_SLUGS } from '../components/Home/Categories/config'
 
-const { data: total } = useProfessionalTotal()
-const totalLabel = computed(() => total.value ? `+${total.value} profissionais verificados` : null)
-
-const { categories } = useHomeCategories()
+const { data: summary } = useCatalogSummary()
+const totalLabel = computed(() => summary.value?.total ? `+${summary.value.total} profissionais verificados` : null)
+const categories = computed(() => buildCategoryItems(
+  summary.value?.professions ?? [],
+  summary.value?.counts ?? {},
+  HOME_CATEGORY_SLUGS
+))
 const { data: featured } = useFeaturedProfessionals(FEATURED_LIMIT)
 
 usePageSeo({
