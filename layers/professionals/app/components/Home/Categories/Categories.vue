@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { HOME_CATEGORY_SLUGS } from './config'
-import { pickCategories } from './utils'
+import type { CategoriesProps } from './types'
 
-const { data: professions } = useProfessions()
-const categories = computed(() => pickCategories(professions.value ?? [], HOME_CATEGORY_SLUGS))
-const counts = useCategoryCounts(HOME_CATEGORY_SLUGS)
+defineProps<CategoriesProps>()
 </script>
 
 <template>
@@ -19,7 +16,7 @@ const counts = useCategoryCounts(HOME_CATEGORY_SLUGS)
           v-for="category in categories"
           :key="category.slug"
           :to="`/buscar?profession=${category.slug}`"
-          class="flex flex-col gap-2 rounded-[14px] border border-line bg-bg-card p-4"
+          class="w-full flex flex-col gap-2 rounded-[14px] border border-line bg-bg-card p-4"
         >
           <UIcon
             :name="category.icon"
@@ -30,7 +27,7 @@ const counts = useCategoryCounts(HOME_CATEGORY_SLUGS)
               {{ category.label }}
             </div>
             <div class="text-xs text-ink-faint">
-              {{ counts[category.slug]?.value ?? '—' }} perfis
+              {{ category.count ?? '—' }} perfis
             </div>
           </div>
         </NuxtLink>

@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { FEATURED_LIMIT } from '../components/Home/FeaturedStrip/config'
+
+const { data: total } = useProfessionalTotal()
+const totalLabel = computed(() => total.value ? `+${total.value} profissionais verificados` : null)
+
+const { categories } = useHomeCategories()
+const { data: featured } = useFeaturedProfessionals(FEATURED_LIMIT)
+
 useSeoMeta({
   title: 'onluxe · Encontre quem combina com você',
   description: 'Perfis reais, avaliações e disponibilidade em tempo real na sua cidade.'
@@ -6,23 +14,12 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer class="flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
-    <div class="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-primary-400">
-      onluxe
-    </div>
-    <h1 class="mt-3 max-w-2xl font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-      Encontre quem combina com você
-    </h1>
-    <p class="mt-3 max-w-xl text-sm text-ink-muted">
-      Perfis reais, avaliações e disponibilidade em tempo real na sua cidade.
-    </p>
-    <UButton
-      to="/buscar"
-      color="primary"
-      size="lg"
-      label="Explorar profissionais"
-      trailing-icon="i-lucide-arrow-right"
-      class="mt-6 font-extrabold"
-    />
-  </UContainer>
+  <div>
+    <HomeHero :total-label="totalLabel" />
+    <HomeRegionSearch />
+    <HomeCategories :categories="categories" />
+    <HomeFeaturedStrip :professionals="featured ?? []" />
+    <HomeHowItWorks />
+    <HomeBottomCta />
+  </div>
 </template>

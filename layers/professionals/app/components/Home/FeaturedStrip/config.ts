@@ -1,1 +1,1 @@
-export const FEATURED_LIMIT = 6
+export const FEATURED_LIMIT = 4

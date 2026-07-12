@@ -1,4 +1,4 @@
-import { mockNuxtImport, mountSuspended } from '@nuxt/test-utils/runtime'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
 import FeaturedStrip from '../FeaturedStrip.vue'
 import type { Professional } from '../../../../types'
 
@@ -24,28 +24,15 @@ const professional: Professional = {
   reviews: []
 }
 
-let mockData: Professional[]
-
-mockNuxtImport('useFeaturedProfessionals', () => () => ({
-  data: ref(mockData),
-  isPending: ref(false),
-  error: ref(null),
-  refetch: vi.fn()
-}))
-
 describe('HomeFeaturedStrip', () => {
   it('renders a card per featured professional', async () => {
-    mockData = [professional]
-
-    const wrapper = await mountSuspended(FeaturedStrip)
+    const wrapper = await mountSuspended(FeaturedStrip, { props: { professionals: [professional] } })
 
     expect(wrapper.text()).toContain('Valentina')
   })
 
   it('renders nothing when there are no featured professionals', async () => {
-    mockData = []
-
-    const wrapper = await mountSuspended(FeaturedStrip)
+    const wrapper = await mountSuspended(FeaturedStrip, { props: { professionals: [] } })
 
     expect(wrapper.text()).not.toContain('Em destaque hoje')
   })
