@@ -1,3 +1,4 @@
+import { DOMWrapper } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import GallerySection from '../GallerySection.vue'
 import type { ProfessionalMedia } from '../../../../types'
@@ -33,5 +34,23 @@ describe('ProfessionalProfileGallerySection', () => {
 
     expect(wrapper.findAll('img')).toHaveLength(5)
     expect(wrapper.text()).toContain('+2')
+  })
+
+  it('emits open with the tile index when a thumbnail is clicked', async () => {
+    const wrapper = await mountSuspended(GallerySection, { props: { media: media(3), name: 'Valentina' } })
+
+    const secondTile = wrapper.findAll('img[alt*="galeria 2"]')[0]!.element.closest('button')!
+    await new DOMWrapper(secondTile).trigger('click')
+
+    expect(wrapper.emitted('open')).toEqual([[1]])
+  })
+
+  it('emits open at index 0 when "Ver toda a galeria" is clicked', async () => {
+    const wrapper = await mountSuspended(GallerySection, { props: { media: media(3), name: 'Valentina' } })
+
+    const seeAllButton = wrapper.findAll('button').find(b => b.text().includes('Ver toda a galeria'))
+    await seeAllButton!.trigger('click')
+
+    expect(wrapper.emitted('open')).toEqual([[0]])
   })
 })
