@@ -127,7 +127,7 @@ useIntersectionObserver(
 
         <div
           v-if="view === 'grid'"
-          class="flex-1 overflow-y-auto p-3"
+          class="flex-1 overflow-y-auto overscroll-contain p-3"
         >
           <div class="grid grid-cols-3 gap-2 sm:grid-cols-4">
             <button

@@ -112,6 +112,8 @@ function useCurrentLocation() {
               icon="i-lucide-search"
               placeholder="Buscar estado"
               aria-label="Buscar estado"
+              autocomplete="off"
+              :spellcheck="false"
               class="w-full"
               autofocus
             />
@@ -128,7 +130,7 @@ function useCurrentLocation() {
             @click="useCurrentLocation"
           />
 
-          <div class="flex-1 overflow-y-auto px-2 pb-2">
+          <div class="flex-1 overflow-y-auto overscroll-contain px-2 pb-2">
             <UButton
               v-for="state in suggestions"
               :key="state.code"

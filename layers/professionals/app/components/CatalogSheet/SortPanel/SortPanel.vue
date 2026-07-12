@@ -25,7 +25,7 @@ const sortValue = computed({
     @close="emit('close')"
   />
 
-  <div class="flex-1 overflow-y-auto border-t border-line p-4">
+  <div class="flex-1 overflow-y-auto overscroll-contain border-t border-line p-4">
     <URadioGroup
       v-model="sortValue"
       :items="sortItems"

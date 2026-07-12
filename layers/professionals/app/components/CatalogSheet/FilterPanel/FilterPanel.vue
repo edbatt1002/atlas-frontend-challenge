@@ -80,7 +80,7 @@ function onMaxPriceUpdate(value: number | undefined) {
 
     <div
       ref="paneRef"
-      class="flex-1 overflow-y-auto p-4"
+      class="flex-1 overflow-y-auto overscroll-contain p-4"
     >
       <div :ref="setSectionRef('profissao')">
         <div class="mb-2.5 font-mono text-[10px] tracking-[0.14em] text-ink-faint">

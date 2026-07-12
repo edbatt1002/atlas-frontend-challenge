@@ -6,7 +6,7 @@ const route = useRoute()
 
 <template>
   <nav
-    class="fixed inset-x-0 bottom-0 z-40 flex justify-between border-t border-default bg-default/85 px-6 py-2.5 backdrop-blur-xl lg:hidden"
+    class="fixed inset-x-0 bottom-0 z-40 flex justify-between border-t border-default bg-default/85 px-6 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden"
   >
     <NuxtLink
       v-for="item in NAV_ITEMS"

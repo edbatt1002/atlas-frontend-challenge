@@ -9,11 +9,15 @@ const year = new Date().getFullYear()
     <template #left>
       <img
         src="/onluxe-logo.svg"
+        width="146"
+        height="40"
         alt="onluxe"
         class="h-8 w-auto dark:hidden"
       >
       <img
         src="/onluxe-logo-dark.svg"
+        width="146"
+        height="40"
         alt="onluxe"
         class="hidden h-8 w-auto dark:block"
       >

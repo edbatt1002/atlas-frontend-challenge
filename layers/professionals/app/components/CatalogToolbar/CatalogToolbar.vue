@@ -31,6 +31,8 @@ const topOffset = computed(() => headerVisible.value ? headerHeight.value : 0)
         icon="i-lucide-search"
         placeholder="Buscar por nome ou profissão"
         aria-label="Buscar por nome ou profissão"
+        autocomplete="off"
+        :spellcheck="false"
         size="lg"
       />
 
