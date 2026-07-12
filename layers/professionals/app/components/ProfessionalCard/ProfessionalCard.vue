@@ -107,13 +107,14 @@ const profileTo = computed(() => professionalPath(props.professional.id, props.p
           <span class="size-1.5 rounded-full bg-online" />ONLINE
         </span>
 
-        <button
-          type="button"
+        <UButton
           aria-label="Favoritar"
-          class="absolute right-2.5 top-4 z-20 flex size-8 items-center justify-center rounded-full border border-white/20 bg-black/45 text-sm text-primary-400"
-        >
-          ♥
-        </button>
+          icon="i-lucide-heart"
+          color="neutral"
+          variant="soft"
+          size="sm"
+          class="absolute right-2.5 top-4 z-20 rounded-full border border-white/20 bg-black/45 text-primary-400"
+        />
 
         <span class="pointer-events-none absolute bottom-2 right-2 z-20 rounded-full bg-primary px-2.5 py-1 text-xs font-extrabold text-white">
           {{ formatCurrency(professional.price) }}

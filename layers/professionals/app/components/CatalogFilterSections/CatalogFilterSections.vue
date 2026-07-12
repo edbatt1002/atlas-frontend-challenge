@@ -7,7 +7,7 @@ const emit = defineEmits<CatalogFilterSectionsEmits>()
 
 <template>
   <div class="w-[150px] min-w-[150px] shrink-0 overflow-y-auto border-r border-line bg-black/20 py-2">
-    <button
+    <UButton
       v-for="section in sections"
       :key="section.id"
       type="button"
@@ -24,6 +24,6 @@ const emit = defineEmits<CatalogFilterSectionsEmits>()
       >
         {{ section.count }}
       </span>
-    </button>
+    </UButton>
   </div>
 </template>

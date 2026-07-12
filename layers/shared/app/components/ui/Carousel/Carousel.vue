@@ -49,31 +49,27 @@ watch(() => props.modelValue, (index) => {
     </swiper-container>
 
     <template v-if="navigation">
-      <button
+      <UButton
         v-if="modelValue > 0"
-        type="button"
         aria-label="Slide anterior"
-        class="absolute left-2 top-1/2 z-30 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white transition hover:bg-black/65"
+        icon="i-lucide-chevron-left"
+        color="neutral"
+        variant="soft"
+        size="sm"
+        class="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-black/45 text-white hover:bg-black/65"
         @click="goPrev"
-      >
-        <UIcon
-          name="i-lucide-chevron-left"
-          class="size-4"
-        />
-      </button>
+      />
 
-      <button
+      <UButton
         v-if="modelValue < slideCount - 1"
-        type="button"
         aria-label="Próximo slide"
-        class="absolute right-2 top-1/2 z-30 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white transition hover:bg-black/65"
+        icon="i-lucide-chevron-right"
+        color="neutral"
+        variant="soft"
+        size="sm"
+        class="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-black/45 text-white hover:bg-black/65"
         @click="goNext"
-      >
-        <UIcon
-          name="i-lucide-chevron-right"
-          class="size-4"
-        />
-      </button>
+      />
     </template>
   </div>
 </template>

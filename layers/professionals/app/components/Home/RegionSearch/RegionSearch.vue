@@ -44,21 +44,16 @@ function useCurrentLocation() {
         Em qual região?
       </div>
 
-      <button
-        type="button"
-        class="mt-2 flex w-full items-center gap-2 rounded-[11px] border border-line bg-bg-soft px-3.5 py-3 text-left text-sm font-semibold text-ink"
+      <UButton
+        block
+        color="neutral"
+        variant="outline"
+        leading-icon="i-lucide-map-pin"
+        trailing-icon="i-lucide-chevron-down"
+        :label="regionLabel"
+        class="mt-2 justify-start font-semibold"
         @click="open"
-      >
-        <UIcon
-          name="i-lucide-map-pin"
-          class="size-4 text-primary-400"
-        />
-        <span class="flex-1 truncate">{{ regionLabel }}</span>
-        <UIcon
-          name="i-lucide-chevron-down"
-          class="size-4 text-ink-faint"
-        />
-      </button>
+      />
 
       <div class="mt-3 flex flex-wrap items-center gap-2 text-xs">
         <span class="text-ink-faint">Popular:</span>
@@ -89,7 +84,7 @@ function useCurrentLocation() {
       :ui="{
         overlay: 'z-50',
         content: 'z-50 h-[70%] max-h-[70%] max-w-(--ui-container) mx-auto',
-        container: 'p-0 gap-0 overflow-hidden',
+        container: 'h-full p-0 gap-0 overflow-hidden',
         body: 'flex-1 min-h-0 p-0'
       }"
       @update:open="(value: boolean) => { if (!value) close() }"
@@ -100,14 +95,15 @@ function useCurrentLocation() {
             <h3 class="font-display text-lg font-extrabold text-ink">
               Em qual região?
             </h3>
-            <button
-              type="button"
+            <UButton
               aria-label="Fechar"
-              class="flex size-8 items-center justify-center rounded-full border border-line text-ink"
+              icon="i-lucide-x"
+              color="neutral"
+              variant="outline"
+              size="sm"
+              class="rounded-full"
               @click="close"
-            >
-              ✕
-            </button>
+            />
           </div>
 
           <div class="border-t border-line p-4">
@@ -120,29 +116,28 @@ function useCurrentLocation() {
             />
           </div>
 
-          <button
+          <UButton
             v-if="isLocationSupported"
-            type="button"
-            class="flex items-center gap-2 border-b border-line px-4 pb-3.5 text-left text-[13px] font-bold text-primary-400"
+            block
+            variant="link"
+            color="primary"
+            icon="i-lucide-locate-fixed"
+            label="Usar minha localização atual"
+            class="justify-start border-b border-line px-4 pb-3.5 font-bold"
             @click="useCurrentLocation"
-          >
-            <UIcon
-              name="i-lucide-locate-fixed"
-              class="size-4"
-            />
-            Usar minha localização atual
-          </button>
+          />
 
           <div class="flex-1 overflow-y-auto px-2 pb-2">
-            <button
+            <UButton
               v-for="state in suggestions"
               :key="state.code"
-              type="button"
-              class="flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-left text-[13px] font-semibold text-ink hover:bg-bg-soft"
+              block
+              variant="ghost"
+              color="neutral"
+              :label="`${state.name} · ${state.code}`"
+              class="justify-start rounded-xl px-3.5 py-3 text-[13px] font-semibold"
               @click="pick(state.name, state.code)"
-            >
-              <span>{{ state.name }} · {{ state.code }}</span>
-            </button>
+            />
           </div>
         </div>
       </template>

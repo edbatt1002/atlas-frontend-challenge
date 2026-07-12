@@ -20,27 +20,24 @@ const gallery = computed(() => getGalleryDisplay(props.professional.gallery, GAL
       >
       <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-bg/35" />
 
-      <NuxtLink
+      <UButton
         to="/buscar"
         aria-label="Voltar ao catálogo"
-        class="absolute left-4 top-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white"
-      >
-        <UIcon
-          name="i-lucide-arrow-left"
-          class="size-5"
-        />
-      </NuxtLink>
+        icon="i-lucide-arrow-left"
+        color="neutral"
+        variant="soft"
+        size="lg"
+        class="absolute left-4 top-4 z-10 rounded-full border border-white/20 bg-black/50 text-white"
+      />
 
-      <button
-        type="button"
+      <UButton
         aria-label="Favoritar"
-        class="absolute right-4 top-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/50 text-primary-400"
-      >
-        <UIcon
-          name="i-lucide-heart"
-          class="size-5"
-        />
-      </button>
+        icon="i-lucide-heart"
+        color="neutral"
+        variant="soft"
+        size="lg"
+        class="absolute right-4 top-4 z-10 rounded-full border border-white/20 bg-black/50 text-primary-400"
+      />
 
       <div class="absolute inset-x-4 bottom-4">
         <span
