@@ -95,6 +95,6 @@ describe('ProfessionalProfile', () => {
   it('links back to the catalog', async () => {
     const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
 
-    expect(wrapper.findAll('a').map(a => a.attributes('href'))).toContain('/')
+    expect(wrapper.findAll('a').map(a => a.attributes('href'))).toContain('/buscar')
   })
 })

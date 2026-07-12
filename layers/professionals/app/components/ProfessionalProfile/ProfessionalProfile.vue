@@ -21,7 +21,7 @@ const gallery = computed(() => getGalleryDisplay(props.professional.gallery, GAL
       <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-bg/35" />
 
       <NuxtLink
-        to="/"
+        to="/buscar"
         aria-label="Voltar ao catálogo"
         class="absolute left-4 top-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white"
       >
