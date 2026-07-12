@@ -10,6 +10,7 @@ const description = computed(() => isNotFound.value
   : 'Não conseguimos carregar essa página. Verifique sua conexão e tente de novo.')
 
 useHead({
+  title: () => `${title.value} · onluxe`,
   htmlAttrs: { lang: 'pt-BR' }
 })
 
@@ -25,9 +26,9 @@ function handleRetry() {
     </div>
 
     <div>
-      <p class="font-display text-xl font-bold text-ink">
+      <h1 class="font-display text-xl font-bold text-ink">
         {{ title }}
-      </p>
+      </h1>
       <p class="mx-auto mt-1.5 max-w-[34ch] text-sm leading-relaxed text-ink-faint">
         {{ description }}
       </p>

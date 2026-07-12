@@ -27,24 +27,31 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
           v-for="(photo, index) in photos"
           :key="photo"
         >
-          <img
+          <NuxtImg
             :src="photo"
             :alt="`${professional.name} - foto ${index + 1}`"
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 && priority ? 'high' : undefined"
+            sizes="sm:100vw md:50vw lg:33vw xl:25vw"
+            width="640"
+            height="800"
+            format="webp"
             class="size-full object-cover"
-          >
+          />
         </UiCarouselSlide>
 
         <UiCarouselSlide>
           <div class="relative flex size-full flex-col items-center justify-center gap-1 overflow-hidden p-5 text-center">
-            <img
+            <NuxtImg
               v-if="photos[0]"
               :src="photos[0]"
               aria-hidden="true"
               loading="lazy"
+              width="640"
+              height="800"
+              format="webp"
               class="absolute inset-0 size-full scale-110 object-cover opacity-80 blur-xs"
-            >
+            />
             <div class="absolute inset-0 bg-gradient-to-br from-bg-raised/85 to-bg-soft/95" />
 
             <p class="relative font-display text-base font-extrabold text-ink">
@@ -73,7 +80,7 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
             </div>
             <NuxtLink
               :to="profileTo"
-              class="relative mt-3.5 rounded-[11px] bg-primary px-5 py-2.5 text-xs font-extrabold text-white"
+              class="relative mt-3.5 rounded-[11px] bg-primary-600 px-5 py-2.5 text-xs font-extrabold text-white"
             >
               Entrar no perfil →
             </NuxtLink>
@@ -111,7 +118,7 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
           class="absolute right-2.5 top-4 z-20 rounded-full border border-white/20 bg-black/45 text-primary-400"
         />
 
-        <span class="pointer-events-none absolute bottom-2 right-2 z-20 rounded-full bg-primary px-2.5 py-1 text-xs font-extrabold text-white">
+        <span class="pointer-events-none absolute bottom-2 right-2 z-20 rounded-full bg-primary-600 px-2.5 py-1 text-xs font-extrabold text-white">
           {{ formatCurrency(professional.price) }}
         </span>
         <UiRatingStar

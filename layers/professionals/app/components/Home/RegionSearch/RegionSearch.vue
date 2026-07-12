@@ -115,7 +115,6 @@ function useCurrentLocation() {
               autocomplete="off"
               :spellcheck="false"
               class="w-full"
-              autofocus
             />
           </div>
 

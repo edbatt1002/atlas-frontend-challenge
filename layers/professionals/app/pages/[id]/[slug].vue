@@ -40,7 +40,7 @@ useProfessionalSeo(professional, isNotFound)
       </p>
       <NuxtLink
         to="/buscar"
-        class="mt-4 inline-block rounded-[11px] bg-primary px-5 py-2.5 text-sm font-bold text-white"
+        class="mt-4 inline-block rounded-[11px] bg-primary-600 px-5 py-2.5 text-sm font-bold text-white"
       >
         Voltar ao catálogo
       </NuxtLink>

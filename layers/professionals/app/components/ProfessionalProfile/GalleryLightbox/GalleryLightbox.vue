@@ -79,7 +79,7 @@ useIntersectionObserver(
         <div class="flex items-center justify-between border-b border-line px-4 py-3">
           <span class="font-display text-sm font-bold text-ink">Galeria</span>
           <div class="flex items-center gap-3">
-            <span class="text-xs text-ink-faint">{{ media.length }} mídias</span>
+            <span class="text-xs text-ink-muted">{{ media.length }} mídias</span>
             <UButton
               aria-label="Fechar"
               icon="i-lucide-x"
@@ -99,9 +99,10 @@ useIntersectionObserver(
               :key="filter.value"
               :label="filter.label"
               size="sm"
-              :color="typeFilter === filter.value ? 'primary' : 'neutral'"
+              color="neutral"
               :variant="typeFilter === filter.value ? 'solid' : 'outline'"
               class="rounded-full font-semibold"
+              :class="typeFilter === filter.value ? 'bg-primary-600 text-white hover:bg-primary-600/90' : ''"
               @click="onSelectType(filter.value)"
             />
           </div>
@@ -137,12 +138,16 @@ useIntersectionObserver(
               class="relative aspect-[3/4] overflow-hidden rounded-[10px] bg-bg-raised"
               @click="openFeedAt(index)"
             >
-              <img
+              <NuxtImg
                 :src="item.url"
                 :alt="`${name} - mídia ${index + 1}`"
                 loading="lazy"
+                sizes="25vw"
+                width="400"
+                height="533"
+                format="webp"
                 class="size-full object-cover"
-              >
+              />
               <span
                 v-if="item.type === 'video'"
                 class="absolute inset-0 flex items-center justify-center bg-black/25 text-xl text-white"
@@ -163,13 +168,17 @@ useIntersectionObserver(
             :ref="setFeedRef(index)"
             class="relative flex h-full w-full snap-start items-center justify-center bg-black"
           >
-            <img
+            <NuxtImg
               v-if="loadedIndexes.has(index)"
               :src="item.url"
               :alt="`${name} - mídia ${index + 1}`"
               :loading="index === 0 ? 'eager' : 'lazy'"
+              sizes="100vw"
+              width="960"
+              height="720"
+              format="webp"
               class="max-h-full max-w-full object-contain"
-            >
+            />
             <span
               v-if="item.type === 'video'"
               class="absolute inset-0 flex items-center justify-center text-4xl text-white"

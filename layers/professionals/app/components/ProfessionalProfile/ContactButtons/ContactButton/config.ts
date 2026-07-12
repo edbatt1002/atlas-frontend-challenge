@@ -3,7 +3,7 @@ export const CONTACT_NETWORKS = {
     label: 'Telegram',
     icon: 'i-simple-icons-telegram',
     baseUrl: 'https://t.me/',
-    bgClass: 'bg-[#2aabee] hover:bg-[#2aabee]/90',
+    bgClass: 'bg-[#147ba8] hover:bg-[#147ba8]/90',
     textClass: 'text-white'
   },
   whatsapp: {
