@@ -13,7 +13,7 @@ const toolbarHeight = useCatalogToolbarHeight()
 const toolbarEl = ref<HTMLElement | null>(null)
 const { height } = useElementSize(toolbarEl)
 watch(height, (h) => {
-  toolbarHeight.value = h
+  if (h > 0) toolbarHeight.value = h
 })
 
 const topOffset = computed(() => headerVisible.value ? headerHeight.value : 0)
