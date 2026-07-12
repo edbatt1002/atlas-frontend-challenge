@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 import { DOMWrapper } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import UApp from '@nuxt/ui/components/App.vue'
@@ -69,6 +69,39 @@ describe('ProfessionalProfileGalleryLightbox', () => {
     await body.find('img[alt*="mídia 2"]').trigger('click')
 
     expect(body.text()).toContain('2/3')
+  })
+
+  it('toggles between grid and feed with the view buttons', async () => {
+    const { body } = await mountLightbox({ open: true, media, name: 'Valentina' })
+
+    await body.find('[aria-label="Feed"]').trigger('click')
+    expect(body.text()).toContain('1/3')
+
+    await body.find('[aria-label="Grade"]').trigger('click')
+    expect(body.findAll('img')).toHaveLength(3)
+  })
+
+  it('resets to the grid with no filter when re-opened', async () => {
+    const open = ref(true)
+    const Host = defineComponent({
+      setup() {
+        return () => h(UApp, null, {
+          default: () => h(GalleryLightbox, { open: open.value, media, name: 'Valentina' })
+        })
+      }
+    })
+    activeWrapper = await mountSuspended(Host, { attachTo: document.body })
+    const body = new DOMWrapper(document.body)
+
+    await body.findAll('button').find(b => b.text() === 'Fotos')!.trigger('click')
+    await body.find('[aria-label="Feed"]').trigger('click')
+
+    open.value = false
+    await nextTick()
+    open.value = true
+    await nextTick()
+
+    expect(body.findAll('img')).toHaveLength(3)
   })
 
   it('emits close when the close button is clicked', async () => {
