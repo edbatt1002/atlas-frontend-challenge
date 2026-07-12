@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ProfessionalCardProps } from './types'
-import { CARD_MAX_PHOTOS } from './config'
+import { CARD_MAX_PHOTOS, CAROUSEL_LAZY_PRELOAD_NEIGHBORS } from './config'
 import { getCardPhotos, getSegmentState } from './utils'
 
 const { professional } = defineProps<ProfessionalCardProps>()
@@ -9,11 +9,6 @@ const photos = computed(() => getCardPhotos(professional.gallery, CARD_MAX_PHOTO
 const slideCount = computed(() => photos.value.length + 1)
 const activeIndex = ref(0)
 const isPhotoSlide = computed(() => activeIndex.value < photos.value.length)
-
-const loadedPhotoIndexes = ref(new Set([0]))
-watch(activeIndex, (index) => {
-  loadedPhotoIndexes.value.add(index)
-})
 
 const profileTo = computed(() => professionalPath(professional.id, professional.name))
 </script>
@@ -24,6 +19,7 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
       <UiCarousel
         v-model="activeIndex"
         :slide-count="slideCount"
+        :lazy-preload-prev-next="CAROUSEL_LAZY_PRELOAD_NEIGHBORS"
         navigation
         class="absolute inset-0 size-full"
       >
@@ -32,7 +28,6 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
           :key="photo"
         >
           <img
-            v-if="loadedPhotoIndexes.has(index)"
             :src="photo"
             :alt="`${professional.name} - foto ${index + 1}`"
             :loading="index === 0 ? 'eager' : 'lazy'"

@@ -50,13 +50,20 @@ describe('ProfessionalCard', () => {
     expect(wrapper.findAll('swiper-slide')).toHaveLength(5)
   })
 
-  it('only loads the first gallery photo eagerly, deferring the rest', async () => {
+  it('renders every gallery photo, eager only for the first and native lazy for the rest', async () => {
     const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
     const galleryImages = wrapper.findAll('img[alt*="foto"]')
 
-    expect(galleryImages).toHaveLength(1)
+    expect(galleryImages).toHaveLength(Math.min(professional.gallery.length, 4))
     expect(galleryImages[0]!.attributes('loading')).toBe('eager')
     expect(galleryImages[0]!.attributes('src')).toBe(professional.gallery[0])
+    expect(galleryImages[1]!.attributes('loading')).toBe('lazy')
+  })
+
+  it('hands the neighbor-preload amount to the carousel via lazy-preload-prev-next', async () => {
+    const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
+
+    expect(wrapper.find('swiper-container').attributes('lazy-preload-prev-next')).toBe('1')
   })
 
   it('marks the first photo with high fetch priority only when the card is a priority card', async () => {
@@ -65,17 +72,6 @@ describe('ProfessionalCard', () => {
 
     const regular = await mountSuspended(ProfessionalCard, { props: { professional } })
     expect(regular.find('img[alt*="foto"]').attributes('fetchpriority')).toBeUndefined()
-  })
-
-  it('loads more gallery photos on demand as the active slide advances', async () => {
-    const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
-    expect(wrapper.findAll('img[alt*="foto"]')).toHaveLength(1)
-
-    await wrapper.find('[aria-label="Próximo slide"]').trigger('click')
-
-    const galleryImages = wrapper.findAll('img[alt*="foto"]')
-    expect(galleryImages).toHaveLength(2)
-    expect(galleryImages[1]!.attributes('loading')).toBe('lazy')
   })
 
   it('renders the profile CTA slide with a blurred preview of the first photo, and the photo/video counts', async () => {

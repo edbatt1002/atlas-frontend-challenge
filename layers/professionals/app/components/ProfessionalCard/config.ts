@@ -1,1 +1,2 @@
 export const CARD_MAX_PHOTOS = 4
+export const CAROUSEL_LAZY_PRELOAD_NEIGHBORS = 1

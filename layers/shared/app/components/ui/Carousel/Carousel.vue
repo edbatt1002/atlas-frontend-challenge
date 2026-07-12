@@ -9,7 +9,7 @@ type SwiperContainerElement = HTMLElement & {
 }
 
 const modelValue = defineModel<number>({ default: 0 })
-const { slideCount, pagination = false, navigation = false } = defineProps<CarouselProps>()
+const { slideCount, pagination = false, navigation = false, lazyPreloadPrevNext = 0 } = defineProps<CarouselProps>()
 
 const containerRef = ref<SwiperContainerElement | null>(null)
 
@@ -38,6 +38,7 @@ watch(modelValue, (index) => {
       :speed="CAROUSEL_TRANSITION_SPEED_MS"
       :pagination="pagination"
       :initial-slide="modelValue"
+      :lazy-preload-prev-next="lazyPreloadPrevNext"
       class="size-full"
       @swiperslidechange="onSlideChange"
     >
