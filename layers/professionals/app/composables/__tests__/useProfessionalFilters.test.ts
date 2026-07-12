@@ -12,6 +12,7 @@ describe('filtersToQuery', () => {
     const filters: ProfessionalFilterState = {
       search: 'ignored',
       profession: 'modelo',
+      state: 'SP',
       online: true,
       maxPrice: 500,
       minRating: 4.5,
@@ -21,6 +22,7 @@ describe('filtersToQuery', () => {
     expect(filtersToQuery(filters, 'ana')).toEqual({
       search: 'ana',
       profession: 'modelo',
+      state: 'SP',
       online: true,
       max_price: 500,
       min_rating: 4.5,
@@ -52,16 +54,17 @@ describe('countActiveFilters', () => {
     expect(countActiveFilters(empty)).toBe(0)
   })
 
-  it('counts profession, online, maxPrice and minRating as one each', () => {
+  it('counts profession, state, online, maxPrice and minRating as one each', () => {
     const filters: ProfessionalFilterState = {
       search: '',
       profession: 'modelo',
+      state: 'SP',
       online: true,
       maxPrice: 500,
       minRating: 4
     }
 
-    expect(countActiveFilters(filters)).toBe(4)
+    expect(countActiveFilters(filters)).toBe(5)
   })
 
   it('does not count search or sort', () => {

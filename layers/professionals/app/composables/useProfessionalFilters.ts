@@ -3,6 +3,7 @@ import type { ProfessionalListParams, ProfessionalSort } from '../types'
 export interface ProfessionalFilterState {
   search: string
   profession?: string
+  state?: string
   online?: boolean
   minPrice?: number
   maxPrice?: number
@@ -10,12 +11,13 @@ export interface ProfessionalFilterState {
   sort?: ProfessionalSort
 }
 
-type ProfessionalFilterQuery = Pick<ProfessionalListParams, 'search' | 'profession' | 'online' | 'min_price' | 'max_price' | 'min_rating' | 'sort'>
+type ProfessionalFilterQuery = Pick<ProfessionalListParams, 'search' | 'profession' | 'state' | 'online' | 'min_price' | 'max_price' | 'min_rating' | 'sort'>
 
 export function filtersToQuery(filters: ProfessionalFilterState, search: string): ProfessionalFilterQuery {
   return {
     ...(search ? { search } : {}),
     ...(filters.profession ? { profession: filters.profession } : {}),
+    ...(filters.state ? { state: filters.state } : {}),
     ...(filters.online ? { online: filters.online } : {}),
     ...(filters.minPrice != null ? { min_price: filters.minPrice } : {}),
     ...(filters.maxPrice != null ? { max_price: filters.maxPrice } : {}),
@@ -27,6 +29,7 @@ export function filtersToQuery(filters: ProfessionalFilterState, search: string)
 export function countActiveFilters(filters: ProfessionalFilterState): number {
   return (
     (filters.profession ? 1 : 0)
+    + (filters.state ? 1 : 0)
     + (filters.online ? 1 : 0)
     + (filters.maxPrice != null ? 1 : 0)
     + (filters.minRating != null ? 1 : 0)
@@ -40,6 +43,7 @@ export function useProfessionalFilters() {
   const filters = reactive<ProfessionalFilterState>({
     search: (route.query.search as string) ?? '',
     profession: (route.query.profession as string) || undefined,
+    state: (route.query.state as string) || undefined,
     online: route.query.online === 'true' || undefined,
     minPrice: route.query.min_price ? Number(route.query.min_price) : undefined,
     maxPrice: route.query.max_price ? Number(route.query.max_price) : undefined,
@@ -70,6 +74,7 @@ export function useProfessionalFilters() {
     filters.search = ''
     debouncedSearch.value = ''
     filters.profession = undefined
+    filters.state = undefined
     filters.online = undefined
     filters.minPrice = undefined
     filters.maxPrice = undefined
