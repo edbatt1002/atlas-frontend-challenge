@@ -63,27 +63,42 @@ const reachedEnd = computed(() => !hasNextPage.value && items.value.length > 0)
     </div>
 
     <div v-else>
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <template v-if="showFirstLoad">
-          <ProfessionalCardSkeleton
-            v-for="n in FIRST_LOAD_SKELETONS"
-            :key="`first-${n}`"
-          />
-        </template>
-        <template v-else>
-          <ProfessionalCard
-            v-for="(pro, index) in items"
-            :key="pro.id"
-            :professional="pro"
-            :priority="index < PRIORITY_CARD_COUNT"
-          />
-          <template v-if="loadingMore">
-            <ProfessionalCardSkeleton
-              v-for="n in LOAD_MORE_SKELETONS"
-              :key="`more-${n}`"
+      <div
+        v-if="showFirstLoad"
+        class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <ProfessionalCardSkeleton
+          v-for="n in FIRST_LOAD_SKELETONS"
+          :key="`first-${n}`"
+        />
+      </div>
+
+      <ClientOnly v-else>
+        <ProfessionalsCatalogVirtualizedGrid
+          :items="items"
+          :priority-count="PRIORITY_CARD_COUNT"
+        />
+
+        <template #fallback>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <ProfessionalCard
+              v-for="(pro, index) in items"
+              :key="pro.id"
+              :professional="pro"
+              :priority="index < PRIORITY_CARD_COUNT"
             />
-          </template>
+          </div>
         </template>
+      </ClientOnly>
+
+      <div
+        v-if="loadingMore"
+        class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <ProfessionalCardSkeleton
+          v-for="n in LOAD_MORE_SKELETONS"
+          :key="`more-${n}`"
+        />
       </div>
 
       <p
