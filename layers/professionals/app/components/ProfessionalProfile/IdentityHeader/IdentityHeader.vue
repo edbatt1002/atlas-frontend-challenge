@@ -6,19 +6,13 @@ defineProps<IdentityHeaderProps>()
 
 <template>
   <div class="-mt-10 px-4 sm:px-6">
-    <div class="relative inline-block">
-      <img
-        :src="avatarUrl"
-        :alt="name"
-        loading="eager"
-        class="size-20 rounded-full border-4 border-bg bg-bg-raised object-cover sm:size-24"
-      >
-      <span
-        v-if="online"
-        class="absolute bottom-1 right-1 size-4 rounded-full border-2 border-bg bg-online"
-        aria-hidden="true"
-      />
-    </div>
+    <UAvatar
+      :src="avatarUrl"
+      :alt="name"
+      size="3xl"
+      :chip="online ? { inset: true, ui: { base: 'bg-online' } } : false"
+      class="border-4 border-bg"
+    />
 
     <span
       v-if="online"
