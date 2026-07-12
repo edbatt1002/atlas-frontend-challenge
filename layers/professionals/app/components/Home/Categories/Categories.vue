@@ -31,6 +31,23 @@ defineProps<CategoriesProps>()
             </div>
           </div>
         </NuxtLink>
+
+        <div
+          v-for="index in categories.length === 0 ? 4 : 0"
+          :key="`category-placeholder-${index}`"
+          aria-hidden="true"
+          class="invisible w-full flex flex-col gap-2 rounded-[14px] border border-line bg-bg-card p-4"
+        >
+          <div class="size-6" />
+          <div>
+            <div class="text-sm font-bold">
+              Categoria
+            </div>
+            <div class="text-xs">
+              — perfis
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
