@@ -11,10 +11,10 @@ defineProps<HeroProps>()
 
     <div class="relative mx-auto max-w-2xl text-center">
       <span
-        v-if="totalLabel"
         class="inline-flex items-center gap-1.5 rounded-full border border-primary-400/30 bg-primary-400/10 px-3 py-1.5 text-xs font-bold text-primary-300"
+        :class="{ invisible: !totalLabel }"
       >
-        {{ totalLabel }}
+        {{ totalLabel ?? '+600 profissionais verificados' }}
       </span>
 
       <h1 class="mt-5 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-5xl">

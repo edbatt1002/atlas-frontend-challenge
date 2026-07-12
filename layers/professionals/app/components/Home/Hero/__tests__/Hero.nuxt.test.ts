@@ -8,11 +8,11 @@ describe('HomeHero', () => {
     expect(wrapper.text()).toContain('Encontre quem combina com você')
   })
 
-  it('shows the total badge only when a label is provided', async () => {
+  it('reserves the badge space while the total is loading', async () => {
     const withTotal = await mountSuspended(Hero, { props: { totalLabel: '+600 profissionais verificados' } })
     expect(withTotal.text()).toContain('+600 profissionais verificados')
 
     const withoutTotal = await mountSuspended(Hero, { props: { totalLabel: null } })
-    expect(withoutTotal.text()).not.toContain('profissionais verificados')
+    expect(withoutTotal.find('span').classes()).toContain('invisible')
   })
 })
