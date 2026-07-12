@@ -1,9 +1,16 @@
 import type {
+  CatalogSummary,
   Profession,
   Professional,
   ProfessionalListParams,
   ProfessionalListResponse
 } from '../types'
+
+export async function getCatalogSummary(): Promise<CatalogSummary> {
+  const { data, error } = await useApi<CatalogSummary>('/api/catalog-summary')
+  if (error) throw error
+  return data
+}
 
 export async function listProfessionals(
   params: ProfessionalListParams = {}

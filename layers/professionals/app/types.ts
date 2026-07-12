@@ -4,6 +4,12 @@ export interface Profession {
   icon: string
 }
 
+export interface CatalogSummary {
+  total: number
+  professions: Profession[]
+  counts: Record<string, number>
+}
+
 export interface ProfessionalService {
   name: string
   price: number
@@ -87,6 +93,22 @@ export interface Professional {
   reviews: ProfessionalReview[]
 }
 
+export interface ProfessionalSummary {
+  id: string
+  name: string
+  profession: string
+  professionSlug: string
+  gallery: string[]
+  photos: number
+  videos: number
+  online: boolean
+  verified: boolean
+  price: number
+  rating: number
+  description: string
+  location: Pick<ProfessionalLocation, 'city' | 'state' | 'distanceKm'>
+}
+
 export type ProfessionalSort
   = | 'featured'
     | 'newest'
@@ -115,7 +137,7 @@ export interface ProfessionalListMeta {
 }
 
 export interface ProfessionalListResponse {
-  data: Professional[]
+  data: ProfessionalSummary[]
   meta: ProfessionalListMeta
 }
 

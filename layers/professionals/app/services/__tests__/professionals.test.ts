@@ -5,6 +5,18 @@ import { setupMockApi } from '~~/mocks/testServer'
 mockNuxtImport('useRuntimeConfig', () => () => ({ public: { apiBase: 'http://localhost' } }))
 const server = setupMockApi()
 
+describe('getCatalogSummary', () => {
+  it('returns total and profession counts in one request', async () => {
+    const { getCatalogSummary } = await import('../professionals')
+
+    const summary = await getCatalogSummary()
+
+    expect(summary.total).toBeGreaterThanOrEqual(500)
+    expect(summary.professions.length).toBeGreaterThan(0)
+    expect(summary.counts[summary.professions[0]!.slug]).toBeGreaterThan(0)
+  })
+})
+
 describe('listProfessionals', () => {
   it('returns a page of professionals with meta', async () => {
     const { listProfessionals } = await import('../professionals')
@@ -13,6 +25,9 @@ describe('listProfessionals', () => {
 
     expect(result.data).toHaveLength(5)
     expect(result.meta.total).toBeGreaterThan(0)
+    expect(result.data[0]!.gallery.length).toBeLessThanOrEqual(4)
+    expect(result.data[0]).not.toHaveProperty('reviews')
+    expect(result.data[0]).not.toHaveProperty('availability')
   })
 
   it('forwards filter params to the handler', async () => {
