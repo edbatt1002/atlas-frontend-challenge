@@ -13,7 +13,8 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/test-utils/module',
     '@vueuse/nuxt',
-    '@nuxt/fonts'
+    '@nuxt/fonts',
+    '@nuxt/image'
   ],
 
   devtools: {
@@ -55,6 +56,19 @@ export default defineNuxtConfig({
         commaDangle: 'never',
         braceStyle: '1tbs'
       }
+    }
+  },
+
+  image: {
+    domains: ['picsum.photos', 'api.dicebear.com'],
+    screens: {
+      sm: 320,
+      md: 480,
+      lg: 640,
+      xl: 960
+    },
+    ipx: {
+      maxAge: 60 * 60 * 24 * 365
     }
   }
 })

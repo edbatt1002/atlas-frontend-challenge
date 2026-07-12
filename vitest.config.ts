@@ -9,6 +9,12 @@ export default defineVitestConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'json-summary'],
+      thresholds: {
+        statements: 90,
+        branches: 85,
+        functions: 85,
+        lines: 90
+      },
       include: ['layers/**/app/**/*.{ts,vue}'],
       exclude: [
         '**/__tests__/**',
