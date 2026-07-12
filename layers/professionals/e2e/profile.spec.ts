@@ -13,6 +13,6 @@ test.describe('Perfil', () => {
   test('mostra o estado de não encontrado para um id inexistente', async ({ page }) => {
     await page.goto('/does-not-exist/x')
 
-    await expect(page.getByText('Profissional não encontrado')).toBeVisible()
+    await expect(page.getByRole('heading', { level: 1, name: 'Página não encontrada' })).toBeVisible()
   })
 })

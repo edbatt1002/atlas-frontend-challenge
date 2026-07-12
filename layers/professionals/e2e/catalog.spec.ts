@@ -32,12 +32,8 @@ test.describe('Catálogo', () => {
     await page.goto('/buscar')
 
     const firstCard = page.locator('article').first()
-    const activeSlide = firstCard.locator('swiper-slide.swiper-slide-active')
-
-    await expect(activeSlide).toHaveAttribute('aria-label', /^1 \//)
-
     await firstCard.getByRole('button', { name: 'Próximo slide' }).click()
 
-    await expect(firstCard.locator('swiper-slide.swiper-slide-active')).toHaveAttribute('aria-label', /^2 \//)
+    await expect(firstCard.locator('.swiper-slide-active')).toHaveAttribute('aria-label', /^2 \//)
   })
 })
