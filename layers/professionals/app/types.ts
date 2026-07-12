@@ -59,6 +59,7 @@ export type ProfessionalSort
 export interface ProfessionalListParams {
   search?: string
   profession?: string
+  state?: string
   online?: boolean
   min_price?: number
   max_price?: number

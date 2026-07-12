@@ -24,6 +24,16 @@ describe('listProfessionals', () => {
     expect(result.data.every(p => p.professionSlug === 'modelo')).toBe(true)
   })
 
+  it('forwards the state filter to the handler', async () => {
+    const { listProfessionals } = await import('../professionals')
+    const state = (await listProfessionals({ limit: 1 })).data[0]!.location.state
+
+    const result = await listProfessionals({ state })
+
+    expect(result.data.length).toBeGreaterThan(0)
+    expect(result.data.every(p => p.location.state === state)).toBe(true)
+  })
+
   it('throws when the server responds with an error', async () => {
     server.use(
       http.get('*/api/professionals', () =>
