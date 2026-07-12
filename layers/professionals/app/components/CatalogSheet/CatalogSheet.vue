@@ -67,6 +67,13 @@ function onSelectSort(value: ProfessionalSort | undefined) {
   emit('close')
 }
 
+const SORT_FEATURED_VALUE = 'featured'
+const sortItems = SORT_ITEMS.map(item => ({ label: item.label, value: item.value ?? SORT_FEATURED_VALUE }))
+const sortValue = computed({
+  get: () => props.sort ?? SORT_FEATURED_VALUE,
+  set: (value: string) => onSelectSort(value === SORT_FEATURED_VALUE ? undefined : value as ProfessionalSort)
+})
+
 const title = computed(() => {
   if (props.mode === 'filter') return 'Filtros'
   if (props.mode === 'sort') return 'Ordenar por'
@@ -81,7 +88,7 @@ const title = computed(() => {
     :ui="{
       overlay: 'z-50',
       content: 'z-50 h-[60%] max-h-[60%] max-w-(--ui-container) mx-auto',
-      container: 'p-0 gap-0 overflow-hidden',
+      container: 'h-full p-0 gap-0 overflow-hidden',
       body: 'flex-1 min-h-0 p-0'
     }"
     @update:open="onUpdateOpen"
@@ -93,14 +100,15 @@ const title = computed(() => {
             <h3 class="font-display text-lg font-extrabold text-ink">
               {{ title }}
             </h3>
-            <button
-              type="button"
+            <UButton
               aria-label="Fechar"
-              class="flex size-8 items-center justify-center rounded-full border border-line text-ink"
+              icon="i-lucide-x"
+              color="neutral"
+              variant="outline"
+              size="sm"
+              class="rounded-full"
               @click="emit('close')"
-            >
-              ✕
-            </button>
+            />
           </div>
 
           <div class="flex min-h-0 flex-1 border-t border-line">
@@ -119,24 +127,24 @@ const title = computed(() => {
                   PROFISSÃO
                 </div>
                 <div class="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    class="whitespace-nowrap rounded-full px-3.5 py-1.5 text-[13px] font-semibold"
-                    :class="!profession ? 'bg-primary text-white' : 'border border-line text-ink-muted'"
+                  <UButton
+                    label="Todas"
+                    size="sm"
+                    :color="!profession ? 'primary' : 'neutral'"
+                    :variant="!profession ? 'solid' : 'outline'"
+                    class="rounded-full font-semibold"
                     @click="emit('update:profession', undefined)"
-                  >
-                    Todas
-                  </button>
-                  <button
+                  />
+                  <UButton
                     v-for="p in professions"
                     :key="p.slug"
-                    type="button"
-                    class="whitespace-nowrap rounded-full px-3.5 py-1.5 text-[13px] font-semibold"
-                    :class="profession === p.slug ? 'bg-primary text-white' : 'border border-line text-ink-muted'"
+                    :label="p.label"
+                    size="sm"
+                    :color="profession === p.slug ? 'primary' : 'neutral'"
+                    :variant="profession === p.slug ? 'solid' : 'outline'"
+                    class="rounded-full font-semibold"
                     @click="emit('update:profession', p.slug)"
-                  >
-                    {{ p.label }}
-                  </button>
+                  />
                 </div>
               </div>
 
@@ -147,14 +155,18 @@ const title = computed(() => {
                 <div class="mb-2.5 font-mono text-[10px] tracking-[0.14em] text-ink-faint">
                   DISPONIBILIDADE
                 </div>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-2 text-[13px] font-bold"
-                  :class="online ? 'bg-online text-[#04140d]' : 'border border-online/35 text-online'"
+                <UButton
+                  label="Somente online agora"
+                  color="neutral"
+                  variant="outline"
+                  class="rounded-full font-bold"
+                  :class="online ? 'border-transparent bg-online text-[#04140d] hover:bg-online' : 'border-online/35 text-online'"
                   @click="emit('update:online', !online)"
                 >
-                  <span class="size-1.5 rounded-full bg-current" />Somente online agora
-                </button>
+                  <template #leading>
+                    <span class="size-1.5 rounded-full bg-current" />
+                  </template>
+                </UButton>
               </div>
 
               <div
@@ -188,16 +200,16 @@ const title = computed(() => {
                   AVALIAÇÃO MÍNIMA
                 </div>
                 <div class="flex flex-wrap gap-2">
-                  <button
+                  <UButton
                     v-for="chip in RATING_CHIPS"
                     :key="chip.label"
-                    type="button"
-                    class="whitespace-nowrap rounded-full px-3.5 py-1.5 text-[13px] font-semibold"
-                    :class="minRating === chip.value ? 'bg-primary text-white' : 'border border-line text-ink-muted'"
+                    :label="chip.label"
+                    size="sm"
+                    :color="minRating === chip.value ? 'primary' : 'neutral'"
+                    :variant="minRating === chip.value ? 'solid' : 'outline'"
+                    class="rounded-full font-semibold"
                     @click="emit('update:minRating', chip.value)"
-                  >
-                    {{ chip.label }}
-                  </button>
+                  />
                 </div>
               </div>
             </div>
@@ -209,31 +221,25 @@ const title = computed(() => {
             <h3 class="font-display text-lg font-extrabold text-ink">
               {{ title }}
             </h3>
-            <button
-              type="button"
+            <UButton
               aria-label="Fechar"
-              class="flex size-8 items-center justify-center rounded-full border border-line text-ink"
+              icon="i-lucide-x"
+              color="neutral"
+              variant="outline"
+              size="sm"
+              class="rounded-full"
               @click="emit('close')"
-            >
-              ✕
-            </button>
+            />
           </div>
 
-          <div class="flex flex-1 flex-col gap-2 overflow-y-auto border-t border-line p-4">
-            <button
-              v-for="item in SORT_ITEMS"
-              :key="item.label"
-              type="button"
-              class="flex items-center justify-between rounded-xl border px-3.5 py-3.5 text-left text-sm font-semibold"
-              :class="sort === item.value ? 'border-primary bg-primary/10 text-ink' : 'border-line text-ink-muted'"
-              @click="onSelectSort(item.value)"
-            >
-              <span>{{ item.label }}</span>
-              <span
-                class="size-4 shrink-0 rounded-full border-2"
-                :class="sort === item.value ? 'border-primary bg-primary' : 'border-white/25'"
-              />
-            </button>
+          <div class="flex-1 overflow-y-auto border-t border-line p-4">
+            <URadioGroup
+              v-model="sortValue"
+              :items="sortItems"
+              variant="list"
+              indicator="end"
+              color="primary"
+            />
           </div>
         </template>
 
@@ -255,13 +261,13 @@ const title = computed(() => {
               label="Permitir localização"
               @click="onGeoAllow"
             />
-            <button
-              type="button"
-              class="mt-2.5 text-[13px] font-semibold text-ink-faint"
+            <UButton
+              label="Agora não"
+              variant="link"
+              color="neutral"
+              class="mt-2.5 font-semibold"
               @click="emit('close')"
-            >
-              Agora não
-            </button>
+            />
           </div>
         </template>
       </div>

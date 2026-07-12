@@ -71,9 +71,11 @@ describe('CatalogSheet', () => {
 
   it('renders sort options and emits update:sort + close on selection', async () => {
     const { sheet, body } = await mountSheet({ mode: 'sort', professions })
-    const option = body.findAll('button').find(b => b.text().includes('Novidades'))
+    const label = body.findAll('label').find(l => l.text().includes('Novidades'))
+    const optionId = label!.attributes('for')!
+    const option = new DOMWrapper(document.getElementById(optionId)!)
 
-    await option!.trigger('click')
+    await option.trigger('click')
 
     expect(sheet.emitted('update:sort')).toEqual([['newest']])
     expect(sheet.emitted('close')).toHaveLength(1)
