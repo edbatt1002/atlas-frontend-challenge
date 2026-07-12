@@ -121,7 +121,7 @@ const profileTo = computed(() => professionalPath(professional.id, professional.
         </span>
         <UiRatingStar
           :value="professional.rating"
-          class="pointer-events-none absolute bottom-2 left-2 z-20 rounded-full bg-black/70 px-2 py-0.5 text-xs font-bold text-white"
+          class="pointer-events-none absolute bottom-2 left-2 z-20 rounded-full bg-black/70 px-2 py-0.5 text-xs font-bold text-white [--color-star:#ffd166]"
         />
       </template>
     </div>

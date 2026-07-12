@@ -120,7 +120,7 @@ function onMaxPriceUpdate(value: number | undefined) {
           color="neutral"
           variant="outline"
           class="rounded-full font-bold"
-          :class="online ? 'border-transparent bg-online text-[#04140d] hover:bg-online' : 'border-online/35 text-online'"
+          :class="online ? 'border-transparent bg-online text-white hover:bg-online dark:text-[#04140d]' : 'border-online/35 text-online'"
           @click="toggleOnline"
         >
           <template #leading>
