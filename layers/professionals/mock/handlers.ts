@@ -1,10 +1,12 @@
 import { http, HttpResponse } from 'msw'
 import { db, seedDb } from './db'
 import { professions } from './professions'
+import { getMockCatalogSummary } from './repository'
 import type {
   Professional,
   ProfessionalListMeta,
   ProfessionalListResponse,
+  ProfessionalSummary,
   ProfessionalSort
 } from '../app/types'
 
@@ -45,13 +47,35 @@ export function sortProfessionals(list: Professional[], sort: ProfessionalSort |
   return [...list].sort(comparator)
 }
 
+export function toProfessionalSummary(professional: Professional): ProfessionalSummary {
+  return {
+    id: professional.id,
+    name: professional.name,
+    profession: professional.profession,
+    professionSlug: professional.professionSlug,
+    gallery: professional.gallery.slice(0, 4),
+    photos: professional.photos,
+    videos: professional.videos,
+    online: professional.online,
+    verified: professional.verified,
+    price: professional.price,
+    rating: professional.rating,
+    description: professional.description,
+    location: {
+      city: professional.location.city,
+      state: professional.location.state,
+      distanceKm: professional.location.distanceKm
+    }
+  }
+}
+
 export function paginate(list: Professional[], page: number, limit: number): ProfessionalListResponse {
   const total = list.length
   const totalPages = Math.max(1, Math.ceil(total / limit))
   const safePage = Math.min(Math.max(1, page), totalPages)
   const start = (safePage - 1) * limit
   const meta: ProfessionalListMeta = { page: safePage, limit, total, totalPages }
-  return { data: list.slice(start, start + limit), meta }
+  return { data: list.slice(start, start + limit).map(toProfessionalSummary), meta }
 }
 
 function parseFilters(params: URLSearchParams): ProfessionalFilters {
@@ -67,6 +91,8 @@ function parseFilters(params: URLSearchParams): ProfessionalFilters {
 }
 
 export const handlers = [
+  http.get('*/api/catalog-summary', () => HttpResponse.json(getMockCatalogSummary())),
+
   http.get('*/api/professions', () => {
     seedDb()
     return HttpResponse.json(professions)
