@@ -27,12 +27,45 @@ export interface ProfessionalLocation {
   distanceKm: number
 }
 
+export interface ProfessionalMedia {
+  url: string
+  type: 'photo' | 'video'
+}
+
+export interface ProfessionalCharacteristics {
+  age: number
+  heightCm: number
+  hairColor: string
+  eyeColor: string
+  attends: string
+  hasLocal: boolean
+  languages: string[]
+  hours: string
+}
+
+export interface ProfessionalPriceTier {
+  label: string
+  price: number
+}
+
+export interface ProfessionalContact {
+  telegram?: string
+  whatsapp?: string
+}
+
+export interface ProfessionalStats {
+  lastActivity: string
+  responseTime: string
+  memberSince: string
+}
+
 export interface Professional {
   id: string
   name: string
   profession: string
   professionSlug: string
-  photo: string
+  cover: string
+  avatar: string
   price: number
   rating: number
   reviewsCount: number
@@ -44,6 +77,11 @@ export interface Professional {
   description: string
   location: ProfessionalLocation
   gallery: string[]
+  media: ProfessionalMedia[]
+  characteristics: ProfessionalCharacteristics
+  priceTiers: ProfessionalPriceTier[]
+  contact: ProfessionalContact
+  stats: ProfessionalStats
   services: ProfessionalService[]
   availability: ProfessionalAvailability[]
   reviews: ProfessionalReview[]
