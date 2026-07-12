@@ -37,7 +37,7 @@ const isNotFound = computed(() => (error.value as FetchError | null)?.statusCode
         Esse perfil pode ter sido removido ou o link está incorreto.
       </p>
       <NuxtLink
-        to="/"
+        to="/buscar"
         class="mt-4 inline-block rounded-[11px] bg-primary px-5 py-2.5 text-sm font-bold text-white"
       >
         Voltar ao catálogo

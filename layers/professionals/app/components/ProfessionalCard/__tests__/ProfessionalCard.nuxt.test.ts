@@ -43,11 +43,11 @@ describe('ProfessionalCard', () => {
     expect(text).toContain('2.3 km')
   })
 
-  it('links to the professional detail route', async () => {
+  it('links to the professional detail route using an /{id}/{slug} path', async () => {
     const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
     const hrefs = wrapper.findAll('a').map(a => a.attributes('href'))
 
-    expect(hrefs).toContain('/professionals/p-1')
+    expect(hrefs).toContain('/p-1/valentina')
   })
 
   it('shows the verified badge only when the professional is verified', async () => {

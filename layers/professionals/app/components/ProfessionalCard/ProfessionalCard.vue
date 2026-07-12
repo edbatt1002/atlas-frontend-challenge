@@ -15,7 +15,7 @@ watch(activeIndex, (index) => {
   loadedPhotoIndexes.value.add(index)
 })
 
-const profileTo = computed(() => `/professionals/${props.professional.id}`)
+const profileTo = computed(() => professionalPath(props.professional.id, props.professional.name))
 </script>
 
 <template>
