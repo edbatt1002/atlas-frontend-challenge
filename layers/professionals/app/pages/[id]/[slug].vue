@@ -13,8 +13,15 @@ const route = useRoute()
 const id = computed(() => String(route.params.id))
 
 const { data: professional, isPending, error } = useProfessional(id)
-
 const isNotFound = computed(() => (error.value as FetchError | null)?.statusCode === 404)
+
+if (import.meta.client) {
+  watchEffect(() => {
+    if (isNotFound.value) {
+      showError(createError({ statusCode: 404, statusMessage: 'Profissional não encontrado' }))
+    }
+  })
+}
 
 useProfessionalSeo(professional, isNotFound)
 </script>
@@ -27,24 +34,6 @@ useProfessionalSeo(professional, isNotFound)
     >
       Carregando perfil…
     </p>
-
-    <div
-      v-else-if="isNotFound"
-      class="px-4 py-24 text-center"
-    >
-      <p class="font-display text-lg font-bold text-ink">
-        Profissional não encontrado
-      </p>
-      <p class="mt-1 text-sm text-ink-faint">
-        Esse perfil pode ter sido removido ou o link está incorreto.
-      </p>
-      <NuxtLink
-        to="/buscar"
-        class="mt-4 inline-block rounded-[11px] bg-primary-600 px-5 py-2.5 text-sm font-bold text-white"
-      >
-        Voltar ao catálogo
-      </NuxtLink>
-    </div>
 
     <p
       v-else-if="error"
