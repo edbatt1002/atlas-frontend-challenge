@@ -27,4 +27,17 @@ test.describe('Catálogo', () => {
     await expect(page).toHaveURL(/\/[0-9a-f-]{36}\//)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   })
+
+  test('troca de foto ao clicar no botão de próximo slide do card', async ({ page }) => {
+    await page.goto('/buscar')
+
+    const firstCard = page.locator('article').first()
+    const activeSlide = firstCard.locator('swiper-slide.swiper-slide-active')
+
+    await expect(activeSlide).toHaveAttribute('aria-label', /^1 \//)
+
+    await firstCard.getByRole('button', { name: 'Próximo slide' }).click()
+
+    await expect(firstCard.locator('swiper-slide.swiper-slide-active')).toHaveAttribute('aria-label', /^2 \//)
+  })
 })
