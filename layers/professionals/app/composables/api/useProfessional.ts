@@ -4,6 +4,7 @@ import type { Professional } from '../../types'
 export function useProfessional(id: MaybeRefOrGetter<string>) {
   return useServerQuery<Professional>(
     () => ['professional', toValue(id)],
-    () => getProfessional(toValue(id))
+    () => getProfessional(toValue(id)),
+    { throwOnServerError: true }
   )
 }

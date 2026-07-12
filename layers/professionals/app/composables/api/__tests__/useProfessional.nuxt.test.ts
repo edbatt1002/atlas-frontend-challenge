@@ -19,6 +19,11 @@ describe('useProfessional', () => {
     const result = useProfessional('p1') as unknown as { key: () => unknown[] }
 
     expect(toValue(result.key)).toEqual(['professional', 'p1'])
+    expect(serverQuery).toHaveBeenCalledWith(
+      expect.any(Function),
+      expect.any(Function),
+      { throwOnServerError: true }
+    )
   })
 
   it('fetches through the service by id', async () => {
