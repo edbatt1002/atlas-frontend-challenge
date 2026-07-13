@@ -76,6 +76,27 @@ export function listMockProfessionals(params: ProfessionalListParams = {}): Prof
   }
 }
 
+export function parseProfessionalListParams(get: (key: string) => string | undefined): ProfessionalListParams {
+  const online = get('online')
+  const minPrice = get('min_price')
+  const maxPrice = get('max_price')
+  const minRating = get('min_rating')
+  const page = get('page')
+  const limit = get('limit')
+
+  return {
+    profession: get('profession') || undefined,
+    state: get('state') || undefined,
+    online: online === undefined ? undefined : online === 'true',
+    min_price: minPrice === undefined ? undefined : Number(minPrice),
+    max_price: maxPrice === undefined ? undefined : Number(maxPrice),
+    min_rating: minRating === undefined ? undefined : Number(minRating),
+    sort: (get('sort') as ProfessionalSort) || undefined,
+    page: page === undefined ? undefined : Number(page),
+    limit: limit === undefined ? undefined : Number(limit)
+  }
+}
+
 export function getMockProfessional(id: string): Professional | undefined {
   seedDb()
   return db.professional.findFirst({ where: { id: { equals: id } } }) as Professional | undefined
