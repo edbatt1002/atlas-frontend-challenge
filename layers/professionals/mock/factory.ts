@@ -1,6 +1,7 @@
 import { fakerPT_BR as faker } from '@faker-js/faker'
 import { professions } from './professions'
 import { getProfessionalImageSet } from './imageSets'
+import { getServiceNamesFor } from './serviceCatalog'
 import type {
   Professional,
   ProfessionalAvailability,
@@ -9,7 +10,6 @@ import type {
   ProfessionalMedia,
   ProfessionalPriceTier,
   ProfessionalReview,
-  ProfessionalService,
   ProfessionalStats
 } from '../app/types'
 
@@ -45,12 +45,10 @@ function buildAvailability(): ProfessionalAvailability[] {
   }))
 }
 
-function buildServices(basePrice: number): ProfessionalService[] {
-  const count = faker.number.int({ min: 5, max: 10 })
-  return Array.from({ length: count }, () => ({
-    name: faker.commerce.productName(),
-    price: Math.round(basePrice * faker.number.float({ min: 0.5, max: 1.6, fractionDigits: 2 }))
-  }))
+function buildServices(professionSlug: string): string[] {
+  const names = getServiceNamesFor(professionSlug)
+  const count = faker.number.int({ min: Math.min(5, names.length), max: names.length })
+  return faker.helpers.arrayElements(names, count)
 }
 
 function buildReviews(): ProfessionalReview[] {
@@ -160,7 +158,7 @@ export function createProfessional(index: number): Professional {
     priceTiers: buildPriceTiers(price),
     contact: buildContact(),
     stats: buildStats(createdAt),
-    services: buildServices(price),
+    services: buildServices(profession.slug),
     availability: buildAvailability(),
     reviews: buildReviews()
   }

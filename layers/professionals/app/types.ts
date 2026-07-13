@@ -10,11 +10,6 @@ export interface CatalogSummary {
   counts: Record<string, number>
 }
 
-export interface ProfessionalService {
-  name: string
-  price: number
-}
-
 export interface ProfessionalReview {
   author: string
   rating: number
@@ -102,7 +97,7 @@ export interface Professional {
   priceTiers: ProfessionalPriceTier[]
   contact: ProfessionalContact
   stats: ProfessionalStats
-  services: ProfessionalService[]
+  services: string[]
   availability: ProfessionalAvailability[]
   reviews: ProfessionalReview[]
 }

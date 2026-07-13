@@ -96,8 +96,8 @@ function openLightbox(index: number) {
               <div class="mt-3 flex flex-wrap gap-2">
                 <UBadge
                   v-for="service in professional.services"
-                  :key="service.name"
-                  :label="`${service.name} · ${formatCurrency(service.price)}`"
+                  :key="service"
+                  :label="service"
                   color="neutral"
                   variant="outline"
                   size="lg"

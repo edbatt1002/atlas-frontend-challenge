@@ -43,10 +43,7 @@ const professional = buildProfessional({
     { label: 'Pernoite', price: 1200 }
   ],
   contact: { telegram: 'valentina_tg', whatsapp: '5511999998888' },
-  services: [
-    { name: 'Massagem', price: 200 },
-    { name: '1 hora', price: 350 }
-  ],
+  services: ['Massagem relaxante', 'Acompanhamento em eventos'],
   reviews: [
     { author: 'Anônimo', rating: 5, comment: 'Atendimento impecável.', date: '2026-01-10T00:00:00.000Z' }
   ]
@@ -74,16 +71,14 @@ describe('ProfessionalProfile', () => {
     expect(offline.text()).not.toContain('ONLINE')
   })
 
-  it('renders the description, characteristics and each service with its price', async () => {
+  it('renders the description, characteristics and each service', async () => {
     const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
     const text = wrapper.text()
 
     expect(text).toContain(professional.description)
     expect(text).toContain('24 anos')
-    expect(text).toContain('Massagem')
-    expect(text).toContain('R$ 200')
-    expect(text).toContain('1 hora')
-    expect(text).toContain('R$ 350')
+    expect(text).toContain('Massagem relaxante')
+    expect(text).toContain('Acompanhamento em eventos')
   })
 
   it('caps the gallery grid and shows an overlay with the remaining count', async () => {
