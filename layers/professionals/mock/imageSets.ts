@@ -6,7 +6,7 @@ export interface ProfessionalImageSet {
 
 const IMAGE_ROOT = '/images/professionals'
 
-export const professionalImageSets: ProfessionalImageSet[] = Array.from({ length: 12 }, (_, index) => {
+export const professionalImageSets: ProfessionalImageSet[] = Array.from({ length: 16 }, (_, index) => {
   const directory = `${IMAGE_ROOT}/pilot-${String(index + 1).padStart(2, '0')}`
 
   return {
