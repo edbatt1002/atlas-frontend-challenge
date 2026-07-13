@@ -16,10 +16,26 @@ import type {
 const weekdays = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
 const slots = ['08:00', '09:30', '11:00', '13:00', '14:30', '16:00', '17:30', '19:00', '21:00']
 const HAIR_COLORS = ['Loiro', 'Castanho', 'Preto', 'Ruivo', 'Grisalho']
+const HAIR_STYLES = ['Liso', 'Cacheado', 'Ondulado', 'Crespo']
+const HAIR_LENGTHS = ['Curto', 'Médio', 'Longo']
 const EYE_COLORS = ['Castanhos', 'Verdes', 'Azuis', 'Mel', 'Pretos']
+const ETHNICITY_OPTIONS = ['Branco', 'Pardo', 'Negro', 'Asiático', 'Indígena']
+const SMOKER_OPTIONS = ['Sim', 'Não', 'Não informado']
 const ATTENDS_OPTIONS = ['Homens', 'Mulheres', 'Casais', 'Todos']
 const LANGUAGE_POOL = ['PT', 'EN', 'ES', 'FR']
 const RESPONSE_TIME_OPTIONS = ['~5 min', '~15 min', '~30 min', '~1 hora']
+
+const GENDER_OPTIONS = [
+  { label: 'Mulher', description: 'Mulher Cisgênero. Nasceu do sexo feminino e identifica-se como mulher.', genitals: 'Possui vagina' },
+  { label: 'Homem', description: 'Homem Cisgênero. Nasceu do sexo masculino e identifica-se como homem.', genitals: 'Possui pênis' },
+  { label: 'Trans', description: 'Mulher Trans. Nasceu do sexo masculino e identifica-se como mulher.', genitals: 'Possui pênis' }
+]
+
+const SEXUAL_PREFERENCE_OPTIONS = [
+  { label: 'Ativo', description: 'Faz penetração' },
+  { label: 'Passivo', description: 'Recebe penetração' },
+  { label: 'Ativo - Passivo', description: 'Faz e recebe penetração' }
+]
 
 function buildAvailability(): ProfessionalAvailability[] {
   const activeDays = faker.helpers.arrayElements(weekdays, { min: 2, max: 6 })
@@ -38,7 +54,7 @@ function buildServices(basePrice: number): ProfessionalService[] {
 }
 
 function buildReviews(): ProfessionalReview[] {
-  const count = faker.number.int({ min: 0, max: 8 })
+  const count = faker.number.int({ min: 3, max: 8 })
   return Array.from({ length: count }, () => ({
     author: faker.person.fullName(),
     rating: faker.number.int({ min: 3, max: 5 }),
@@ -56,11 +72,28 @@ function buildMedia(gallery: string[]): ProfessionalMedia[] {
 }
 
 function buildCharacteristics(): ProfessionalCharacteristics {
+  const gender = faker.helpers.arrayElement(GENDER_OPTIONS)
+  const sexualPreference = faker.helpers.arrayElement(SEXUAL_PREFERENCE_OPTIONS)
+
   return {
     age: faker.number.int({ min: 20, max: 45 }),
     heightCm: faker.number.int({ min: 155, max: 190 }),
+    weightKg: faker.number.int({ min: 48, max: 95 }),
+    footSize: faker.number.int({ min: 34, max: 44 }),
+    gender: gender.label,
+    genderDescription: gender.description,
+    genitals: gender.genitals,
+    sexualPreference: sexualPreference.label,
+    sexualPreferenceDescription: sexualPreference.description,
+    ethnicity: faker.helpers.arrayElement(ETHNICITY_OPTIONS),
     hairColor: faker.helpers.arrayElement(HAIR_COLORS),
+    hairStyle: faker.helpers.arrayElement(HAIR_STYLES),
+    hairLength: faker.helpers.arrayElement(HAIR_LENGTHS),
     eyeColor: faker.helpers.arrayElement(EYE_COLORS),
+    hasSilicone: faker.datatype.boolean(0.15),
+    hasTattoos: faker.datatype.boolean(0.35),
+    hasPiercings: faker.datatype.boolean(0.25),
+    smoker: faker.helpers.arrayElement(SMOKER_OPTIONS),
     attends: faker.helpers.arrayElement(ATTENDS_OPTIONS),
     hasLocal: faker.datatype.boolean(0.6),
     languages: faker.helpers.arrayElements(LANGUAGE_POOL, { min: 1, max: 3 }),
