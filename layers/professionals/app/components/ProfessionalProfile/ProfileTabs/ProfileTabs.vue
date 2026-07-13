@@ -10,7 +10,7 @@ const items = PROFILE_SECTIONS.map(section => ({ label: section.label, value: se
 
 const tabsHeight = useProfileTabsHeight()
 const wrapperEl = ref<HTMLElement | null>(null)
-const { height } = useElementSize(wrapperEl)
+const { height } = useElementSize(wrapperEl, undefined, { box: 'border-box' })
 watch(height, (h) => {
   tabsHeight.value = h
 })
