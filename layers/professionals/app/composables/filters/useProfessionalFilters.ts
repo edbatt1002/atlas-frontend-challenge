@@ -1,7 +1,6 @@
 import type { ProfessionalListParams, ProfessionalSort } from '../../types'
 
 export interface ProfessionalFilterState {
-  search: string
   profession?: string
   state?: string
   online?: boolean
@@ -11,11 +10,10 @@ export interface ProfessionalFilterState {
   sort?: ProfessionalSort
 }
 
-type ProfessionalFilterQuery = Pick<ProfessionalListParams, 'search' | 'profession' | 'state' | 'online' | 'min_price' | 'max_price' | 'min_rating' | 'sort'>
+type ProfessionalFilterQuery = Pick<ProfessionalListParams, 'profession' | 'state' | 'online' | 'min_price' | 'max_price' | 'min_rating' | 'sort'>
 
-export function filtersToQuery(filters: ProfessionalFilterState, search: string): ProfessionalFilterQuery {
+export function filtersToQuery(filters: ProfessionalFilterState): ProfessionalFilterQuery {
   return {
-    ...(search ? { search } : {}),
     ...(filters.profession ? { profession: filters.profession } : {}),
     ...(filters.state ? { state: filters.state } : {}),
     ...(filters.online ? { online: filters.online } : {}),
@@ -41,7 +39,6 @@ export function useProfessionalFilters() {
   const router = useRouter()
 
   const filters = reactive<ProfessionalFilterState>({
-    search: (route.query.search as string) ?? '',
     profession: (route.query.profession as string) || undefined,
     state: (route.query.state as string) || undefined,
     online: route.query.online === 'true' || undefined,
@@ -51,19 +48,7 @@ export function useProfessionalFilters() {
     sort: (route.query.sort as ProfessionalSort) || undefined
   })
 
-  const debouncedSearch = ref(filters.search)
-  let timer: ReturnType<typeof setTimeout>
-  watch(
-    () => filters.search,
-    (value) => {
-      clearTimeout(timer)
-      timer = setTimeout(() => {
-        debouncedSearch.value = value
-      }, 300)
-    }
-  )
-
-  const query = computed<ProfessionalFilterQuery>(() => filtersToQuery(filters, debouncedSearch.value))
+  const query = computed<ProfessionalFilterQuery>(() => filtersToQuery(filters))
   const activeFilterCount = computed(() => countActiveFilters(filters))
 
   watch(query, (q) => {
@@ -71,8 +56,6 @@ export function useProfessionalFilters() {
   })
 
   function reset() {
-    filters.search = ''
-    debouncedSearch.value = ''
     filters.profession = undefined
     filters.state = undefined
     filters.online = undefined

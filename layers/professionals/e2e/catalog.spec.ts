@@ -1,13 +1,14 @@
 import { expect, test } from '@playwright/test'
 
 test.describe('Catálogo', () => {
-  test('lista profissionais e reflete a busca na URL', async ({ page }) => {
+  test('lista profissionais e reflete a busca por endereço na URL', async ({ page }) => {
     await page.goto('/buscar')
 
     await expect(page.locator('article').first()).toBeVisible()
 
-    await page.getByLabel('Buscar por nome ou profissão').fill('ana')
-    await expect(page).toHaveURL(/search=ana/)
+    await page.getByRole('button', { name: 'Buscar por endereço' }).click()
+    await page.getByRole('button', { name: 'São Paulo · SP' }).click()
+    await expect(page).toHaveURL(/state=SP/)
   })
 
   test('abre o painel de filtros e aplica uma profissão', async ({ page }) => {

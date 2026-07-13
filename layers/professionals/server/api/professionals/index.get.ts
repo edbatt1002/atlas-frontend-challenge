@@ -4,7 +4,6 @@ import type { ProfessionalListParams, ProfessionalSort } from '../../../app/type
 export default defineEventHandler((event) => {
   const query = getQuery(event)
   const params: ProfessionalListParams = {
-    search: typeof query.search === 'string' ? query.search : undefined,
     profession: typeof query.profession === 'string' ? query.profession : undefined,
     state: typeof query.state === 'string' ? query.state : undefined,
     online: query.online === undefined ? undefined : query.online === 'true',

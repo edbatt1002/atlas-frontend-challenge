@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { CatalogToolbarEmits, CatalogToolbarProps } from './types'
+import { BRAZILIAN_STATES } from '../RegionPickerDrawer/config'
+import type { State } from '../RegionPickerDrawer/types'
 
 defineProps<CatalogToolbarProps>()
 const emit = defineEmits<CatalogToolbarEmits>()
 
-const search = defineModel<string>('search', { required: true })
+const state = defineModel<string | undefined>('state')
 
 const { visible: headerVisible } = useHeaderVisibility()
 const headerHeight = useHeaderHeight()
@@ -17,6 +19,24 @@ watch(height, (h) => {
 })
 
 const topOffset = computed(() => headerVisible.value ? headerHeight.value : 0)
+
+const isRegionPickerOpen = ref(false)
+const stateLabel = computed(() => {
+  const picked = BRAZILIAN_STATES.find(s => s.code === state.value)
+  return picked ? `${picked.name} · ${picked.code}` : 'Buscar por endereço'
+})
+
+function onSelectRegion(picked: State) {
+  state.value = picked.code
+}
+
+function onUseLocation() {
+  state.value = undefined
+}
+
+function openRegionPicker() {
+  isRegionPickerOpen.value = true
+}
 </script>
 
 <template>
@@ -26,14 +46,23 @@ const topOffset = computed(() => headerVisible.value ? headerHeight.value : 0)
     :style="{ top: `${topOffset}px` }"
   >
     <UContainer class="flex flex-col gap-4">
-      <UInput
-        v-model="search"
-        icon="i-lucide-search"
-        placeholder="Buscar por nome ou profissão"
-        aria-label="Buscar por nome ou profissão"
-        autocomplete="off"
-        :spellcheck="false"
+      <UButton
+        block
+        color="neutral"
+        variant="outline"
+        leading-icon="i-lucide-map-pin"
+        trailing-icon="i-lucide-chevron-down"
+        :label="stateLabel"
         size="lg"
+        class="justify-start font-semibold"
+        @click="openRegionPicker"
+      />
+
+      <RegionPickerDrawer
+        v-model:open="isRegionPickerOpen"
+        :selected-code="state ?? null"
+        @select="onSelectRegion"
+        @use-location="onUseLocation"
       />
 
       <div class="flex gap-4">

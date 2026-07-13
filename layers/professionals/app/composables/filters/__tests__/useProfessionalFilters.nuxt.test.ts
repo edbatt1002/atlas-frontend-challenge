@@ -16,16 +16,15 @@ mockNuxtImport('useRouter', () => () => ({
   onError: () => {}
 }))
 
-const empty: ProfessionalFilterState = { search: '' }
+const empty: ProfessionalFilterState = {}
 
 describe('filtersToQuery', () => {
   it('returns an empty object when no filter is active', () => {
-    expect(filtersToQuery(empty, '')).toEqual({})
+    expect(filtersToQuery(empty)).toEqual({})
   })
 
   it('includes only the active filters, translated to the API (snake_case, english) vocabulary', () => {
     const filters: ProfessionalFilterState = {
-      search: 'ignored',
       profession: 'modelo',
       state: 'SP',
       online: true,
@@ -34,8 +33,7 @@ describe('filtersToQuery', () => {
       sort: 'price'
     }
 
-    expect(filtersToQuery(filters, 'ana')).toEqual({
-      search: 'ana',
+    expect(filtersToQuery(filters)).toEqual({
       profession: 'modelo',
       state: 'SP',
       online: true,
@@ -45,22 +43,22 @@ describe('filtersToQuery', () => {
     })
   })
 
-  it('drops empty search and undefined fields', () => {
-    const filters: ProfessionalFilterState = { search: '', profession: undefined, maxPrice: undefined }
+  it('drops undefined fields', () => {
+    const filters: ProfessionalFilterState = { profession: undefined, maxPrice: undefined }
 
-    expect(filtersToQuery(filters, '')).toEqual({})
+    expect(filtersToQuery(filters)).toEqual({})
   })
 
   it('keeps a zero min_price (present, not empty)', () => {
-    const filters: ProfessionalFilterState = { search: '', minPrice: 0 }
+    const filters: ProfessionalFilterState = { minPrice: 0 }
 
-    expect(filtersToQuery(filters, '')).toEqual({ min_price: 0 })
+    expect(filtersToQuery(filters)).toEqual({ min_price: 0 })
   })
 
   it('drops online when false', () => {
-    const filters: ProfessionalFilterState = { search: '', online: false }
+    const filters: ProfessionalFilterState = { online: false }
 
-    expect(filtersToQuery(filters, '')).toEqual({})
+    expect(filtersToQuery(filters)).toEqual({})
   })
 })
 
@@ -71,7 +69,6 @@ describe('countActiveFilters', () => {
 
   it('counts profession, state, online, maxPrice and minRating as one each', () => {
     const filters: ProfessionalFilterState = {
-      search: '',
       profession: 'modelo',
       state: 'SP',
       online: true,
@@ -82,8 +79,8 @@ describe('countActiveFilters', () => {
     expect(countActiveFilters(filters)).toBe(5)
   })
 
-  it('does not count search or sort', () => {
-    const filters: ProfessionalFilterState = { search: 'ana', sort: 'price' }
+  it('does not count sort', () => {
+    const filters: ProfessionalFilterState = { sort: 'price' }
 
     expect(countActiveFilters(filters)).toBe(0)
   })
@@ -96,11 +93,10 @@ describe('useProfessionalFilters', () => {
   })
 
   it('initializes state from the route query', () => {
-    routeState.query = { search: 'ana', profession: 'modelo', online: 'true', min_rating: '4.5', sort: 'rating' }
+    routeState.query = { profession: 'modelo', online: 'true', min_rating: '4.5', sort: 'rating' }
 
     const { filters, activeFilterCount } = useProfessionalFilters()
 
-    expect(filters.search).toBe('ana')
     expect(filters.profession).toBe('modelo')
     expect(filters.online).toBe(true)
     expect(filters.minRating).toBe(4.5)
@@ -108,26 +104,12 @@ describe('useProfessionalFilters', () => {
     expect(activeFilterCount.value).toBe(3)
   })
 
-  it('reflects a non-search filter change in the query immediately', () => {
+  it('reflects a filter change in the query immediately', () => {
     const { filters, query } = useProfessionalFilters()
 
     filters.profession = 'dj'
 
     expect(query.value.profession).toBe('dj')
-  })
-
-  it('debounces the search into the query', async () => {
-    vi.useFakeTimers()
-    const { filters, query } = useProfessionalFilters()
-
-    filters.search = 'lu'
-    await nextTick()
-    expect(query.value.search).toBeUndefined()
-
-    vi.advanceTimersByTime(300)
-    expect(query.value.search).toBe('lu')
-
-    vi.useRealTimers()
   })
 
   it('reset clears every filter', () => {

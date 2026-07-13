@@ -18,9 +18,6 @@ const sortComparators: Record<ProfessionalSort, (a: Professional, b: Professiona
 }
 
 const filterPredicates = {
-  search: (value: string, professional: Professional) =>
-    professional.name.toLowerCase().includes(value)
-    || professional.profession.toLowerCase().includes(value),
   profession: (value: string, professional: Professional) => professional.professionSlug === value,
   state: (value: string, professional: Professional) => professional.location.state === value,
   online: (value: boolean, professional: Professional) => professional.online === value,
@@ -59,12 +56,11 @@ export function listMockProfessionals(params: ProfessionalListParams = {}): Prof
 
   for (const [key, rawValue] of Object.entries(params)) {
     if (rawValue === undefined || !(key in filterPredicates)) continue
-    const value = key === 'search' ? String(rawValue).trim().toLowerCase() : rawValue
     const predicate = filterPredicates[key as keyof typeof filterPredicates] as (
       value: string | number | boolean,
       professional: Professional
     ) => boolean
-    results = results.filter(professional => predicate(value, professional))
+    results = results.filter(professional => predicate(rawValue, professional))
   }
 
   results = [...results].sort(sortComparators[params.sort ?? 'featured'])

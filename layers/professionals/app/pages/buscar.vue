@@ -27,7 +27,7 @@ function closeSheet() {
 <template>
   <div>
     <CatalogToolbar
-      v-model:search="filters.search"
+      v-model:state="filters.state"
       :filter-count="activeFilterCount"
       @open="openSheet"
     />

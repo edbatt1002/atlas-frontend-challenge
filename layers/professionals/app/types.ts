@@ -131,7 +131,6 @@ export type ProfessionalSort
     | 'price'
 
 export interface ProfessionalListParams {
-  search?: string
   profession?: string
   state?: string
   online?: boolean

@@ -10,7 +10,7 @@ import type {
   ProfessionalSort
 } from '../app/types'
 
-type ProfessionalFilterKey = 'search' | 'profession' | 'state' | 'online' | 'min_price' | 'max_price' | 'min_rating'
+type ProfessionalFilterKey = 'profession' | 'state' | 'online' | 'min_price' | 'max_price' | 'min_rating'
 type ProfessionalFilters = Partial<Record<ProfessionalFilterKey, string>>
 
 const sortComparators: Record<ProfessionalSort, (a: Professional, b: Professional) => number> = {
@@ -22,8 +22,6 @@ const sortComparators: Record<ProfessionalSort, (a: Professional, b: Professiona
 }
 
 const filterPredicates: Record<ProfessionalFilterKey, (value: string, p: Professional) => boolean> = {
-  search: (value, p) =>
-    p.name.toLowerCase().includes(value) || p.profession.toLowerCase().includes(value),
   profession: (value, p) => p.professionSlug === value,
   state: (value, p) => p.location.state === value,
   online: (value, p) => p.online === (value === 'true'),
@@ -80,7 +78,6 @@ export function paginate(list: Professional[], page: number, limit: number): Pro
 
 function parseFilters(params: URLSearchParams): ProfessionalFilters {
   return {
-    search: params.get('search')?.trim().toLowerCase() || undefined,
     profession: params.get('profession') || undefined,
     state: params.get('state') || undefined,
     online: params.get('online') || undefined,

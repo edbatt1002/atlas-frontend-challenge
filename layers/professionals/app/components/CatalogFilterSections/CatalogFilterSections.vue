@@ -24,7 +24,7 @@ function onUpdateModelValue(value: string | number) {
     orientation="vertical"
     variant="link"
     color="primary"
-    class="w-[150px] min-w-[150px] shrink-0 overflow-y-auto border-r border-line bg-black/20 py-2 mb-auto"
+    class="w-[150px] min-w-[150px] shrink-0 overflow-y-auto border-r border-line py-2 mb-auto"
     :ui="{ list: 'bg-transparent', trigger: 'justify-between font-semibold' }"
     @update:model-value="onUpdateModelValue"
   />
