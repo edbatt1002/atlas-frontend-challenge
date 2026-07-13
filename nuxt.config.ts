@@ -33,6 +33,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    '/': { swr: 60 * 60 * 24 },
     '/termos': { prerender: true },
     '/privacidade': { prerender: true },
     '/suporte': { prerender: true },
