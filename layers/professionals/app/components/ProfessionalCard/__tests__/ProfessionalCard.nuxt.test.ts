@@ -44,43 +44,21 @@ describe('ProfessionalCard', () => {
     expect(offline.text()).not.toContain('ONLINE')
   })
 
-  it('caps the carousel to at most 4 photos from the gallery', async () => {
-    const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
-
-    expect(wrapper.findAll('swiper-slide')).toHaveLength(5)
-  })
-
-  it('renders every gallery photo, eager only for the first and native lazy for the rest', async () => {
+  it('renders only the SSR image before carousel activation', async () => {
     const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
     const galleryImages = wrapper.findAll('img[alt*="foto"]')
 
-    expect(galleryImages).toHaveLength(Math.min(professional.gallery.length, 4))
-    expect(galleryImages[0]!.attributes('loading')).toBe('eager')
+    expect(galleryImages).toHaveLength(1)
+    expect(galleryImages[0]!.attributes('loading')).toBe('lazy')
     expect(galleryImages[0]!.attributes('src')).toBe(professional.gallery[0])
-    expect(galleryImages[1]!.attributes('loading')).toBe('lazy')
-  })
-
-  it('hands the neighbor-preload amount to the carousel via lazy-preload-prev-next', async () => {
-    const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
-
-    expect(wrapper.find('swiper-container').attributes('lazy-preload-prev-next')).toBe('1')
   })
 
   it('marks the first photo with high fetch priority only when the card is a priority card', async () => {
     const priority = await mountSuspended(ProfessionalCard, { props: { professional, priority: true } })
     expect(priority.find('img[alt*="foto"]').attributes('fetchpriority')).toBe('high')
+    expect(priority.find('img[alt*="foto"]').attributes('loading')).toBe('eager')
 
     const regular = await mountSuspended(ProfessionalCard, { props: { professional } })
     expect(regular.find('img[alt*="foto"]').attributes('fetchpriority')).toBeUndefined()
-  })
-
-  it('renders the profile CTA slide with a blurred preview of the first photo, and the photo/video counts', async () => {
-    const wrapper = await mountSuspended(ProfessionalCard, { props: { professional } })
-    const text = wrapper.text()
-
-    expect(text).toContain('Entrar no perfil')
-    expect(text).toContain('24')
-    expect(text).toContain('3')
-    expect(wrapper.find('img[aria-hidden="true"]').attributes('src')).toBe(professional.gallery[0])
   })
 })
