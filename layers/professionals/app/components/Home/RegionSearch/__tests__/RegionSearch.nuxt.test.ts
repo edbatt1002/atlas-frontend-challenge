@@ -25,6 +25,22 @@ async function mountRegionSearch() {
 }
 
 describe('HomeRegionSearch', () => {
+  beforeEach(() => {
+    Object.defineProperty(navigator, 'geolocation', {
+      value: {
+        watchPosition: (success: PositionCallback) => {
+          success({
+            coords: { latitude: -23.5, longitude: -46.6, accuracy: 10, altitude: null, altitudeAccuracy: null, heading: null, speed: null },
+            timestamp: 0
+          } as GeolocationPosition)
+          return 1
+        },
+        clearWatch: vi.fn()
+      },
+      configurable: true
+    })
+  })
+
   it('defaults to showing the whole country', async () => {
     const { body } = await mountRegionSearch()
 
@@ -73,6 +89,16 @@ describe('HomeRegionSearch', () => {
     await body.find('[aria-label="Fechar"]').trigger('click')
 
     expect(body.text()).toContain('Todo o Brasil')
+  })
+
+  it('shows "Perto de você" when the current location is used', async () => {
+    const { body } = await mountRegionSearch()
+    await body.find('button').trigger('click')
+
+    const locationButton = body.findAll('button').find(b => b.text().includes('Usar minha localização atual'))
+    await locationButton!.trigger('click')
+
+    expect(body.text()).toContain('Perto de você')
   })
 
   it('renders the popular shortcuts linking into the catalog', async () => {

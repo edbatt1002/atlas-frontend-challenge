@@ -25,6 +25,22 @@ async function mountDrawer(open = true) {
 }
 
 describe('RegionPickerDrawer', () => {
+  beforeEach(() => {
+    Object.defineProperty(navigator, 'geolocation', {
+      value: {
+        watchPosition: (success: PositionCallback) => {
+          success({
+            coords: { latitude: -23.5, longitude: -46.6, accuracy: 10, altitude: null, altitudeAccuracy: null, heading: null, speed: null },
+            timestamp: 0
+          } as GeolocationPosition)
+          return 1
+        },
+        clearWatch: vi.fn()
+      },
+      configurable: true
+    })
+  })
+
   it('renders the state list when open', async () => {
     const { body } = await mountDrawer()
 
@@ -58,5 +74,17 @@ describe('RegionPickerDrawer', () => {
     await body.find('[aria-label="Fechar"]').trigger('click')
 
     expect(drawer.emitted('update:open')).toEqual([[false]])
+  })
+
+  it('emits useLocation and closes when the current location is used', async () => {
+    const { wrapper, body } = await mountDrawer()
+    const drawer = wrapper.findComponent(RegionPickerDrawer)
+    const locationButton = body.findAll('button').find(b => b.text().includes('Usar minha localização atual'))
+
+    await locationButton!.trigger('click')
+    await nextTick()
+
+    expect(drawer.emitted('useLocation')).toHaveLength(1)
+    expect(drawer.emitted('update:open')?.at(-1)).toEqual([false])
   })
 })

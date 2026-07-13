@@ -1,6 +1,7 @@
 import type { DOMWrapper } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import SortPanel from '../SortPanel.vue'
+import type { ProfessionalSort } from '../../../../types'
 
 let activeWrapper: Awaited<ReturnType<typeof mountSuspended>> | null = null
 
@@ -9,8 +10,8 @@ afterEach(() => {
   activeWrapper = null
 })
 
-async function mountPanel() {
-  activeWrapper = await mountSuspended(SortPanel, { attachTo: document.body })
+async function mountPanel(sort?: ProfessionalSort) {
+  activeWrapper = await mountSuspended(SortPanel, { props: { sort }, attachTo: document.body })
   return activeWrapper
 }
 
@@ -31,6 +32,16 @@ describe('SortPanel', () => {
     await option!.trigger('click')
 
     expect(wrapper.emitted('update:sort')).toEqual([['newest']])
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it('emits update:sort as undefined when Destaques is picked back', async () => {
+    const wrapper = await mountPanel('newest')
+    const option = wrapper.findAll('button').find((b: DOMWrapper<Element>) => b.text().includes('Destaques'))
+
+    await option!.trigger('click')
+
+    expect(wrapper.emitted('update:sort')).toEqual([[undefined]])
     expect(wrapper.emitted('close')).toHaveLength(1)
   })
 

@@ -60,4 +60,14 @@ describe('LayoutHeader', () => {
     expect(body.text()).toContain('Privacidade')
     expect(body.text()).toContain('Suporte')
   })
+
+  it('closes the mobile menu when the close button is clicked', async () => {
+    const { body } = await mountHeader()
+
+    await body.find('button[aria-label="Abrir menu"]').trigger('click')
+    expect(document.body.innerHTML).toContain('data-state="open"')
+
+    await body.find('button.rounded-full[aria-label="Fechar menu"]').trigger('click')
+    expect(document.body.innerHTML).not.toContain('data-state="open"')
+  })
 })

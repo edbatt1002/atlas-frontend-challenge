@@ -5,6 +5,22 @@ import UApp from '@nuxt/ui/components/App.vue'
 import CatalogToolbar from '../CatalogToolbar.vue'
 
 describe('CatalogToolbar', () => {
+  beforeEach(() => {
+    Object.defineProperty(navigator, 'geolocation', {
+      value: {
+        watchPosition: (success: PositionCallback) => {
+          success({
+            coords: { latitude: -23.5, longitude: -46.6, accuracy: 10, altitude: null, altitudeAccuracy: null, heading: null, speed: null },
+            timestamp: 0
+          } as GeolocationPosition)
+          return 1
+        },
+        clearWatch: vi.fn()
+      },
+      configurable: true
+    })
+  })
+
   it('shows the picked state label, or a placeholder when none is picked', async () => {
     const withState = await mountSuspended(CatalogToolbar, {
       props: { 'filterCount': 0, 'state': 'SP', 'onUpdate:state': () => {} }
@@ -63,6 +79,30 @@ describe('CatalogToolbar', () => {
     await spOption!.trigger('click')
 
     expect(emitted).toEqual([['SP']])
+    wrapper.unmount()
+  })
+
+  it('clears the picked state when the current location is used', async () => {
+    const emitted: (string | undefined)[] = []
+    const Host = defineComponent({
+      setup() {
+        return () => h(UApp, null, {
+          default: () => h(CatalogToolbar, {
+            'filterCount': 0,
+            'state': 'SP',
+            'onUpdate:state': (value: string | undefined) => emitted.push(value)
+          })
+        })
+      }
+    })
+    const wrapper = await mountSuspended(Host, { attachTo: document.body })
+    const body = new DOMWrapper(document.body)
+
+    await body.find('button').trigger('click')
+    const locationButton = body.findAll('button').find(b => b.text().includes('Usar minha localização atual'))
+    await locationButton!.trigger('click')
+
+    expect(emitted).toContain(undefined)
     wrapper.unmount()
   })
 })

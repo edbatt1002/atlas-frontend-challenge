@@ -27,4 +27,12 @@ describe('ProfessionalPriceTag', () => {
 
     expect(wrapper.text()).toContain('/ hora')
   })
+
+  it('applies the explicit size when provided', async () => {
+    const wrapper = await mountSuspended(ProfessionalPriceTag, {
+      props: { price: 350, size: 'sm' }
+    })
+
+    expect(wrapper.text()).toContain('R$ 350')
+  })
 })

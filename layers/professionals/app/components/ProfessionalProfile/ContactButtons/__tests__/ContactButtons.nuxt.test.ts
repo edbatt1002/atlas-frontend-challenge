@@ -22,6 +22,16 @@ describe('ProfessionalProfileContactButtons', () => {
     expect(hrefs.some(h => h?.includes('t.me'))).toBe(false)
   })
 
+  it('compact variant omits the whatsapp button when only telegram is available', async () => {
+    const wrapper = await mountSuspended(ContactButtons, {
+      props: { contact: { telegram: 'tg_handle' }, variant: 'compact' }
+    })
+    const hrefs = wrapper.findAll('a').map(a => a.attributes('href'))
+
+    expect(hrefs).toContain('https://t.me/tg_handle')
+    expect(hrefs.some(h => h?.includes('wa.me'))).toBe(false)
+  })
+
   it('primary variant prefers whatsapp over telegram', async () => {
     const wrapper = await mountSuspended(ContactButtons, {
       props: { contact: { telegram: 'tg_handle', whatsapp: '5511999998888' }, variant: 'primary' }

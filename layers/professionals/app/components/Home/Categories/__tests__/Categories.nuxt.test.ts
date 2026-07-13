@@ -31,4 +31,11 @@ describe('HomeCategories', () => {
 
     expect(hrefs).toContain('/buscar?profession=acompanhante')
   })
+
+  it('renders placeholder cards when there are no categories yet', async () => {
+    const wrapper = await mountSuspended(Categories, { props: { categories: [] } })
+
+    expect(wrapper.findAll('[aria-hidden="true"]')).toHaveLength(4)
+    expect(wrapper.findAll('a')).toHaveLength(0)
+  })
 })

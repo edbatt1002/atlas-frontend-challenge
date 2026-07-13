@@ -59,6 +59,12 @@ describe('useProfessionals', () => {
     expect(listProfessionals).toHaveBeenCalledWith({ profession: 'modelo', page: 3 })
   })
 
+  it('defaults to no filters when none are provided', () => {
+    const result = useProfessionals() as unknown as InfiniteResult
+
+    expect(toValue(result.key)).toEqual(['professionals', {}])
+  })
+
   it('wires pagination options', () => {
     const result = useProfessionals() as unknown as InfiniteResult
 
