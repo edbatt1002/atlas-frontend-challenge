@@ -10,7 +10,8 @@ const props: IdentityHeaderProps = {
   online: true,
   rating: 4.9,
   reviewsCount: 214,
-  location: { city: 'São Paulo', state: 'SP', distanceKm: 2.3 }
+  location: { city: 'São Paulo', state: 'SP', distanceKm: 2.3 },
+  contact: { whatsapp: '5511999999999' }
 }
 
 describe('ProfessionalProfileIdentityHeader', () => {

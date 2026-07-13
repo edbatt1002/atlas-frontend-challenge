@@ -21,6 +21,6 @@ const link = computed(() => buildContactLink(networkProp, value))
     variant="solid"
     block
     :class="[network.bgClass, network.textClass]"
-    class="justify-center border-0 font-extrabold"
+    class="justify-center border-0 font-extrabold lg:w-auto"
   />
 </template>

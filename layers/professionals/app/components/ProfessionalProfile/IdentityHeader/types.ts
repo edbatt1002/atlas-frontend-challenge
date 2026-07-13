@@ -1,4 +1,4 @@
-import type { ProfessionalLocation } from '../../../types'
+import type { ProfessionalContact, ProfessionalLocation } from '../../../types'
 
 export interface IdentityHeaderProps {
   avatarUrl: string
@@ -9,4 +9,5 @@ export interface IdentityHeaderProps {
   rating: number
   reviewsCount: number
   location: ProfessionalLocation
+  contact: ProfessionalContact
 }
