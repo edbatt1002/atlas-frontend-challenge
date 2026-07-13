@@ -1,20 +1,6 @@
-import type { Professional } from '../../types'
+import type { ProfessionalSummary } from '../../types'
 
-export type ProfessionalCardData = Pick<
-  Professional,
-  | 'id'
-  | 'name'
-  | 'profession'
-  | 'gallery'
-  | 'photos'
-  | 'videos'
-  | 'online'
-  | 'verified'
-  | 'price'
-  | 'rating'
-  | 'description'
-  | 'location'
->
+export type ProfessionalCardData = ProfessionalSummary
 
 export interface ProfessionalCardProps {
   professional: ProfessionalCardData
