@@ -24,13 +24,13 @@ defineProps<FeaturedStripProps>()
           v-for="professional in professionals"
           :key="professional.id"
           :professional="professional"
-          class="w-[220px] shrink-0"
+          class="w-[215px] shrink-0"
         />
         <ProfessionalCardSkeleton
           v-for="index in professionals.length === 0 ? 4 : 0"
           :key="`featured-placeholder-${index}`"
           aria-hidden="true"
-          class="w-[220px] shrink-0"
+          class="w-[215px] shrink-0"
         />
       </div>
     </div>
