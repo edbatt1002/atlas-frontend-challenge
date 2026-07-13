@@ -5,7 +5,7 @@ export default defineEventHandler((event) => {
   const professional = id ? getMockProfessional(id) : undefined
 
   if (!professional) {
-    throw createError({ statusCode: 404, statusMessage: 'Professional not found' })
+    throw createError({ statusCode: 404, message: 'Professional not found' })
   }
 
   return professional

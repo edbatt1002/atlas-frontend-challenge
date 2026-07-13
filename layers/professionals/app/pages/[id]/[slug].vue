@@ -18,7 +18,7 @@ const isNotFound = computed(() => (error.value as FetchError | null)?.statusCode
 if (import.meta.client) {
   watchEffect(() => {
     if (isNotFound.value) {
-      showError(createError({ statusCode: 404, statusMessage: 'Profissional não encontrado' }))
+      showError(createError({ statusCode: 404, message: 'Profissional não encontrado' }))
       return
     }
 
