@@ -24,7 +24,7 @@ function onUpdateOpen(open: boolean) {
     direction="bottom"
     :ui="{
       overlay: 'z-50',
-      content: 'z-50 h-[60%] max-h-[60%] max-w-(--ui-container) mx-auto',
+      content: 'z-50 h-[60%] max-h-[60%] sm:h-auto sm:max-h-[85vh] max-w-(--ui-container) mx-auto',
       container: 'h-full p-0 gap-0 overflow-hidden',
       body: 'flex-1 min-h-0 p-0'
     }"

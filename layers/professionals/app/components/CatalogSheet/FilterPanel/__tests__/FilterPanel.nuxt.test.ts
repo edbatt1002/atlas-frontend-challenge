@@ -56,4 +56,16 @@ describe('FilterPanel', () => {
 
     expect(wrapper.emitted('close')).toHaveLength(1)
   })
+
+  it('scrolls to the matching section when clicked in the rail nav', async () => {
+    const scrollIntoView = vi.fn()
+    HTMLElement.prototype.scrollIntoView = scrollIntoView
+
+    const wrapper = await mountSuspended(FilterPanel, { props: baseProps })
+    const ratingSection = wrapper.findAll('button').find(b => b.text() === 'Avaliação')
+
+    await ratingSection!.trigger('mousedown')
+
+    expect(scrollIntoView).toHaveBeenCalled()
+  })
 })

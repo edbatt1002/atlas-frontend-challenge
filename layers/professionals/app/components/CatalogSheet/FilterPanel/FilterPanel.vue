@@ -33,17 +33,8 @@ function setSectionRef(id: CatalogFilterSection) {
   }
 }
 
-FILTER_SECTIONS.forEach((section) => {
-  useIntersectionObserver(
-    () => sectionRefs[section.id],
-    ([entry]) => {
-      if (entry?.isIntersecting) activeSection.value = section.id
-    },
-    { root: paneRef, rootMargin: '0px 0px -70% 0px' }
-  )
-})
-
 function scrollToSection(id: CatalogFilterSection) {
+  activeSection.value = id
   sectionRefs[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
@@ -75,6 +66,7 @@ function onMaxPriceUpdate(value: number | undefined) {
     <CatalogFilterSections
       :sections="filterSectionsWithCount"
       :active="activeSection"
+      class="sm:hidden"
       @select="scrollToSection"
     />
 
