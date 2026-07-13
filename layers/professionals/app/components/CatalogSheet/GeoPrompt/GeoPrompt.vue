@@ -17,7 +17,7 @@ function onGeoAllow() {
 </script>
 
 <template>
-  <div class="flex flex-1 flex-col items-center justify-center px-8 text-center">
+  <div class="flex min-h-[360px] flex-1 flex-col items-center justify-center px-8 py-8 text-center">
     <div class="flex size-[70px] items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-3xl text-primary-400">
       <UIcon name="i-lucide-map-pin" />
     </div>
