@@ -25,7 +25,7 @@ const topOffset = computed(() => headerVisible.value ? headerHeight.value : 0)
     class="fixed inset-x-0 z-30 border-b border-line bg-bg/95 py-3 backdrop-blur-xl transition-[top] duration-300"
     :style="{ top: `${topOffset}px` }"
   >
-    <UContainer class="flex flex-col gap-3">
+    <UContainer class="flex flex-col gap-4">
       <UInput
         v-model="search"
         icon="i-lucide-search"
@@ -36,13 +36,14 @@ const topOffset = computed(() => headerVisible.value ? headerHeight.value : 0)
         size="lg"
       />
 
-      <div class="flex gap-2">
+      <div class="flex gap-4">
         <UChip
           :show="filterCount > 0"
           :text="filterCount"
           color="primary"
-          size="sm"
+          size="3xl"
           class="flex-1"
+          :ui="{ base: 'h-5 min-w-5 px-1 text-[11px] font-bold' }"
         >
           <UButton
             block
