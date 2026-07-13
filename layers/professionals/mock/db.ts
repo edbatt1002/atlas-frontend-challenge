@@ -41,8 +41,10 @@ export function seedDb() {
   if (seeded) return
   seeded = true
 
+  const imageSource = process.env.NUXT_PUBLIC_IMAGE_SOURCE || 'local'
+
   faker.seed(SEED)
   for (let i = 0; i < PROFESSIONAL_COUNT; i++) {
-    db.professional.create(createProfessional(i))
+    db.professional.create(createProfessional(i, imageSource))
   }
 }

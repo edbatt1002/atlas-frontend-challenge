@@ -122,13 +122,13 @@ function buildStats(createdAt: string): ProfessionalStats {
   }
 }
 
-export function createProfessional(index: number): Professional {
+export function createProfessional(index: number, imageSource: string = 'local'): Professional {
   const profession = faker.helpers.arrayElement(professions)
   const sex = faker.person.sexType()
   const firstName = faker.person.firstName(sex)
   const lastName = faker.person.lastName()
   const price = faker.number.int({ min: 80, max: 900 })
-  const imageSet = getProfessionalImageSet(index)
+  const imageSet = getProfessionalImageSet(index, imageSource)
   const createdAt = faker.date.past({ years: 2 }).toISOString()
 
   return {

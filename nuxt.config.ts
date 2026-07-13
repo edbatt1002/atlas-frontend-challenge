@@ -28,12 +28,13 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: ''
+      apiBase: '',
+      imageSource: process.env.NUXT_PUBLIC_IMAGE_SOURCE || 'local'
     }
   },
 
   routeRules: {
-    '/': { swr: 60 * 60 * 24 },
+    ...(process.env.NODE_ENV === 'production' ? { '/': { swr: 60 * 60 * 24 } } : {}),
     '/termos': { prerender: true },
     '/privacidade': { prerender: true },
     '/suporte': { prerender: true },
@@ -68,15 +69,6 @@ export default defineNuxtConfig({
   },
 
   image: {
-    domains: ['picsum.photos', 'api.dicebear.com'],
-    screens: {
-      sm: 320,
-      md: 480,
-      lg: 640,
-      xl: 960
-    },
-    ipx: {
-      maxAge: 60 * 60 * 24 * 365
-    }
+    provider: 'none'
   }
 })

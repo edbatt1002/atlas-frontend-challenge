@@ -1,3 +1,5 @@
+import { fakerPT_BR as faker } from '@faker-js/faker'
+
 export interface ProfessionalImageSet {
   avatar: string
   cover: string
@@ -18,7 +20,22 @@ export const professionalImageSets: ProfessionalImageSet[] = Array.from({ length
   }
 })
 
-export function getProfessionalImageSet(index: number): ProfessionalImageSet {
+function getLocalImageSet(index: number): ProfessionalImageSet {
   const distributedIndex = (index * 7) % professionalImageSets.length
   return professionalImageSets[distributedIndex]!
+}
+
+function buildFakerImageSet(): ProfessionalImageSet {
+  const photo = (width: number, height: number) => faker.image.urlPicsumPhotos({ width, height, blur: 0, grayscale: false })
+
+  return {
+    avatar: photo(200, 200),
+    cover: photo(1280, 480),
+    gallery: Array.from({ length: 3 }, () => photo(640, 800))
+  }
+}
+
+export function getProfessionalImageSet(index: number, source: string = 'local'): ProfessionalImageSet {
+  if (source === 'faker') return buildFakerImageSet()
+  return getLocalImageSet(index)
 }
