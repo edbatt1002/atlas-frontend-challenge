@@ -10,10 +10,12 @@ const slideCount = computed(() => photos.value.length + 1)
 const activeIndex = ref(0)
 const carouselActive = ref(false)
 const carouselReady = ref(false)
+const carouselEngaged = ref(false)
 const nextSlideRequested = ref(false)
 const cardEl = ref<HTMLElement | null>(null)
 const canHover = useMediaQuery('(hover: hover) and (pointer: fine)')
 const isPhotoSlide = computed(() => activeIndex.value < photos.value.length)
+const carouselVisible = computed(() => carouselReady.value && carouselEngaged.value)
 
 const profileTo = computed(() => professionalPath(professional.id, professional.name))
 
@@ -25,6 +27,12 @@ function activateCarousel() {
 
 function requestNextSlide() {
   nextSlideRequested.value = true
+  carouselEngaged.value = true
+  activateCarousel()
+}
+
+function engageCarousel() {
+  carouselEngaged.value = true
   activateCarousel()
 }
 
@@ -50,8 +58,9 @@ stopCarouselObserver = carouselObserver.stop
   <article
     ref="cardEl"
     class="group relative overflow-hidden rounded-[12px] border border-line bg-bg-card shadow-card transition duration-200 [content-visibility:auto] [contain-intrinsic-size:auto_590px] hover:border-primary-400/40"
-    @pointerenter="canHover && activateCarousel()"
-    @focusin="activateCarousel"
+    @pointerenter="canHover && engageCarousel()"
+    @pointerdown="engageCarousel"
+    @focusin="engageCarousel"
   >
     <div class="relative aspect-[4/5] overflow-hidden bg-bg-raised">
       <LazyProfessionalCardCarousel
@@ -60,11 +69,12 @@ stopCarouselObserver = carouselObserver.stop
         :professional="professional"
         :photos="photos"
         :priority="priority"
+        :engaged="carouselEngaged"
         @ready="carouselReady = true"
       />
 
       <div
-        v-if="!carouselReady && photos[0]"
+        v-if="!carouselVisible && photos[0]"
         class="pointer-events-none absolute inset-0 z-10"
       >
         <NuxtImg
@@ -72,11 +82,9 @@ stopCarouselObserver = carouselObserver.stop
           :alt="`${professional.name} - foto 1`"
           :loading="priority ? 'eager' : 'lazy'"
           :fetchpriority="priority ? 'high' : undefined"
-          sizes="sm:100vw md:50vw lg:33vw xl:25vw"
           width="640"
           height="800"
-          quality="70"
-          format="webp"
+          densities="1"
           class="size-full object-cover"
         />
 

@@ -11,10 +11,9 @@ defineProps<CoverProps>()
       :alt="`Capa de ${name}`"
       loading="eager"
       fetchpriority="high"
-      sizes="100vw"
       width="1200"
       height="400"
-      format="webp"
+      densities="1"
       class="size-full object-cover"
     />
     <div class="absolute inset-0 bg-gradient-to-t from-bg via-bg/10 to-transparent" />

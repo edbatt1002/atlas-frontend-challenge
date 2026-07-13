@@ -38,10 +38,9 @@ const gallery = computed(() => getGalleryDisplay(props.media, GALLERY_GRID_LIMIT
           :src="item.url"
           :alt="`${name} - galeria ${index + 1}`"
           loading="lazy"
-          sizes="33vw"
           width="400"
           height="533"
-          format="webp"
+          densities="1"
           class="size-full object-cover"
         />
         <span

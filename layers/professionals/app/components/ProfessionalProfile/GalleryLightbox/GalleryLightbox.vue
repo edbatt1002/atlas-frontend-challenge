@@ -142,10 +142,9 @@ useIntersectionObserver(
                 :src="item.url"
                 :alt="`${name} - mídia ${index + 1}`"
                 loading="lazy"
-                sizes="25vw"
                 width="400"
                 height="533"
-                format="webp"
+                densities="1"
                 class="size-full object-cover"
               />
               <span
@@ -173,10 +172,9 @@ useIntersectionObserver(
               :src="item.url"
               :alt="`${name} - mídia ${index + 1}`"
               :loading="index === 0 ? 'eager' : 'lazy'"
-              sizes="100vw"
               width="960"
               height="720"
-              format="webp"
+              densities="1"
               class="max-h-full max-w-full object-contain"
             />
             <span

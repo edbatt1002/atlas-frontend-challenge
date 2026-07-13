@@ -3,10 +3,11 @@ import { SwiperSlide } from 'swiper/vue'
 import type { ProfessionalCardData } from '../types'
 import { CAROUSEL_LAZY_PRELOAD_NEIGHBORS } from '../config'
 
-const { professional, photos, priority = false } = defineProps<{
+const { professional, photos, priority = false, engaged = true } = defineProps<{
   professional: ProfessionalCardData
   photos: string[]
   priority?: boolean
+  engaged?: boolean
 }>()
 
 const activeIndex = defineModel<number>({ required: true })
@@ -46,16 +47,14 @@ watch(activeIndex, (index) => {
       :key="photo"
     >
       <NuxtImg
-        v-if="loadedPhotoIndexes.has(index)"
+        v-if="engaged && loadedPhotoIndexes.has(index)"
         :src="photo"
         :alt="`${professional.name} - foto ${index + 1}`"
         :loading="index === 0 && priority ? 'eager' : 'lazy'"
         :fetchpriority="index === 0 && priority ? 'high' : undefined"
-        sizes="sm:100vw md:50vw lg:33vw xl:25vw"
         width="640"
         height="800"
-        quality="70"
-        format="webp"
+        densities="1"
         class="size-full object-cover"
         @load="index === 0 && emitReady()"
         @error="index === 0 && emitReady()"
@@ -65,17 +64,16 @@ watch(activeIndex, (index) => {
     <SwiperSlide>
       <div class="relative flex size-full flex-col items-center justify-center gap-1 overflow-hidden p-5 text-center">
         <NuxtImg
-          v-if="photos[0]"
+          v-if="engaged && photos[0]"
           :src="photos[0]"
           aria-hidden="true"
           loading="lazy"
           width="640"
           height="800"
-          quality="70"
-          format="webp"
+          densities="1"
           class="absolute inset-0 size-full scale-110 object-cover opacity-80 blur-xs"
         />
-        <div class="absolute inset-0 bg-gradient-to-br from-bg-raised/85 to-bg-soft/95" />
+        <div class="absolute inset-0 bg-gradient-to-br from-bg-raised/40 to-bg-soft/60 dark:from-bg-raised/85 dark:to-bg-soft/95" />
 
         <p class="relative font-display text-base font-extrabold text-ink">
           Perfil de {{ professional.name }}

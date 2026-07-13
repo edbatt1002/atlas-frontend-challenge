@@ -1,5 +1,6 @@
 import { fakerPT_BR as faker } from '@faker-js/faker'
 import { professions } from './professions'
+import { getProfessionalImageSet } from './imageSets'
 import type {
   Professional,
   ProfessionalAvailability,
@@ -46,10 +47,10 @@ function buildReviews(): ProfessionalReview[] {
   }))
 }
 
-function buildMedia(photoSeed: string): ProfessionalMedia[] {
+function buildMedia(gallery: string[]): ProfessionalMedia[] {
   const count = faker.number.int({ min: 4, max: 12 })
   return Array.from({ length: count }, (_, i) => ({
-    url: `https://picsum.photos/seed/${encodeURIComponent(`${photoSeed}-${i}`)}/640/480`,
+    url: gallery[i % gallery.length]!,
     type: faker.datatype.boolean(0.2) ? 'video' as const : 'photo' as const
   }))
 }
@@ -96,7 +97,7 @@ export function createProfessional(index: number): Professional {
   const firstName = faker.person.firstName(sex)
   const lastName = faker.person.lastName()
   const price = faker.number.int({ min: 80, max: 900 })
-  const photoSeed = `${profession.slug}-${index}-${firstName}`
+  const imageSet = getProfessionalImageSet(index)
   const createdAt = faker.date.past({ years: 2 }).toISOString()
 
   return {
@@ -104,8 +105,8 @@ export function createProfessional(index: number): Professional {
     name: `${firstName} ${lastName}`,
     profession: profession.label,
     professionSlug: profession.slug,
-    cover: `https://picsum.photos/seed/${encodeURIComponent(`${photoSeed}-cover`)}/1200/400`,
-    avatar: `https://api.dicebear.com/9.x/personas/svg?seed=${encodeURIComponent(photoSeed)}`,
+    cover: imageSet.cover,
+    avatar: imageSet.avatar,
     price,
     rating: faker.number.float({ min: 3.2, max: 5, fractionDigits: 1 }),
     reviewsCount: faker.number.int({ min: 0, max: 320 }),
@@ -120,10 +121,8 @@ export function createProfessional(index: number): Professional {
       state: faker.location.state({ abbreviated: true }),
       distanceKm: faker.number.float({ min: 0.5, max: 45, fractionDigits: 1 })
     },
-    gallery: Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, (_, i) =>
-      `https://picsum.photos/seed/${encodeURIComponent(`${photoSeed}-${i}`)}/640/480`
-    ),
-    media: buildMedia(photoSeed),
+    gallery: imageSet.gallery,
+    media: buildMedia(imageSet.gallery),
     characteristics: buildCharacteristics(),
     priceTiers: buildPriceTiers(price),
     contact: buildContact(),
