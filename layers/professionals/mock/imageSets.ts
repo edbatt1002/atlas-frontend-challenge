@@ -6,7 +6,7 @@ export interface ProfessionalImageSet {
 
 const IMAGE_ROOT = '/images/professionals'
 
-export const professionalImageSets: ProfessionalImageSet[] = Array.from({ length: 16 }, (_, index) => {
+export const professionalImageSets: ProfessionalImageSet[] = Array.from({ length: 20 }, (_, index) => {
   const directory = `${IMAGE_ROOT}/pilot-${String(index + 1).padStart(2, '0')}`
 
   return {
@@ -19,6 +19,6 @@ export const professionalImageSets: ProfessionalImageSet[] = Array.from({ length
 })
 
 export function getProfessionalImageSet(index: number): ProfessionalImageSet {
-  const distributedIndex = (index * 5) % professionalImageSets.length
+  const distributedIndex = (index * 7) % professionalImageSets.length
   return professionalImageSets[distributedIndex]!
 }
