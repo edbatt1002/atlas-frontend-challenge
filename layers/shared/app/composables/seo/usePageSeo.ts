@@ -9,8 +9,12 @@ export interface PageSeoOptions {
 }
 
 export function usePageSeo(options: PageSeoOptions) {
+  const route = useRoute()
+  const origin = useRequestURL().origin
+
   const fullTitle = () => `${SITE_NAME} · ${toValue(options.title)}`
   const description = () => toValue(options.description) ?? DEFAULT_DESCRIPTION
+  const canonicalUrl = () => `${origin}${route.path}`
 
   useSeoMeta({
     title: fullTitle,
@@ -20,5 +24,9 @@ export function usePageSeo(options: PageSeoOptions) {
     ogImage: () => toValue(options.image),
     twitterCard: 'summary_large_image',
     robots: () => toValue(options.noindex) ? 'noindex, nofollow' : 'index, follow'
+  })
+
+  useHead({
+    link: [{ rel: 'canonical', href: canonicalUrl }]
   })
 }
