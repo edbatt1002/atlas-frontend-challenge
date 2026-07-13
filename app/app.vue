@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { pt_br } from '@nuxt/ui/locale'
+
 const { visible: headerVisible } = useHeaderVisibility()
 const { visible: bottomNavVisible } = useBottomNavVisibility()
 const headerHeight = useHeaderHeight()
@@ -38,7 +40,10 @@ useSeoMeta({
 </script>
 
 <template>
-  <UApp :scroll-body="false">
+  <UApp
+    :scroll-body="false"
+    :locale="pt_br"
+  >
     <div
       ref="headerEl"
       class="fixed inset-x-0 top-0 z-40 transition-transform duration-300"

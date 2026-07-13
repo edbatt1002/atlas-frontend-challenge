@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pt_br } from '@nuxt/ui/locale'
 import type { NuxtError } from '#app'
 
 const { error } = defineProps<{ error: NuxtError }>()
@@ -20,7 +21,7 @@ function handleRetry() {
 </script>
 
 <template>
-  <UApp>
+  <UApp :locale="pt_br">
     <div class="flex h-svh flex-col overflow-hidden">
       <LayoutHeader />
 
