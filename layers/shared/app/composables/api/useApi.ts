@@ -33,7 +33,7 @@ export async function useApi<T>(
   const { baseURL, ...fetchOptions } = options ?? {}
 
   try {
-    const data = await $fetch<T>(useApiUrl(path, baseURL), fetchOptions)
+    const data = await $fetch<T>(useApiUrl(path, baseURL), fetchOptions) as T
     return { data, error: null }
   } catch (error) {
     return { data: null, error: error as FetchError }
