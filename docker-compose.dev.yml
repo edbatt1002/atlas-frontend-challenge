@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      target: deps
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.nuxt
+      - /app/.output
+    command: npm run dev -- --host 0.0.0.0

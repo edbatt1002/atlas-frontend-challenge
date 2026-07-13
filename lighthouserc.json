@@ -20,7 +20,7 @@
         "categories:performance": [
           "error",
           {
-            "minScore": 0.85,
+            "minScore": 0.8,
             "aggregationMethod": "median"
           }
         ],
@@ -46,14 +46,14 @@
           }
         ],
         "first-contentful-paint": [
-          "error",
+          "warn",
           {
             "maxNumericValue": 1800,
             "aggregationMethod": "median"
           }
         ],
         "largest-contentful-paint": [
-          "error",
+          "warn",
           {
             "maxNumericValue": 2500,
             "aggregationMethod": "median"

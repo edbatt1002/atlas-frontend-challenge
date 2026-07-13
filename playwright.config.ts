@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000'
+
 export default defineConfig({
   testDir: '.',
   testMatch: ['e2e/**/*.spec.ts', 'layers/*/e2e/**/*.spec.ts'],
@@ -11,16 +13,18 @@ export default defineConfig({
     ? [['github'], ['html', { open: 'never' }]]
     : 'list',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL,
     trace: 'on-first-retry'
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } }
   ],
-  webServer: {
-    command: 'node .output/server/index.mjs',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120000
-  }
+  webServer: process.env.PLAYWRIGHT_BASE_URL
+    ? undefined
+    : {
+        command: 'node .output/server/index.mjs',
+        url: baseURL,
+        reuseExistingServer: !process.env.CI,
+        timeout: 120000
+      }
 })
