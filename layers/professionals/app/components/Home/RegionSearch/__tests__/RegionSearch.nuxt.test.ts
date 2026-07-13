@@ -45,7 +45,7 @@ describe('HomeRegionSearch', () => {
 
   it('points the explore CTA at the catalog filtered by the picked state', async () => {
     const { body } = await mountRegionSearch()
-    const exploreLink = () => body.findAll('a').find(a => a.text().includes('Explorar profissionais'))
+    const exploreLink = () => body.findAll('a').find(a => a.text().includes('Buscar profissionais'))
 
     expect(exploreLink()!.attributes('href')).toBe('/buscar')
 

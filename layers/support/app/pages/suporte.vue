@@ -50,7 +50,7 @@ usePageSeo({
 
       <UButton
         to="/buscar"
-        label="Explorar profissionais"
+        label="Buscar profissionais"
         icon="i-lucide-search"
         size="lg"
         class="mt-6 font-bold"

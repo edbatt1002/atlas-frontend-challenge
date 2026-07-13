@@ -6,7 +6,7 @@ test.describe('Home', () => {
 
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
-    await page.getByRole('link', { name: 'Explorar profissionais' }).first().click()
+    await page.getByRole('link', { name: 'Buscar profissionais' }).first().click()
     await expect(page).toHaveURL(/\/buscar/)
   })
 })

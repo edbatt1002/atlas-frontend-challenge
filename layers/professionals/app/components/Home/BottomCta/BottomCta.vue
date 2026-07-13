@@ -12,7 +12,7 @@
       to="/buscar"
       color="primary"
       size="lg"
-      label="Explorar profissionais"
+      label="Buscar profissionais"
       class="mt-5 font-extrabold"
     />
     <p class="mt-6 text-xs text-ink-faint">

@@ -78,7 +78,7 @@ function useCurrentLocation() {
         block
         color="primary"
         size="lg"
-        label="Explorar profissionais"
+        label="Buscar profissionais"
         trailing-icon="i-lucide-arrow-right"
         class="mt-4 justify-center font-extrabold"
       />

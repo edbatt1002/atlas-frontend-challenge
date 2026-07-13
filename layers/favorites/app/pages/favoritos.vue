@@ -28,11 +28,11 @@ usePageSeo({
           Nenhum favorito por enquanto
         </h2>
         <p class="mt-2 max-w-md text-sm leading-6 text-ink-muted">
-          Explore o catálogo e marque os perfis que mais combinam com você para encontrá-los aqui depois.
+          Busque no catálogo e marque os perfis que mais combinam com você para encontrá-los aqui depois.
         </p>
         <UButton
           to="/buscar"
-          label="Explorar profissionais"
+          label="Buscar profissionais"
           icon="i-lucide-search"
           size="lg"
           class="mt-6 font-bold"
