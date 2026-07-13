@@ -41,8 +41,22 @@ export interface ProfessionalMedia {
 export interface ProfessionalCharacteristics {
   age: number
   heightCm: number
+  weightKg: number
+  footSize: number
+  gender: string
+  genderDescription: string
+  genitals: string
+  sexualPreference: string
+  sexualPreferenceDescription: string
+  ethnicity: string
   hairColor: string
+  hairStyle: string
+  hairLength: string
   eyeColor: string
+  hasSilicone: boolean
+  hasTattoos: boolean
+  hasPiercings: boolean
+  smoker: string
   attends: string
   hasLocal: boolean
   languages: string[]

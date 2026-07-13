@@ -16,8 +16,22 @@ const professional = buildProfessional({
   characteristics: {
     age: 24,
     heightCm: 168,
+    weightKg: 58,
+    footSize: 36,
+    gender: 'Mulher',
+    genderDescription: 'Mulher Cisgênero. Nasceu do sexo feminino e identifica-se como mulher.',
+    genitals: 'Possui vagina',
+    sexualPreference: 'Ativo - Passivo',
+    sexualPreferenceDescription: 'Faz e recebe penetração',
+    ethnicity: 'Branco',
     hairColor: 'Loiro',
+    hairStyle: 'Liso',
+    hairLength: 'Médio',
     eyeColor: 'Castanhos',
+    hasSilicone: false,
+    hasTattoos: false,
+    hasPiercings: false,
+    smoker: 'Não',
     attends: 'Homens',
     hasLocal: true,
     languages: ['PT', 'EN'],
@@ -107,5 +121,17 @@ describe('ProfessionalProfile', () => {
     const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
 
     expect(wrapper.findAll('a').map(a => a.attributes('href'))).toContain('/buscar')
+  })
+
+  it('marks a tab active immediately when clicked, before any scroll settles', async () => {
+    const scrollIntoView = vi.fn()
+    HTMLElement.prototype.scrollIntoView = scrollIntoView
+
+    const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
+    const tab = wrapper.findAll('button').find(b => b.text() === 'Avaliações')
+
+    await tab!.trigger('mousedown')
+
+    expect(scrollIntoView).toHaveBeenCalled()
   })
 })
