@@ -5,7 +5,7 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <UFooter class="hidden lg:block">
+  <UFooter class="hidden border-t border-line lg:block">
     <template #left>
       <img
         src="/onluxe-logo.svg"
