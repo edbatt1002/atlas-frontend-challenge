@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ProfessionalProfileProps } from './types'
-import type { ProfileSectionId } from './ProfileTabs/config'
+import { useProfileScrollSpy } from './useProfileScrollSpy'
 
 defineProps<ProfessionalProfileProps>()
 
@@ -9,29 +9,10 @@ const tabsHeight = useProfileTabsHeight()
 const tabsTopOffset = computed(() => headerHeight.value)
 const sectionScrollMarginTop = computed(() => headerHeight.value + tabsHeight.value + 12)
 
-const sectionRefs = reactive<Partial<Record<ProfileSectionId, HTMLElement>>>({})
-const activeSection = ref<ProfileSectionId>('fotos')
-
-function setSectionRef(id: ProfileSectionId) {
-  return (el: unknown) => {
-    sectionRefs[id] = (el as HTMLElement | null) ?? undefined
-  }
-}
-
-const SECTION_IDS: ProfileSectionId[] = ['fotos', 'sobre', 'aval']
-SECTION_IDS.forEach((id) => {
-  useIntersectionObserver(
-    () => sectionRefs[id],
-    ([entry]) => {
-      if (entry?.isIntersecting) activeSection.value = id
-    },
-    { rootMargin: computed(() => `-${sectionScrollMarginTop.value}px 0px -60% 0px`) }
-  )
-})
-
-function scrollToSection(id: ProfileSectionId) {
-  sectionRefs[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
+const { activeSection, setSectionRef, scrollToSection } = useProfileScrollSpy(
+  ['fotos', 'sobre', 'aval'],
+  computed(() => `-${sectionScrollMarginTop.value}px 0px -50% 0px`)
+)
 
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
@@ -59,11 +40,7 @@ function openLightbox(index: number) {
         :rating="professional.rating"
         :reviews-count="professional.reviewsCount"
         :location="professional.location"
-      />
-
-      <ProfessionalProfileContactButtons
         :contact="professional.contact"
-        class="mt-4 px-4 sm:px-6"
       />
     </div>
 
@@ -77,7 +54,7 @@ function openLightbox(index: number) {
     <div class="mx-auto max-w-[1180px]">
       <div class="grid gap-6 pb-28 lg:grid-cols-[1fr_320px] lg:items-start lg:pb-10">
         <div class="min-w-0">
-          <div class="flex flex-col gap-6 px-4 py-5 sm:px-6">
+          <div class="flex flex-col gap-10 px-4 py-5 sm:px-6">
             <div
               :ref="setSectionRef('fotos')"
               :style="{ scrollMarginTop: `${sectionScrollMarginTop}px` }"
@@ -96,27 +73,27 @@ function openLightbox(index: number) {
               <h2 class="font-display text-base font-bold text-ink">
                 Sobre mim
               </h2>
-              <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+              <p class="mt-3 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
                 {{ professional.description }}
               </p>
 
               <ProfessionalProfileCharacteristicsGrid
                 :characteristics="professional.characteristics"
-                class="mt-6"
+                class="mt-8"
               />
 
-              <h2 class="mt-6 font-display text-base font-bold text-ink lg:hidden">
+              <h2 class="mt-8 font-display text-base font-bold text-ink lg:hidden">
                 Valores
               </h2>
               <ProfessionalProfilePriceTiers
                 :tiers="professional.priceTiers"
-                class="mt-2 lg:hidden"
+                class="mt-3 lg:hidden"
               />
 
-              <h2 class="mt-6 font-display text-base font-bold text-ink">
+              <h2 class="mt-8 font-display text-base font-bold text-ink">
                 Serviços
               </h2>
-              <div class="mt-2 flex flex-wrap gap-2">
+              <div class="mt-3 flex flex-wrap gap-2">
                 <UBadge
                   v-for="service in professional.services"
                   :key="service.name"
@@ -144,7 +121,7 @@ function openLightbox(index: number) {
           :contact="professional.contact"
           :verified="professional.verified"
           :stats="professional.stats"
-          class="hidden px-4 sm:px-6 lg:sticky lg:top-24 lg:block"
+          class="hidden px-4 sm:px-6 lg:sticky lg:top-24 lg:block lg:pt-7"
         />
       </div>
     </div>
