@@ -11,7 +11,8 @@ const professional = buildProfessional({
     { url: 'https://example.test/3.jpg', type: 'video' },
     { url: 'https://example.test/4.jpg', type: 'photo' },
     { url: 'https://example.test/5.jpg', type: 'photo' },
-    { url: 'https://example.test/6.jpg', type: 'photo' }
+    { url: 'https://example.test/6.jpg', type: 'photo' },
+    { url: 'https://example.test/7.jpg', type: 'photo' }
   ],
   characteristics: {
     age: 24,
@@ -84,7 +85,7 @@ describe('ProfessionalProfile', () => {
   it('caps the gallery grid and shows an overlay with the remaining count', async () => {
     const wrapper = await mountSuspended(ProfessionalProfile, { props: { professional } })
 
-    expect(wrapper.findAll('img[alt*="galeria"]')).toHaveLength(5)
+    expect(wrapper.findAll('img[alt*="galeria"]')).toHaveLength(6)
     expect(wrapper.text()).toContain('+1')
   })
 
