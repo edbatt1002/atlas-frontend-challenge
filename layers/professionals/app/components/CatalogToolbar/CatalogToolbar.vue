@@ -11,7 +11,7 @@ const headerHeight = useHeaderHeight()
 const toolbarHeight = useCatalogToolbarHeight()
 
 const toolbarEl = ref<HTMLElement | null>(null)
-const { height } = useElementSize(toolbarEl)
+const { height } = useElementSize(toolbarEl, undefined, { box: 'border-box' })
 watch(height, (h) => {
   if (h > 0) toolbarHeight.value = h
 })
