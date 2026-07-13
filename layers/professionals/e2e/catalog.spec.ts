@@ -22,11 +22,15 @@ test.describe('Catálogo', () => {
 
   test('navega para o perfil ao clicar num card', async ({ page }) => {
     await page.goto('/buscar')
+    const firstCard = page.locator('article').first()
+    const professionalName = await firstCard.getByRole('heading', { level: 3 }).textContent()
 
-    await page.locator('article').first().locator('a').last().click()
+    await firstCard.locator('a').last().click()
 
     await expect(page).toHaveURL(/\/[0-9a-f-]{36}\//)
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    const profileHeading = page.getByRole('heading', { level: 1, name: professionalName! })
+    await expect(profileHeading).toHaveCount(1)
+    await expect(profileHeading).toBeVisible()
   })
 
   test('troca de foto ao clicar no botão de próximo slide do card', async ({ page }) => {
