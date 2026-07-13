@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { ProfessionalsCatalogProps } from './types'
-import { FIRST_LOAD_SKELETONS, INFINITE_SCROLL_ROOT_MARGIN, LOAD_MORE_SKELETONS, PRIORITY_CARD_COUNT } from './config'
+import { CATALOG_PAGE_SIZE, FIRST_LOAD_SKELETONS, INFINITE_SCROLL_ROOT_MARGIN, LOAD_MORE_SKELETONS, PRIORITY_CARD_COUNT, VIRTUALIZATION_MIN_ITEMS } from './config'
 
 const props = defineProps<ProfessionalsCatalogProps>()
 const emit = defineEmits<{ clear: [] }>()
 
-const { items, isPending, error, hasNextPage, fetchNextPage } = useProfessionals(() => props.query)
+const { items, isPending, error, hasNextPage, fetchNextPage } = useProfessionals(() => ({
+  ...props.query,
+  limit: CATALOG_PAGE_SIZE
+}))
 
 const loadingMore = ref(false)
 async function loadMore() {
@@ -30,6 +33,7 @@ useIntersectionObserver(
 const showFirstLoad = computed(() => isPending.value && items.value.length === 0)
 const isEmpty = computed(() => !isPending.value && !error.value && items.value.length === 0)
 const reachedEnd = computed(() => !hasNextPage.value && items.value.length > 0)
+const shouldVirtualize = computed(() => items.value.length >= VIRTUALIZATION_MIN_ITEMS)
 </script>
 
 <template>
@@ -73,6 +77,18 @@ const reachedEnd = computed(() => !hasNextPage.value && items.value.length > 0)
         />
       </div>
 
+      <div
+        v-else-if="!shouldVirtualize"
+        class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <ProfessionalCard
+          v-for="(pro, index) in items"
+          :key="pro.id"
+          :professional="pro"
+          :priority="index < PRIORITY_CARD_COUNT"
+        />
+      </div>
+
       <ClientOnly v-else>
         <ProfessionalsCatalogVirtualizedGrid
           :items="items"
@@ -81,11 +97,9 @@ const reachedEnd = computed(() => !hasNextPage.value && items.value.length > 0)
 
         <template #fallback>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <ProfessionalCard
-              v-for="(pro, index) in items"
-              :key="pro.id"
-              :professional="pro"
-              :priority="index < PRIORITY_CARD_COUNT"
+            <ProfessionalCardSkeleton
+              v-for="index in FIRST_LOAD_SKELETONS"
+              :key="`hydration-placeholder-${index}`"
             />
           </div>
         </template>

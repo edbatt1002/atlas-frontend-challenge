@@ -1,4 +1,6 @@
 export const FIRST_LOAD_SKELETONS = 10
+export const CATALOG_PAGE_SIZE = 12
 export const LOAD_MORE_SKELETONS = 5
 export const INFINITE_SCROLL_ROOT_MARGIN = '400px'
-export const PRIORITY_CARD_COUNT = 4
+export const PRIORITY_CARD_COUNT = 1
+export const VIRTUALIZATION_MIN_ITEMS = 49
