@@ -56,7 +56,7 @@ useSeoMeta({
       class="pb-16 lg:pb-0"
       :style="{ paddingTop: `${headerHeight}px` }"
     >
-      <NuxtPage />
+      <NuxtPage :transition="{ name: 'page' }" />
     </UMain>
 
     <LayoutFooter />

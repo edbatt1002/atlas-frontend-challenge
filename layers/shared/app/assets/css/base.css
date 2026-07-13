@@ -17,6 +17,23 @@ body {
   font-family: var(--font-sans);
 }
 
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.18s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
+@media (max-width: calc(var(--breakpoint-lg) - 1px)) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
