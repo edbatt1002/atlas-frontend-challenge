@@ -11,7 +11,7 @@ defineProps<HeroProps>()
 
     <div class="relative mx-auto max-w-2xl text-center">
       <span
-        class="inline-flex items-center gap-1.5 rounded-full border border-primary-400/30 bg-primary-400/10 px-3 py-1.5 text-xs font-bold text-primary-300"
+        class="inline-flex items-center gap-1.5 rounded-full border border-primary-400/30 bg-primary-400/10 px-3 py-1.5 text-xs font-bold text-primary-400"
         :class="{ invisible: !totalLabel }"
       >
         {{ totalLabel ?? '+600 profissionais verificados' }}
