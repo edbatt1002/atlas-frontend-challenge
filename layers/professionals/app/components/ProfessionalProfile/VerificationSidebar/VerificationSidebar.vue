@@ -21,7 +21,7 @@ defineProps<VerificationSidebarProps>()
       <ProfessionalProfileContactButtons
         :contact="contact"
         variant="primary"
-        class="mt-4"
+        class="mt-4 lg:w-full"
       />
     </div>
 
