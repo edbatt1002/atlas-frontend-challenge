@@ -9,6 +9,7 @@ const selectedCode = ref<string | null>(null)
 
 const regionLabel = computed(() => selectedLabel.value ?? 'Todo o Brasil')
 const suggestions = computed(() => filterStates(BRAZILIAN_STATES, query.value))
+const suggestionItems = computed(() => suggestions.value.map(state => ({ label: `${state.name} · ${state.code}`, value: state.code })))
 const exploreTo = computed(() => selectedCode.value ? `/buscar?state=${selectedCode.value}` : '/buscar')
 
 function open() {
@@ -24,6 +25,11 @@ function pick(name: string, code?: string) {
   selectedLabel.value = code ? `${name} · ${code}` : name
   selectedCode.value = code ?? null
   close()
+}
+
+function selectRegion(code: string) {
+  const state = suggestions.value.find(item => item.code === code)
+  if (state) pick(state.name, state.code)
 }
 
 const { coords, resume: requestLocation, isSupported: isLocationSupported } = useGeolocation({ immediate: false })
@@ -130,15 +136,10 @@ function useCurrentLocation() {
           />
 
           <div class="flex-1 overflow-y-auto overscroll-contain px-2 pb-2">
-            <UButton
-              v-for="state in suggestions"
-              :key="state.code"
-              block
-              variant="ghost"
-              color="neutral"
-              :label="`${state.name} · ${state.code}`"
-              class="justify-start rounded-xl px-3.5 py-3 text-[13px] font-semibold"
-              @click="pick(state.name, state.code)"
+            <UiSelectionList
+              :items="suggestionItems"
+              :model-value="selectedCode ?? undefined"
+              @update:model-value="selectRegion"
             />
           </div>
         </div>

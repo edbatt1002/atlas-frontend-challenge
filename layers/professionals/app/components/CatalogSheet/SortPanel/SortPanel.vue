@@ -26,12 +26,9 @@ const sortValue = computed({
   />
 
   <div class="flex-1 overflow-y-auto overscroll-contain border-t border-line p-4">
-    <URadioGroup
+    <UiSelectionList
       v-model="sortValue"
       :items="sortItems"
-      variant="list"
-      indicator="end"
-      color="primary"
     />
   </div>
 </template>

@@ -1,4 +1,4 @@
-import { DOMWrapper } from '@vue/test-utils'
+import type { DOMWrapper } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import SortPanel from '../SortPanel.vue'
 
@@ -26,11 +26,9 @@ describe('SortPanel', () => {
 
   it('emits update:sort and close when an option is selected', async () => {
     const wrapper = await mountPanel()
-    const label = wrapper.findAll('label').find((l: DOMWrapper<Element>) => l.text().includes('Novidades'))
-    const optionId = label!.attributes('for')!
-    const option = new DOMWrapper(document.getElementById(optionId)!)
+    const option = wrapper.findAll('button').find((b: DOMWrapper<Element>) => b.text().includes('Novidades'))
 
-    await option.trigger('click')
+    await option!.trigger('click')
 
     expect(wrapper.emitted('update:sort')).toEqual([['newest']])
     expect(wrapper.emitted('close')).toHaveLength(1)
