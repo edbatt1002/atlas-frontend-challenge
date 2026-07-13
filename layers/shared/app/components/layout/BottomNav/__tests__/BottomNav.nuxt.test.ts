@@ -10,7 +10,7 @@ describe('LayoutBottomNav', () => {
   it('renders the three available tabs', async () => {
     const wrapper = await mountSuspended(BottomNav)
     const text = wrapper.text()
-    expect(text).toContain('Explorar')
+    expect(text).toContain('Home')
     expect(text).toContain('Buscar')
     expect(text).toContain('Favoritos')
   })
@@ -29,7 +29,7 @@ describe('LayoutBottomNav', () => {
     const wrapper = await mountSuspended(BottomNav, {
       route: '/'
     })
-    const activeLink = wrapper.findAll('a').find(l => l.text().includes('Explorar'))
+    const activeLink = wrapper.findAll('a').find(l => l.text().includes('Home'))
     expect(activeLink!.classes()).toContain('text-primary')
 
     const inactiveLink = wrapper.findAll('a').find(l => l.text().includes('Buscar'))
