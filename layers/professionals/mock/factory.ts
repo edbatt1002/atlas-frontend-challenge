@@ -30,7 +30,7 @@ function buildAvailability(): ProfessionalAvailability[] {
 }
 
 function buildServices(basePrice: number): ProfessionalService[] {
-  const count = faker.number.int({ min: 1, max: 4 })
+  const count = faker.number.int({ min: 5, max: 10 })
   return Array.from({ length: count }, () => ({
     name: faker.commerce.productName(),
     price: Math.round(basePrice * faker.number.float({ min: 0.5, max: 1.6, fractionDigits: 2 }))
@@ -115,7 +115,7 @@ export function createProfessional(index: number): Professional {
     photos: faker.number.int({ min: 4, max: 60 }),
     videos: faker.number.int({ min: 0, max: 12 }),
     createdAt,
-    description: faker.lorem.paragraphs({ min: 1, max: 3 }, '\n\n'),
+    description: faker.lorem.paragraphs({ min: 3, max: 5 }, '\n\n'),
     location: {
       city: faker.location.city(),
       state: faker.location.state({ abbreviated: true }),

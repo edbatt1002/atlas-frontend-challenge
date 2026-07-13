@@ -2,5 +2,5 @@
   <rect x="0" y="0" width="40" height="40" rx="12" fill="#ff2d6f"></rect>
   <circle cx="20" cy="20" r="10.5" fill="none" stroke="#fff" stroke-width="4"></circle>
   <circle cx="27.8" cy="12.2" r="3.4" fill="#fff"></circle>
-  <text x="52" y="27" style="font-family:&#39;Bricolage Grotesque&#39;,&#39;Plus Jakarta Sans&#39;,system-ui,-apple-system,&#39;Segoe UI&#39;,sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;font-variation-settings:&#39;opsz&#39; 40"><tspan fill="#12060d">on</tspan><tspan fill="#ff2d6f">luxe</tspan></text>
+  <text x="52" y="27" style="font-family:'Bricolage Grotesque','Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-weight:800;font-size:28px;letter-spacing:-0.02em;font-variation-settings:'opsz' 40"><tspan fill="#12060d">on</tspan><tspan fill="#ff2d6f">luxe</tspan></text>
 </svg>
