@@ -132,6 +132,16 @@ Workflow em `.github/workflows/ci.yml`, 3 jobs em toda PR/push pra `main`:
 2. `e2e` — Playwright (reaproveita o build do job anterior)
 3. `lighthouse` — auditoria de performance real via Lighthouse CI
 
+## Próximos passos
+
+O que faria sentido evoluir se o projeto continuasse:
+
+- **Observabilidade.** `server/api/health.get.ts` hoje é só um healthcheck binário (pro Docker). Evoluir pra logging estruturado das rotas Nitro + error tracking (ex. Sentry) daria visibilidade real de erro em produção, não só em teste.
+- **Instrumentação / RUM (Real User Monitoring).** O que existe hoje é auditoria sintética (Lighthouse CI, em ambiente controlado de CI) — não captura Web Vitals de usuário real (rede/dispositivo variável). Reportar `web-vitals` de sessões reais fecharia esse gap entre "performance de laboratório" e "performance percebida".
+- **Speculation Rules API.** Prefetch/prerender especulativo do perfil ao passar o mouse/tocar num card do catálogo — reduziria a latência percebida na navegação catálogo→perfil, que hoje já é rápida (SSR) mas pagaria menos ainda com o documento praticamente pronto antes do clique. Progressive enhancement (só Chromium suporta hoje); precisa medir o trade-off de banda gasta com navegações especulativas que o usuário não completa.
+- **Persistência real.** Favoritos são só estado visual hoje (sem backend de escrita); perfil de profissional é 100% leitura, sem cadastro/edição. Ambos exigem autenticação e uma API de escrita real — o raciocínio de invalidação de cache pra esse cenário já está mapeado em `docs/architecture/professional-profile-cache-invalidation.md`.
+- **Pipeline de imagem real.** Hoje as fotos são um conjunto sintético pré-otimizado e versionado no repo. Com upload de usuário real, entraria um pipeline de moderação + processamento assíncrono + CDN — evolução já documentada em `docs/architecture/image-delivery.md`.
+
 ## Uso de IA
 
 Usei o **Claude Code** (Anthropic) principalmente pra trabalho repetitivo (testes, boilerplate, refatoração mecânica). Arquitetura, padrões e decisões de projeto foram sempre minhas: eu direcionava, a IA executava, eu revisava antes de cada etapa avançar.
