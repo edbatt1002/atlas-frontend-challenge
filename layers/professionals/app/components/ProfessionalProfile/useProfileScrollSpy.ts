@@ -26,7 +26,7 @@ export function useProfileScrollSpy(sectionIds: ProfileSectionId[], rootMargin: 
     { rootMargin, threshold: [0, 0.25, 0.5, 0.75, 1] }
   )
 
-  const { arrivedState } = useScroll(window, { throttle: 100 })
+  const { arrivedState } = useScroll(window, { throttle: SCROLL_THROTTLE_MS })
   watch(() => arrivedState.bottom, (atBottom) => {
     const isScrollable = document.documentElement.scrollHeight > window.innerHeight
     if (atBottom && isScrollable) activeSection.value = sectionIds[sectionIds.length - 1]!

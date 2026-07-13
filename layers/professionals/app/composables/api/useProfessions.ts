@@ -5,6 +5,6 @@ export function useProfessions() {
   return useServerQuery<Profession[]>(
     ['professions'],
     () => listProfessions(),
-    { staleTime: 1000 * 60 * 60 }
+    { staleTime: ONE_HOUR_MS }
   )
 }

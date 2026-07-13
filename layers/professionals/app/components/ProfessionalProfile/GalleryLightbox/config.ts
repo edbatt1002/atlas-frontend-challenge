@@ -5,3 +5,5 @@ export const TYPE_FILTERS = [
 ]
 
 export type MediaTypeFilter = typeof TYPE_FILTERS[number]['value']
+
+export const FEED_VISIBILITY_THRESHOLD = 0.6

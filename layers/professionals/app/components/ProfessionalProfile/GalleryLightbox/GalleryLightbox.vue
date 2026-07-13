@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { GalleryLightboxEmits, GalleryLightboxProps } from './types'
-import { TYPE_FILTERS } from './config'
+import { FEED_VISIBILITY_THRESHOLD, TYPE_FILTERS } from './config'
 import type { MediaTypeFilter } from './config'
 import { clampIndex, filterMediaByType } from './utils'
 
@@ -62,7 +62,7 @@ useIntersectionObserver(
     const index = feedRefs.value.indexOf(visible.target as HTMLElement)
     if (index !== -1) activeIndex.value = index
   },
-  { root: feedContainerRef, threshold: 0.6 }
+  { root: feedContainerRef, threshold: FEED_VISIBILITY_THRESHOLD }
 )
 </script>
 

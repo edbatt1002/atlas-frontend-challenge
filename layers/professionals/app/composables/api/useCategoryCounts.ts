@@ -5,7 +5,7 @@ export function useCategoryCounts(slugs: string[]) {
     const { data } = useServerQuery(
       ['category-count', slug],
       async () => (await listProfessionals({ profession: slug, limit: 1 })).meta.total,
-      { staleTime: 1000 * 60 * 60 }
+      { staleTime: ONE_HOUR_MS }
     )
     return [slug, data]
   }))
