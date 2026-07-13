@@ -32,6 +32,13 @@ export default defineNuxtConfig({
     }
   },
 
+  routeRules: {
+    '/termos': { prerender: true },
+    '/privacidade': { prerender: true },
+    '/suporte': { prerender: true },
+    '/favoritos': { prerender: true }
+  },
+
   devServer: {
     port: Number(process.env.PORT) || 3000
   },
