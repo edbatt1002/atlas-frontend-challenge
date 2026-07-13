@@ -1,1 +1,1 @@
-export const GALLERY_GRID_LIMIT = 5
+export const GALLERY_GRID_LIMIT = 6

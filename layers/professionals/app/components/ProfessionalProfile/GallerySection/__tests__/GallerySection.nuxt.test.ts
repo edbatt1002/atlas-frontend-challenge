@@ -30,9 +30,9 @@ describe('ProfessionalProfileGallerySection', () => {
   })
 
   it('caps the grid and shows the remaining count on the last tile', async () => {
-    const wrapper = await mountSuspended(GallerySection, { props: { media: media(7), name: 'Valentina' } })
+    const wrapper = await mountSuspended(GallerySection, { props: { media: media(8), name: 'Valentina' } })
 
-    expect(wrapper.findAll('img')).toHaveLength(5)
+    expect(wrapper.findAll('img')).toHaveLength(6)
     expect(wrapper.text()).toContain('+2')
   })
 
