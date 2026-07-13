@@ -19,6 +19,14 @@ if (import.meta.client) {
   watchEffect(() => {
     if (isNotFound.value) {
       showError(createError({ statusCode: 404, statusMessage: 'Profissional não encontrado' }))
+      return
+    }
+
+    if (!professional.value) return
+
+    const canonicalPath = professionalPath(professional.value.id, professional.value.name)
+    if (route.path !== canonicalPath) {
+      navigateTo(canonicalPath, { replace: true })
     }
   })
 }

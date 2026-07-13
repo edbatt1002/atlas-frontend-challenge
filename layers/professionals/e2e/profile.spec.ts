@@ -15,4 +15,15 @@ test.describe('Perfil', () => {
 
     await expect(page.getByRole('heading', { level: 1, name: 'Página não encontrada' })).toBeVisible()
   })
+
+  test('redireciona para o slug correto quando a URL tem o slug errado', async ({ page }) => {
+    await page.goto('/buscar')
+    const profileHref = await page.locator('article').first().locator('a').last().getAttribute('href')
+    const id = profileHref!.split('/')[1]
+
+    await page.goto(`/${id}/slug-qualquer-errado`)
+
+    await expect(page).toHaveURL(new RegExp(`${profileHref}$`))
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  })
 })

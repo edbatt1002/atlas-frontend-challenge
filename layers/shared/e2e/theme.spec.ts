@@ -7,10 +7,10 @@ test.describe('Tema', () => {
 
     await expect(html).toHaveClass(/dark/)
 
-    await page.getByRole('button', { name: 'Switch to light mode' }).click()
+    await page.getByRole('button', { name: 'Mudar para modo claro' }).click()
     await expect(html).not.toHaveClass(/dark/)
 
-    await page.getByRole('button', { name: 'Switch to dark mode' }).click()
+    await page.getByRole('button', { name: 'Mudar para modo escuro' }).click()
     await expect(html).toHaveClass(/dark/)
   })
 })
